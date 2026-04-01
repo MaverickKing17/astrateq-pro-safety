@@ -30,7 +30,8 @@ import {
   User,
   Bot,
   Minimize2,
-  Zap
+  Zap,
+  HelpCircle
 } from "lucide-react";
 
 function Logo({ className = "" }: { className?: string }) {
@@ -366,6 +367,8 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      <FAQSection />
 
       {/* Footer */}
       <motion.footer 
@@ -922,5 +925,133 @@ function SolutionCard({ icon, title, subtitle, description, features, index }: {
         </div>
       </div>
     </motion.div>
+  );
+}
+
+function FAQItem({ question, answer }: { question: string, answer: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border-b border-slate-100 last:border-none">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full py-6 flex items-center justify-between text-left group"
+      >
+        <span className="text-lg font-display font-bold text-brand-offwhite group-hover:text-brand-purple transition-colors">
+          {question}
+        </span>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          className="text-brand-purple"
+        >
+          <ChevronDown size={20} />
+        </motion.div>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <p className="pb-6 text-brand-gray leading-relaxed">
+              {answer}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function FAQSection() {
+  const faqs = [
+    {
+      category: "Installation",
+      questions: [
+        {
+          q: "Do I need professional installation?",
+          a: "While DIY installation is possible for some models, we recommend professional installation by an Astrateq certified partner to ensure optimal sensor calibration and integration with your vehicle's systems."
+        },
+        {
+          q: "How long does the installation take?",
+          a: "A standard installation typically takes between 2 to 4 hours, depending on your vehicle's make and model and the complexity of the sensor integration."
+        }
+      ]
+    },
+    {
+      category: "Compatibility",
+      questions: [
+        {
+          q: "Is my vehicle compatible?",
+          a: "Astrateq Gadgets are compatible with most vehicles manufactured after 2015. We offer specialized integration for major EV brands including Tesla, Rivian, and Ford F-150 Lightning."
+        },
+        {
+          q: "Does it work with older vehicles?",
+          a: "Vehicles manufactured before 2015 may require additional adapters. Please contact our support team with your VIN for a compatibility check."
+        }
+      ]
+    },
+    {
+      category: "Data Privacy",
+      questions: [
+        {
+          q: "How is my data protected?",
+          a: "We are fully PIPEDA compliant. Our 'Privacy by Design' approach means that sensitive video and sensor data is processed at the edge (on the device itself) and is never uploaded to the cloud without your explicit consent."
+        },
+        {
+          q: "Who owns the data collected by the sensors?",
+          a: "You do. Astrateq Gadgets Inc. does not sell your data. We only use anonymized, aggregated data to improve our safety algorithms if you opt-in to our research program."
+        }
+      ]
+    },
+    {
+      category: "Product Features",
+      questions: [
+        {
+          q: "Does it work in extreme cold?",
+          a: "Yes. Our hardware is engineered and tested in Toronto to operate reliably in temperatures as low as -40°C. The multi-spectral sensors are specifically designed to maintain visibility during heavy snowfall and whiteout conditions."
+        },
+        {
+          q: "What is AlTrak™?",
+          a: "AlTrak™ is our proprietary predictive safety suite that uses 4K sensor fusion to detect potential hazards up to 500ms faster than human reaction time."
+        }
+      ]
+    }
+  ];
+
+  return (
+    <section className="py-32 px-4 bg-white relative overflow-hidden">
+      <div className="max-w-4xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-brand-offwhite mb-4">
+            Frequently Asked <span className="text-brand-purple">Questions</span>
+          </h2>
+          <p className="text-brand-gray">Everything you need to know about Astrateq safety systems</p>
+        </motion.div>
+
+        <div className="space-y-12">
+          {faqs.map((group, idx) => (
+            <div key={idx}>
+              <h3 className="text-xs font-mono font-bold text-brand-purple uppercase tracking-[0.3em] mb-6 border-b border-brand-purple/10 pb-2">
+                {group.category}
+              </h3>
+              <div className="divide-y divide-slate-100">
+                {group.questions.map((faq, fIdx) => (
+                  <FAQItem key={fIdx} question={faq.q} answer={faq.a} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
