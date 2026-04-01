@@ -20,6 +20,22 @@ import {
 export default function App() {
   return (
     <div className="min-h-screen flex flex-col selection:bg-brand-cyan/30 selection:text-brand-cyan">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="text-xl font-display font-bold text-brand-offwhite tracking-tight">
+            ASTRATEQ GADGETS<span className="text-brand-cyan">.</span>
+          </div>
+          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-brand-gray">
+            <a href="#" className="hover:text-brand-cyan transition-colors">Vision</a>
+            <a href="#" className="hover:text-brand-cyan transition-colors">Solutions</a>
+            <button className="px-4 py-2 bg-brand-cyan text-white rounded-lg hover:bg-brand-cyan/90 transition-colors">
+              Beta Waitlist
+            </button>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-20 pb-32">
         {/* Background with Arctic Feel */}
@@ -221,7 +237,7 @@ export default function App() {
           {/* Brand & Language */}
           <div className="flex flex-col items-center gap-6">
             <div className="text-2xl font-display font-bold text-brand-offwhite tracking-tight">
-              ASTRATEQ<span className="text-brand-cyan">.</span>
+              ASTRATEQ GADGETS<span className="text-brand-cyan">.</span>
             </div>
             <div className="flex items-center gap-6 text-sm font-bold tracking-widest text-brand-gray">
               <span className="text-brand-cyan cursor-default">EN</span>
@@ -264,7 +280,7 @@ function HeroBadge({ icon, text, delay }: { icon: ReactNode, text: string, delay
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="flex items-center gap-2 text-sm"
+      className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-full text-xs font-semibold text-brand-gray shadow-sm hover:border-brand-cyan/30 transition-colors"
     >
       {icon}
       <span>{text}</span>
@@ -286,13 +302,13 @@ function SolutionCard({ icon, title, subtitle, description, features, index }: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -12 }}
+      whileHover={{ y: -6 }}
       className="glass-panel hover-glow p-10 rounded-3xl border-slate-200 group relative overflow-hidden"
     >
       {/* Technical Background Accent */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-brand-cyan/10 transition-colors" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-brand-cyan/8 transition-colors" />
       
-      <div className="w-16 h-16 rounded-2xl bg-brand-cyan/5 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 relative">
+      <div className="w-16 h-16 rounded-2xl bg-brand-cyan/5 flex items-center justify-center mb-8 group-hover:scale-105 transition-transform duration-500 relative">
         <div className="absolute inset-0 border border-brand-cyan/10 rounded-2xl animate-pulse" />
         {icon}
       </div>
