@@ -105,29 +105,35 @@ export default function App() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex flex-col items-center gap-6"
           >
-            <div className="flex items-center gap-2 px-4 py-2 bg-brand-cyan/5 border border-brand-cyan/10 rounded-full text-brand-cyan text-xs font-medium">
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="flex items-center gap-2 px-4 py-2 bg-brand-cyan/5 border border-brand-cyan/10 rounded-full text-brand-cyan text-xs font-medium"
+            >
               <AlertTriangle size={14} />
               <span>Astrateq gadgets are driver assistance tools only.</span>
-            </div>
+            </motion.div>
 
-            <button className="group relative px-8 py-4 bg-brand-yellow text-brand-offwhite font-bold rounded-lg transition-all hover:scale-105 hover:shadow-[0_10px_30px_rgba(250,204,21,0.2)] active:scale-95">
+            <motion.button 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="group relative px-8 py-4 bg-brand-yellow text-brand-offwhite font-bold rounded-lg transition-all hover:scale-105 hover:shadow-[0_10px_30px_rgba(250,204,21,0.2)] active:scale-95"
+            >
               JOIN THE FOUNDING BETA WAITLIST (100 SPOTS REMAINING)
-            </button>
+            </motion.button>
 
-            <div className="flex flex-wrap justify-center gap-8 mt-12 text-brand-gray">
-              <div className="flex items-center gap-2 text-sm">
-                <ShieldCheck size={18} className="text-brand-cyan" />
-                <span>Transport Canada Compliant</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <RotateCcw size={18} className="text-brand-cyan" />
-                <span>60-Day Returns</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm">
-                <MapPin size={18} className="text-brand-cyan" />
-                <span>Toronto Engineered & Shipped</span>
-              </div>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              className="flex flex-wrap justify-center gap-8 mt-12 text-brand-gray"
+            >
+              <HeroBadge icon={<ShieldCheck size={18} className="text-brand-cyan" />} text="Transport Canada Compliant" delay={1.3} />
+              <HeroBadge icon={<RotateCcw size={18} className="text-brand-cyan" />} text="60-Day Returns" delay={1.4} />
+              <HeroBadge icon={<MapPin size={18} className="text-brand-cyan" />} text="Toronto Engineered & Shipped" delay={1.5} />
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -161,15 +167,22 @@ export default function App() {
       {/* Solutions Section */}
       <section className="py-32 px-4 bg-brand-navy relative">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-20"
+          >
             <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-brand-offwhite">
               The <span className="text-brand-cyan">Solution</span>
             </h2>
             <p className="text-brand-gray">Three pillars of intelligent automotive protection</p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <SolutionCard 
+              index={0}
               icon={<Eye className="text-brand-cyan" />}
               title="AlTrak™"
               subtitle="PREDICTIVE SAFETY"
@@ -177,6 +190,7 @@ export default function App() {
               features={["< 50MS REACTION TIME", "94% HAZARD PREDICTION", "360° COVERAGE"]}
             />
             <SolutionCard 
+              index={1}
               icon={<Battery className="text-brand-cyan" />}
               title="EV Battery Intelligence"
               subtitle="RANGE CONFIDENCE"
@@ -184,6 +198,7 @@ export default function App() {
               features={["500MI RANGE OPTIMIZED", "THERMAL AI MANAGEMENT", "WINTER-TESTED"]}
             />
             <SolutionCard 
+              index={2}
               icon={<Shield className="text-brand-cyan" />}
               title="Guardian Mode"
               subtitle="24/7 ASSET MONITORING"
@@ -195,7 +210,13 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 border-t border-slate-200 bg-brand-navy">
+      <motion.footer 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="py-12 px-4 border-t border-slate-200 bg-brand-navy"
+      >
         <div className="max-w-6xl mx-auto flex flex-col items-center gap-8">
           <div className="flex items-center gap-4 text-sm font-medium text-brand-gray">
             <span className="text-brand-cyan">EN</span>
@@ -215,7 +236,7 @@ export default function App() {
             </p>
           </div>
         </div>
-      </footer>
+      </motion.footer>
 
       {/* Floating Chat Button (as seen in screenshot) */}
       <button className="fixed bottom-6 right-6 w-14 h-14 bg-brand-cyan text-brand-navy rounded-full flex items-center justify-center shadow-lg shadow-brand-cyan/20 hover:scale-110 transition-transform z-50">
@@ -225,15 +246,34 @@ export default function App() {
   );
 }
 
-function SolutionCard({ icon, title, subtitle, description, features }: { 
+function HeroBadge({ icon, text, delay }: { icon: ReactNode, text: string, delay: number }) {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay }}
+      className="flex items-center gap-2 text-sm"
+    >
+      {icon}
+      <span>{text}</span>
+    </motion.div>
+  );
+}
+
+function SolutionCard({ icon, title, subtitle, description, features, index }: { 
   icon: ReactNode, 
   title: string, 
   subtitle: string, 
   description: string, 
-  features: string[] 
+  features: string[],
+  index: number
 }) {
   return (
     <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ y: -10 }}
       className="glass-panel p-8 rounded-2xl border-brand-cyan/5 hover:border-brand-cyan/30 transition-colors group"
     >
