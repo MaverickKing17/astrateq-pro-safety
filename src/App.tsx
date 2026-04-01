@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { motion } from "motion/react";
 import { 
   ShieldCheck, 
@@ -16,7 +16,13 @@ import {
   AlertTriangle,
   Globe,
   Linkedin,
-  Twitter
+  Twitter,
+  Cookie,
+  X,
+  ExternalLink,
+  Scale,
+  ShieldAlert,
+  ChevronDown
 } from "lucide-react";
 
 export default function App() {
@@ -283,6 +289,54 @@ export default function App() {
             </a>
           </div>
           
+          {/* AI System Disclaimer */}
+          <div className="max-w-2xl mx-auto px-6 py-4 bg-brand-cyan/5 border border-brand-cyan/10 rounded-xl flex items-start gap-4 text-left">
+            <AlertTriangle className="text-brand-cyan shrink-0 mt-0.5" size={20} />
+            <p className="text-sm text-brand-gray leading-relaxed">
+              <span className="font-bold text-brand-offwhite">Safety Notice:</span> Astrateq Gadgets are driver assistance tools only and do not replace the driver's responsibility. Always maintain full control of your vehicle and stay alert to road conditions.
+            </p>
+          </div>
+
+          {/* Legal Links Grid */}
+          <div className="flex flex-col md:grid md:grid-cols-4 gap-0 md:gap-8 text-left w-full max-w-4xl pt-8 border-t border-slate-200">
+            <FooterAccordion 
+              title="Core Legal"
+              links={[
+                { label: "Privacy Policy", href: "#" },
+                { label: "Terms of Service", href: "#" },
+                { label: "Cookie Policy", href: "#" },
+                { label: "DMCA / IP Policy", href: "#" },
+              ]}
+            />
+            <FooterAccordion 
+              title="AI & Ethics"
+              links={[
+                { label: "AI Ethics Statement", href: "#" },
+                { label: "Algorithmic Transparency", href: "#" },
+                { label: "Data Processing Addendum", href: "#" },
+                { label: "Model Safety Card", href: "#" },
+              ]}
+            />
+            <FooterAccordion 
+              title="Compliance"
+              links={[
+                { label: "PIPEDA Compliance", href: "#" },
+                { label: "CASL (Anti-Spam)", href: "#" },
+                { label: "Transport Canada Standards", href: "#" },
+                { label: "AODA Accessibility", href: "#" },
+              ]}
+            />
+            <FooterAccordion 
+              title="Safety"
+              links={[
+                { label: "Driver Responsibility", href: "#" },
+                { label: "Hardware Warranty", href: "#" },
+                { label: "Recall Information", href: "#" },
+                { label: "Safety Certifications", href: "#" },
+              ]}
+            />
+          </div>
+
           {/* Legal & Copyright */}
           <div className="text-center space-y-6 max-w-3xl">
             <div className="space-y-4">
@@ -307,6 +361,103 @@ export default function App() {
       <button className="fixed bottom-6 right-6 w-14 h-14 bg-brand-cyan text-brand-navy rounded-full flex items-center justify-center shadow-lg shadow-brand-cyan/20 hover:scale-110 transition-transform z-50">
         <Globe size={24} />
       </button>
+
+      <CookieBanner />
+    </div>
+  );
+}
+
+function CookieBanner() {
+  const [isVisible, setIsVisible] = useState(true);
+
+  if (!isVisible) return null;
+
+  return (
+    <motion.div 
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 2, duration: 0.8 }}
+      className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:w-[400px] z-[60]"
+    >
+      <div className="glass-panel p-6 rounded-2xl border-brand-cyan/20 shadow-2xl shadow-brand-cyan/10 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-cyan via-brand-yellow to-brand-cyan" />
+        
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-xl bg-brand-cyan/10 flex items-center justify-center shrink-0">
+            <Cookie className="text-brand-cyan" size={20} />
+          </div>
+          <div className="space-y-3">
+            <h4 className="font-display font-bold text-brand-offwhite text-sm tracking-tight">
+              Optimizing Your AI Experience
+            </h4>
+            <p className="text-xs text-brand-gray leading-relaxed">
+              Astrateq uses cookies to analyze terrain data patterns and improve our predictive safety algorithms. By continuing, you agree to our <button className="text-brand-cyan hover:underline">AI Data Policy</button>.
+            </p>
+            <div className="flex gap-3 pt-1">
+              <button 
+                onClick={() => setIsVisible(false)}
+                className="flex-1 px-4 py-2 bg-brand-offwhite text-white text-[10px] font-bold rounded-lg hover:bg-brand-offwhite/90 transition-colors uppercase tracking-widest"
+              >
+                Accept All
+              </button>
+              <button 
+                onClick={() => setIsVisible(false)}
+                className="px-4 py-2 border border-slate-200 text-brand-gray text-[10px] font-bold rounded-lg hover:bg-slate-50 transition-colors uppercase tracking-widest"
+              >
+                Settings
+              </button>
+            </div>
+          </div>
+          <button 
+            onClick={() => setIsVisible(false)}
+            className="absolute top-4 right-4 text-brand-gray/40 hover:text-brand-cyan transition-colors"
+          >
+            <X size={16} />
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function FooterAccordion({ title, links }: { title: string, links: { label: string, href: string }[] }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border-b border-slate-200 md:border-none py-2 md:py-0">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center justify-between w-full md:cursor-default md:pointer-events-none py-3 md:py-0 mb-0 md:mb-4 group"
+      >
+        <h5 className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.2em] group-hover:text-brand-cyan-glow transition-colors">
+          {title}
+        </h5>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          className="md:hidden text-brand-gray/40"
+        >
+          <ChevronDown size={14} />
+        </motion.div>
+      </button>
+      
+      <motion.div
+        initial={false}
+        animate={{ 
+          height: isOpen ? "auto" : "0px",
+          opacity: isOpen ? 1 : 0,
+        }}
+        className="overflow-hidden md:!h-auto md:!opacity-100"
+      >
+        <ul className="pb-4 md:pb-0 space-y-2 text-xs text-brand-gray font-medium">
+          {links.map((link, i) => (
+            <li key={i}>
+              <a href={link.href} className="hover:text-brand-cyan transition-colors block py-1 md:py-0">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
     </div>
   );
 }
