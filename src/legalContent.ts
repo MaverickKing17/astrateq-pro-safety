@@ -152,18 +152,44 @@ We follow Transport Canada's best practices for Advanced Driver Assistance Syste
 ## 3. Testing
 Systems are tested in extreme Canadian climates to ensure reliability from -40°C to +85°C.
 `,
-  "AODA Accessibility": `
-# AODA Accessibility Statement
-Astrateq is committed to meeting the requirements of the Accessibility for Ontarians with Disabilities Act (AODA).
+  "Accessibility Statement": `
+# Accessibility Statement
+**Last Updated: April 1, 2026**
 
-## 1. Digital Accessibility
-Our web and mobile interfaces aim for WCAG 2.1 Level AA compliance.
+Astrateq Gadgets Inc. is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience for everyone and applying the relevant accessibility standards.
 
-## 2. Feedback Process
-We welcome feedback on how we can improve accessibility. Contact us at accessibility@astrateq.com.
+## 1. Conformance Status
+The [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/) defines requirements for designers and developers to improve accessibility for people with disabilities. It defines three levels of conformance: Level A, Level AA, and Level AAA.
 
-## 3. Alternative Formats
-Legal documents and user manuals are available in alternative formats upon request.
+Astrateq Gadgets Inc. is partially conformant with **WCAG 2.1 Level AA**. Partially conformant means that some parts of the content do not fully conform to the accessibility standard (e.g., some real-time AI telemetry visualizations may have high-contrast requirements that are still being optimized).
+
+## 2. AODA Compliance
+In accordance with the **Accessibility for Ontarians with Disabilities Act (AODA)**, Astrateq Gadgets Inc. is committed to meeting the accessibility needs of persons with disabilities in a timely manner. We are dedicated to providing our services in a way that respects the dignity and independence of people with disabilities.
+
+## 3. Assistive Technology Compatibility
+Our digital platforms are designed to be compatible with the following assistive technologies:
+- Screen readers (e.g., NVDA, JAWS, VoiceOver).
+- Screen magnification software.
+- Speech recognition software.
+- Standard keyboard navigation.
+
+## 4. Technical Specifications
+Accessibility of Astrateq Gadgets Inc. relies on the following technologies to work with the particular combination of web browser and any assistive technologies or plugins installed on your computer:
+- HTML
+- WAI-ARIA
+- CSS
+- JavaScript
+
+## 5. Feedback Process
+We welcome your feedback on the accessibility of Astrateq Gadgets Inc. Please let us know if you encounter accessibility barriers:
+- **Email:** accessibility@astrateq.com
+- **Phone:** +1 (800) ASTRATEQ (Ext. 4)
+- **Mailing Address:** 100 Innovation Drive, Suite 400, Toronto, ON M5J 2T3, Canada
+
+We aim to respond to accessibility feedback within 5 business days.
+
+## 6. Formal Complaints
+If you are not satisfied with our response to your accessibility feedback, you may file a formal complaint by contacting our Legal Department at legal@astrateq.com.
 `,
   "Driver Responsibility": `
 # Driver Responsibility Notice

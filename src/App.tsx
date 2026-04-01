@@ -613,7 +613,7 @@ export default function App() {
                 { label: "PIPEDA Compliance", href: "#" },
                 { label: "CASL (Anti-Spam)", href: "#" },
                 { label: "Transport Canada Standards", href: "#" },
-                { label: "AODA Accessibility", href: "#" },
+                { label: "Accessibility Statement", href: "#" },
               ]}
             />
             <FooterAccordion 
