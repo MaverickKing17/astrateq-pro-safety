@@ -14,7 +14,9 @@ import {
   Shield, 
   ChevronRight,
   AlertTriangle,
-  Globe
+  Globe,
+  Linkedin,
+  Twitter
 } from "lucide-react";
 
 export default function App() {
@@ -239,11 +241,46 @@ export default function App() {
             <div className="text-2xl font-display font-bold text-brand-offwhite tracking-tight">
               ASTRATEQ GADGETS<span className="text-brand-cyan">.</span>
             </div>
-            <div className="flex items-center gap-6 text-sm font-bold tracking-widest text-brand-gray">
-              <span className="text-brand-cyan cursor-default">EN</span>
-              <div className="w-[1px] h-4 bg-slate-300" />
-              <button className="hover:text-brand-cyan transition-colors">FR</button>
+            <div className="flex items-center gap-6 text-sm font-bold tracking-widest text-brand-gray" role="navigation" aria-label="Language selection">
+              <button 
+                className="text-brand-cyan cursor-default" 
+                aria-label="English" 
+                aria-current="true"
+              >
+                EN
+              </button>
+              <div className="w-[1px] h-4 bg-slate-300" aria-hidden="true" />
+              <button 
+                className="hover:text-brand-cyan transition-colors" 
+                aria-label="Switch to French"
+              >
+                FR
+              </button>
             </div>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex items-center gap-6" role="list" aria-label="Social media links">
+            <a 
+              href="https://linkedin.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-brand-gray hover:text-brand-cyan hover:border-brand-cyan transition-all"
+              aria-label="Follow Astrateq Gadgets on LinkedIn"
+              role="listitem"
+            >
+              <Linkedin size={20} />
+            </a>
+            <a 
+              href="https://twitter.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-brand-gray hover:text-brand-cyan hover:border-brand-cyan transition-all"
+              aria-label="Follow Astrateq Gadgets on Twitter"
+              role="listitem"
+            >
+              <Twitter size={20} />
+            </a>
           </div>
           
           {/* Legal & Copyright */}
