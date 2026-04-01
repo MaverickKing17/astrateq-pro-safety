@@ -57,4 +57,3 @@ Here is a high-authority `README.md` for your **astrateq-pro-safety** repository
 
 **Current Status:** Refine phase. [cite_start]We are currently accepting our first **100 "Founding Beta Testers"** across Ontario and BC[cite: 36].
 
-**Would you like me to create a "Technical Features" markdown file that lists all the specific 94% accuracy data points for your AlTrak and EV systems?**
