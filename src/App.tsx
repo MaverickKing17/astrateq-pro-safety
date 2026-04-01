@@ -36,36 +36,48 @@ import {
 
 function Logo({ className = "" }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <div className="relative w-10 h-10 flex items-center justify-center">
+    <div className={`flex items-center gap-3 ${className}`}>
+      <div className="relative w-12 h-12 flex items-center justify-center">
         {/* Animated Glow Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-purple to-brand-purple-glow rounded-xl rotate-45 opacity-20 animate-pulse" />
+        <div className="absolute inset-0 bg-brand-purple/20 rounded-2xl blur-xl animate-pulse" />
         
-        {/* Stylized 'A' SVG inspired by the provided logo */}
-        <svg viewBox="0 0 100 100" className="w-8 h-8 text-brand-purple drop-shadow-[0_0_12px_rgba(217,70,239,0.6)]">
-          <defs>
-            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#D946EF" />
-              <stop offset="100%" stopColor="#F0ABFC" />
-            </linearGradient>
-          </defs>
-          <path 
-            d="M50 10 L15 85 L25 85 L35 65 L65 65 L75 85 L85 85 L50 10 Z M40 55 L50 35 L60 55 L40 55 Z" 
-            fill="url(#logoGradient)" 
-          />
-          <path 
-            d="M30 75 Q50 60 70 75" 
-            fill="none" 
-            stroke="url(#logoGradient)" 
-            strokeWidth="4" 
-            strokeLinecap="round"
-            className="animate-pulse"
-          />
-        </svg>
+        {/* Official Astrateq Icon (Recreated with SVG) */}
+        <div className="relative z-10 w-10 h-10 flex items-center justify-center">
+          <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_8px_rgba(217,70,239,0.5)]">
+            <defs>
+              <linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#D946EF" />
+                <stop offset="50%" stopColor="#A21CAF" />
+                <stop offset="100%" stopColor="#701A75" />
+              </linearGradient>
+            </defs>
+            {/* Stylized Ribbon 'A' */}
+            <path 
+              d="M50 15 L25 85 L35 85 L45 55 Q55 55 65 85 L75 85 L50 15 Z" 
+              fill="url(#ribbonGradient)"
+            />
+            <path 
+              d="M35 65 Q20 65 20 45 Q20 25 40 25 Q60 25 60 45 Q60 65 45 65" 
+              fill="none" 
+              stroke="url(#ribbonGradient)" 
+              strokeWidth="10" 
+              strokeLinecap="round"
+              className="opacity-80"
+            />
+            {/* Fluid accent */}
+            <path 
+              d="M60 40 Q75 30 85 50" 
+              fill="none" 
+              stroke="url(#ribbonGradient)" 
+              strokeWidth="6" 
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
       </div>
       <div className="flex flex-col leading-none">
-        <span className="text-xl font-display font-black text-brand-offwhite tracking-tighter">ASTRATEQ</span>
-        <span className="text-[9px] font-mono font-bold text-brand-purple tracking-[0.4em] uppercase">Gadgets</span>
+        <span className="text-2xl font-display font-black text-brand-offwhite tracking-tighter">ASTRATEQ</span>
+        <span className="text-[10px] font-mono font-bold text-brand-purple tracking-[0.5em] uppercase mt-0.5">Gadgets</span>
       </div>
     </div>
   );
@@ -84,11 +96,31 @@ export default function App() {
     }
   };
 
-  const handleWaitlistSubmit = (e: React.FormEvent) => {
+  const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsWaitlistOpen(false);
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 5000);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch("https://formspree.io/f/mbdpkqrd", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        setIsWaitlistOpen(false);
+        setShowSuccess(true);
+        setTimeout(() => setShowSuccess(false), 5000);
+        form.reset();
+      } else {
+        alert("Oops! There was a problem submitting your form. Please try again.");
+      }
+    } catch (error) {
+      alert("Oops! There was a problem submitting your form. Please try again.");
+    }
   };
 
   return (
@@ -1241,7 +1273,7 @@ function FAQSection() {
   );
 }
 
-function WaitlistModal({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose: () => void, onSubmit: (e: React.FormEvent) => void }) {
+function WaitlistModal({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose: () => void, onSubmit: (e: React.FormEvent<HTMLFormElement>) => void }) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -1279,6 +1311,7 @@ function WaitlistModal({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose
                 <label className="block text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest mb-2">Full Name</label>
                 <input 
                   required
+                  name="name"
                   type="text" 
                   placeholder="John Doe"
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple transition-colors"
@@ -1288,6 +1321,7 @@ function WaitlistModal({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose
                 <label className="block text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest mb-2">Email Address</label>
                 <input 
                   required
+                  name="email"
                   type="email" 
                   placeholder="john@example.com"
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple transition-colors"
