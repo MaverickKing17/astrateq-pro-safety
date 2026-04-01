@@ -46,4 +46,23 @@
   .animate-spin-slow {
     animation: spin-slow 20s linear infinite;
   }
+
+  .markdown-body h1 {
+    @apply text-3xl font-display font-bold mb-6 text-brand-offwhite border-b border-slate-200 pb-4;
+  }
+  .markdown-body h2 {
+    @apply text-xl font-display font-bold mt-8 mb-4 text-brand-offwhite;
+  }
+  .markdown-body h3 {
+    @apply text-lg font-display font-bold mt-6 mb-3 text-brand-offwhite;
+  }
+  .markdown-body p {
+    @apply text-base text-brand-gray leading-relaxed mb-4;
+  }
+  .markdown-body ul {
+    @apply list-disc pl-6 mb-6 space-y-2 text-brand-gray;
+  }
+  .markdown-body strong {
+    @apply text-brand-offwhite font-bold;
+  }
 }

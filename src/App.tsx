@@ -4,7 +4,9 @@
  */
 
 import { ReactNode, useState } from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import Markdown from "react-markdown";
+import { LEGAL_CONTENT } from "./legalContent";
 import { 
   ShieldCheck, 
   RotateCcw, 
@@ -32,6 +34,7 @@ import {
 
 export default function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [activeLegalPage, setActiveLegalPage] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen flex flex-col selection:bg-brand-cyan/30 selection:text-brand-cyan">
@@ -309,6 +312,7 @@ export default function App() {
             <FooterAccordion 
               title="Core Legal"
               description="Foundational agreements governing your use of Astrateq services."
+              onLinkClick={setActiveLegalPage}
               links={[
                 { label: "Privacy Policy", href: "#" },
                 { label: "Terms of Service", href: "#" },
@@ -319,6 +323,7 @@ export default function App() {
             <FooterAccordion 
               title="AI & Ethics"
               description="Our commitment to responsible and transparent AI development."
+              onLinkClick={setActiveLegalPage}
               links={[
                 { label: "AI Ethics Statement", href: "#" },
                 { label: "Algorithmic Transparency", href: "#" },
@@ -329,6 +334,7 @@ export default function App() {
             <FooterAccordion 
               title="Compliance"
               description="Adherence to Canadian and international regulatory standards."
+              onLinkClick={setActiveLegalPage}
               links={[
                 { label: "PIPEDA Compliance", href: "#" },
                 { label: "CASL (Anti-Spam)", href: "#" },
@@ -339,6 +345,7 @@ export default function App() {
             <FooterAccordion 
               title="Safety"
               description="Critical safety information and hardware performance standards."
+              onLinkClick={setActiveLegalPage}
               links={[
                 { label: "Driver Responsibility", href: "#" },
                 { label: "Hardware Warranty", href: "#" },
@@ -379,8 +386,68 @@ export default function App() {
 
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
+      <LegalModal 
+        isOpen={!!activeLegalPage} 
+        content={activeLegalPage ? LEGAL_CONTENT[activeLegalPage] : ""} 
+        onClose={() => setActiveLegalPage(null)} 
+      />
+
       <CookieBanner />
     </div>
+  );
+}
+
+function LegalModal({ isOpen, content, onClose }: { isOpen: boolean, content: string, onClose: () => void }) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-brand-navy/40 backdrop-blur-sm"
+        >
+          <motion.div
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 20 }}
+            className="w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-slate-200"
+          >
+            <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-brand-cyan/10 flex items-center justify-center">
+                  <ShieldAlert className="text-brand-cyan" size={20} />
+                </div>
+                <h3 className="text-lg font-display font-bold text-brand-offwhite tracking-tight">Legal Documentation</h3>
+              </div>
+              <button 
+                onClick={onClose}
+                className="p-2 hover:bg-slate-200 rounded-lg transition-colors text-brand-gray"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto p-8 md:p-12 scrollbar-hide">
+              <div className="prose prose-slate max-w-none prose-headings:font-display prose-headings:text-brand-offwhite prose-p:text-brand-gray prose-strong:text-brand-offwhite prose-a:text-brand-cyan">
+                <div className="markdown-body">
+                  <Markdown>{content}</Markdown>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+              <button 
+                onClick={onClose}
+                className="px-6 py-2.5 bg-brand-navy text-white text-sm font-bold rounded-xl hover:bg-brand-navy/90 transition-colors uppercase tracking-widest"
+              >
+                Close Document
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -391,6 +458,45 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
+  const knowledgeBase = [
+    {
+      keywords: ["altrak", "terrain", "sensor", "4k"],
+      response: "AlTrak is our flagship 4K sensor suite. It provides real-time terrain analysis and predictive safety alerts with sub-10ms latency, ensuring maximum reaction time for drivers."
+    },
+    {
+      keywords: ["fleetguard", "fleet", "enterprise", "management"],
+      response: "FleetGuard Pro is designed for enterprise fleet management. It features advanced driver behavior monitoring, route optimization, and comprehensive efficiency analytics."
+    },
+    {
+      keywords: ["battery", "ev", "range", "thermal", "intelligence"],
+      response: "The EV Battery Intelligence Suite offers cell-level monitoring and thermal management. It predicts range more accurately by accounting for terrain and ambient temperature."
+    },
+    {
+      keywords: ["pipeda", "privacy", "data", "protection"],
+      response: "Astrateq is fully PIPEDA compliant. We prioritize edge-processing, meaning most sensitive data never leaves your vehicle, ensuring your privacy is protected by design."
+    },
+    {
+      keywords: ["transport canada", "regulation", "standard", "safety"],
+      response: "Our hardware meets or exceeds all Transport Canada safety standards. We work closely with regulators to ensure our AI assistance tools are safe for Canadian roads."
+    },
+    {
+      keywords: ["aoda", "accessibility", "ontario"],
+      response: "We are committed to AODA standards. Our interfaces are designed with high contrast and intuitive layouts to be accessible to all drivers, regardless of ability."
+    },
+    {
+      keywords: ["spec", "technical", "resolution", "latency", "temperature", "weather"],
+      response: "Technical Specifications: 4K HDR optics, <10ms processing latency, IP67 weather sealing, and a wide operating range of -40°C to +85°C for Canadian winters."
+    },
+    {
+      keywords: ["casl", "spam", "email", "consent"],
+      response: "Astrateq strictly adheres to CASL (Canada's Anti-Spam Legislation). We only send communications to users who have provided explicit consent."
+    },
+    {
+      keywords: ["warranty", "repair", "guarantee"],
+      response: "Astrateq Gadgets come with a 24-month limited hardware warranty. For repair requests, please visit our support portal or contact a certified installer."
+    }
+  ];
+
   const handleSend = () => {
     if (!input.trim()) return;
 
@@ -399,17 +505,19 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
     setInput("");
     setIsTyping(true);
 
-    // Mock AI response logic
     setTimeout(() => {
-      let botResponse = "I'm processing your request regarding Astrateq systems. For immediate safety concerns, please refer to your primary driver controls.";
-      
       const lowerMsg = userMsg.toLowerCase();
-      if (lowerMsg.includes("battery")) {
-        botResponse = "The EV Battery Intelligence Suite is currently monitoring cell health. All parameters are within optimal safety ranges.";
-      } else if (lowerMsg.includes("safety") || lowerMsg.includes("help")) {
-        botResponse = "Astrateq systems are active. Remember: our tools are for assistance only. You remain the primary safety controller of the vehicle.";
-      } else if (lowerMsg.includes("hello") || lowerMsg.includes("hi")) {
-        botResponse = "Hello. I am the Astrateq AI interface. I can provide information on AlTrak, FleetGuard Pro, and our Battery Intelligence Suite.";
+      let botResponse = "";
+
+      // Find the best match in the knowledge base
+      const match = knowledgeBase.find(item => 
+        item.keywords.some(keyword => lowerMsg.includes(keyword))
+      );
+
+      if (match) {
+        botResponse = match.response;
+      } else {
+        botResponse = "I'm sorry, I don't have specific information on that topic in my current knowledge base. Would you like to contact a human specialist? You can reach us at support@astrateq.com or call 1-800-ASTRATEQ.";
       }
 
       setMessages(prev => [...prev, { role: 'bot', text: botResponse }]);
@@ -574,7 +682,12 @@ function CookieBanner() {
   );
 }
 
-function FooterAccordion({ title, description, links }: { title: string, description: string, links: { label: string, href: string }[] }) {
+function FooterAccordion({ title, description, onLinkClick, links }: { 
+  title: string, 
+  description: string, 
+  onLinkClick: (label: string) => void,
+  links: { label: string, href: string }[] 
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -610,9 +723,12 @@ function FooterAccordion({ title, description, links }: { title: string, descrip
         <ul className="pb-6 md:pb-0 space-y-3 text-sm text-brand-gray font-medium">
           {links.map((link, i) => (
             <li key={i}>
-              <a href={link.href} className="hover:text-brand-cyan transition-colors block py-1.5 md:py-0 border-l-2 border-transparent hover:border-brand-cyan hover:pl-3 md:hover:pl-0 md:border-none transition-all duration-300">
+              <button 
+                onClick={() => onLinkClick(link.label)}
+                className="hover:text-brand-cyan transition-colors block py-1.5 md:py-0 border-l-2 border-transparent hover:border-brand-cyan hover:pl-3 md:hover:pl-0 md:border-none transition-all duration-300 text-left w-full"
+              >
                 {link.label}
-              </a>
+              </button>
             </li>
           ))}
         </ul>
