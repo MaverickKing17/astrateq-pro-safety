@@ -593,13 +593,23 @@ export default function App() {
       </motion.footer>
 
       {/* Floating Chat Button */}
-      <button 
+      <motion.button 
         onClick={() => setIsChatOpen(true)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-brand-purple text-brand-navy rounded-full flex items-center justify-center shadow-lg shadow-brand-purple/20 hover:scale-110 transition-transform z-50"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        whileHover={{ scale: 1.1, rotate: 5 }}
+        whileTap={{ scale: 0.9 }}
+        className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-br from-brand-purple via-brand-purple-glow to-brand-purple text-white rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(217,70,239,0.4)] hover:shadow-[0_0_30px_rgba(217,70,239,0.6)] transition-all z-50 group overflow-hidden"
         aria-label="Open AI Live Chat"
       >
-        <Globe size={24} />
-      </button>
+        {/* Animated Background Pulse */}
+        <div className="absolute inset-0 bg-white/20 animate-pulse group-hover:animate-none" />
+        
+        {/* Rotating Border Glow */}
+        <div className="absolute inset-0 border-2 border-white/30 rounded-full animate-spin-slow opacity-50" />
+        
+        <Globe size={28} className="relative z-10 drop-shadow-md" />
+      </motion.button>
 
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
@@ -763,24 +773,27 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
     >
       <div className="glass-panel flex-1 rounded-3xl border-brand-purple/30 shadow-2xl overflow-hidden flex flex-col bg-white/95 backdrop-blur-2xl">
         {/* Header */}
-        <div className="p-5 bg-brand-navy text-white flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-purple/20 flex items-center justify-center border border-brand-purple/30">
-              <Bot className="text-brand-purple" size={20} />
+        <div className="p-6 bg-gradient-to-r from-brand-navy via-brand-navy/90 to-brand-navy text-white flex items-center justify-between relative overflow-hidden">
+          {/* Animated Background Detail */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-purple/10 rounded-full blur-3xl -mr-16 -mt-16 animate-pulse" />
+          
+          <div className="flex items-center gap-4 relative z-10">
+            <div className="w-12 h-12 rounded-2xl bg-brand-purple flex items-center justify-center border border-white/20 shadow-[0_0_15px_rgba(217,70,239,0.4)]">
+              <Bot className="text-white" size={24} />
             </div>
             <div>
-              <h3 className="font-display font-bold text-sm tracking-tight">Astrateq AI Support</h3>
-              <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse" />
-                <span className="text-[10px] font-mono font-bold text-brand-purple/80 uppercase tracking-widest">System Active</span>
+              <h3 className="font-display font-bold text-base tracking-tight text-white leading-none mb-1.5">Astrateq AI Support</h3>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-brand-purple animate-pulse shadow-[0_0_8px_#D946EF]" />
+                <span className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-[0.2em]">System Active</span>
               </div>
             </div>
           </div>
           <button 
             onClick={onClose}
-            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+            className="p-2 hover:bg-white/10 rounded-xl transition-all hover:scale-110 active:scale-95 relative z-10"
           >
-            <Minimize2 size={18} />
+            <Minimize2 size={20} className="text-white/60 hover:text-white" />
           </button>
         </div>
 
