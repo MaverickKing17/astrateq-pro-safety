@@ -22,10 +22,17 @@ import {
   ExternalLink,
   Scale,
   ShieldAlert,
-  ChevronDown
+  ChevronDown,
+  MessageSquare,
+  Send,
+  User,
+  Bot,
+  Minimize2
 } from "lucide-react";
 
 export default function App() {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   return (
     <div className="min-h-screen flex flex-col selection:bg-brand-cyan/30 selection:text-brand-cyan">
       {/* Header */}
@@ -361,13 +368,137 @@ export default function App() {
         </div>
       </motion.footer>
 
-      {/* Floating Chat Button (as seen in screenshot) */}
-      <button className="fixed bottom-6 right-6 w-14 h-14 bg-brand-cyan text-brand-navy rounded-full flex items-center justify-center shadow-lg shadow-brand-cyan/20 hover:scale-110 transition-transform z-50">
+      {/* Floating Chat Button */}
+      <button 
+        onClick={() => setIsChatOpen(true)}
+        className="fixed bottom-6 right-6 w-14 h-14 bg-brand-cyan text-brand-navy rounded-full flex items-center justify-center shadow-lg shadow-brand-cyan/20 hover:scale-110 transition-transform z-50"
+        aria-label="Open AI Live Chat"
+      >
         <Globe size={24} />
       </button>
 
+      <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+
       <CookieBanner />
     </div>
+  );
+}
+
+function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
+  const [messages, setMessages] = useState<{ role: 'user' | 'bot', text: string }[]>([
+    { role: 'bot', text: "Welcome to Astrateq Support. I am your AI Safety Assistant. How can I help you optimize your journey today?" }
+  ]);
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+
+  const handleSend = () => {
+    if (!input.trim()) return;
+
+    const userMsg = input.trim();
+    setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
+    setInput("");
+    setIsTyping(true);
+
+    // Mock AI response logic
+    setTimeout(() => {
+      let botResponse = "I'm processing your request regarding Astrateq systems. For immediate safety concerns, please refer to your primary driver controls.";
+      
+      const lowerMsg = userMsg.toLowerCase();
+      if (lowerMsg.includes("battery")) {
+        botResponse = "The EV Battery Intelligence Suite is currently monitoring cell health. All parameters are within optimal safety ranges.";
+      } else if (lowerMsg.includes("safety") || lowerMsg.includes("help")) {
+        botResponse = "Astrateq systems are active. Remember: our tools are for assistance only. You remain the primary safety controller of the vehicle.";
+      } else if (lowerMsg.includes("hello") || lowerMsg.includes("hi")) {
+        botResponse = "Hello. I am the Astrateq AI interface. I can provide information on AlTrak, FleetGuard Pro, and our Battery Intelligence Suite.";
+      }
+
+      setMessages(prev => [...prev, { role: 'bot', text: botResponse }]);
+      setIsTyping(false);
+    }, 1000);
+  };
+
+  return (
+    <motion.div
+      initial={false}
+      animate={{ 
+        opacity: isOpen ? 1 : 0,
+        scale: isOpen ? 1 : 0.9,
+        y: isOpen ? 0 : 20,
+        pointerEvents: isOpen ? 'auto' : 'none'
+      }}
+      className="fixed bottom-24 right-6 w-[350px] md:w-[400px] h-[500px] z-[70] flex flex-col"
+    >
+      <div className="glass-panel flex-1 rounded-3xl border-brand-cyan/30 shadow-2xl overflow-hidden flex flex-col bg-white/95 backdrop-blur-2xl">
+        {/* Header */}
+        <div className="p-5 bg-brand-navy text-white flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-brand-cyan/20 flex items-center justify-center border border-brand-cyan/30">
+              <Bot className="text-brand-cyan" size={20} />
+            </div>
+            <div>
+              <h3 className="font-display font-bold text-sm tracking-tight">Astrateq AI Support</h3>
+              <div className="flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse" />
+                <span className="text-[10px] font-mono font-bold text-brand-cyan/80 uppercase tracking-widest">System Active</span>
+              </div>
+            </div>
+          </div>
+          <button 
+            onClick={onClose}
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+          >
+            <Minimize2 size={18} />
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto p-5 space-y-4 scrollbar-hide">
+          {messages.map((msg, i) => (
+            <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${
+                msg.role === 'user' 
+                  ? 'bg-brand-cyan text-brand-navy font-medium rounded-tr-none' 
+                  : 'bg-slate-100 text-brand-gray font-medium rounded-tl-none'
+              }`}>
+                {msg.text}
+              </div>
+            </div>
+          ))}
+          {isTyping && (
+            <div className="flex justify-start">
+              <div className="bg-slate-100 p-4 rounded-2xl rounded-tl-none flex gap-1">
+                <div className="w-1.5 h-1.5 bg-brand-gray/30 rounded-full animate-bounce" />
+                <div className="w-1.5 h-1.5 bg-brand-gray/30 rounded-full animate-bounce [animation-delay:0.2s]" />
+                <div className="w-1.5 h-1.5 bg-brand-gray/30 rounded-full animate-bounce [animation-delay:0.4s]" />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Input */}
+        <div className="p-4 border-t border-slate-100 bg-slate-50/50">
+          <div className="relative">
+            <input 
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+              placeholder="Ask about Astrateq systems..."
+              className="w-full pl-4 pr-12 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-cyan transition-colors placeholder:text-slate-400"
+            />
+            <button 
+              onClick={handleSend}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-brand-cyan hover:bg-brand-cyan/10 rounded-lg transition-colors"
+            >
+              <Send size={18} />
+            </button>
+          </div>
+          <p className="mt-3 text-[9px] text-center text-brand-gray/40 font-bold uppercase tracking-widest">
+            AI Assistance • Driver Responsibility Required
+          </p>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
