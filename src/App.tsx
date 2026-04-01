@@ -298,9 +298,10 @@ export default function App() {
           </div>
 
           {/* Legal Links Grid */}
-          <div className="flex flex-col md:grid md:grid-cols-4 gap-0 md:gap-8 text-left w-full max-w-4xl pt-8 border-t border-slate-200">
+          <div className="flex flex-col md:grid md:grid-cols-4 gap-0 md:gap-12 text-left w-full max-w-6xl pt-12 border-t border-slate-200">
             <FooterAccordion 
               title="Core Legal"
+              description="Foundational agreements governing your use of Astrateq services."
               links={[
                 { label: "Privacy Policy", href: "#" },
                 { label: "Terms of Service", href: "#" },
@@ -310,6 +311,7 @@ export default function App() {
             />
             <FooterAccordion 
               title="AI & Ethics"
+              description="Our commitment to responsible and transparent AI development."
               links={[
                 { label: "AI Ethics Statement", href: "#" },
                 { label: "Algorithmic Transparency", href: "#" },
@@ -319,6 +321,7 @@ export default function App() {
             />
             <FooterAccordion 
               title="Compliance"
+              description="Adherence to Canadian and international regulatory standards."
               links={[
                 { label: "PIPEDA Compliance", href: "#" },
                 { label: "CASL (Anti-Spam)", href: "#" },
@@ -328,6 +331,7 @@ export default function App() {
             />
             <FooterAccordion 
               title="Safety"
+              description="Critical safety information and hardware performance standards."
               links={[
                 { label: "Driver Responsibility", href: "#" },
                 { label: "Hardware Warranty", href: "#" },
@@ -439,23 +443,28 @@ function CookieBanner() {
   );
 }
 
-function FooterAccordion({ title, links }: { title: string, links: { label: string, href: string }[] }) {
+function FooterAccordion({ title, description, links }: { title: string, description: string, links: { label: string, href: string }[] }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-slate-200 md:border-none py-2 md:py-0">
+    <div className="border-b border-slate-200 md:border-none py-4 md:py-0">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full md:cursor-default md:pointer-events-none py-3 md:py-0 mb-0 md:mb-4 group"
+        className="flex items-center justify-between w-full md:cursor-default md:pointer-events-none py-2 md:py-0 mb-0 md:mb-6 group"
       >
-        <h5 className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.2em] group-hover:text-brand-cyan-glow transition-colors">
-          {title}
-        </h5>
+        <div className="text-left">
+          <h5 className="text-xs font-mono font-bold text-brand-cyan uppercase tracking-[0.25em] group-hover:text-brand-cyan-glow transition-colors mb-2">
+            {title}
+          </h5>
+          <p className="hidden md:block text-[11px] text-brand-gray/60 font-medium uppercase tracking-wider max-w-[200px] leading-relaxed">
+            {description}
+          </p>
+        </div>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           className="md:hidden text-brand-gray/40"
         >
-          <ChevronDown size={14} />
+          <ChevronDown size={18} />
         </motion.div>
       </button>
       
@@ -467,10 +476,10 @@ function FooterAccordion({ title, links }: { title: string, links: { label: stri
         }}
         className="overflow-hidden md:!h-auto md:!opacity-100"
       >
-        <ul className="pb-4 md:pb-0 space-y-2 text-xs text-brand-gray font-medium">
+        <ul className="pb-6 md:pb-0 space-y-3 text-sm text-brand-gray font-medium">
           {links.map((link, i) => (
             <li key={i}>
-              <a href={link.href} className="hover:text-brand-cyan transition-colors block py-1 md:py-0">
+              <a href={link.href} className="hover:text-brand-cyan transition-colors block py-1.5 md:py-0 border-l-2 border-transparent hover:border-brand-cyan hover:pl-3 md:hover:pl-0 md:border-none transition-all duration-300">
                 {link.label}
               </a>
             </li>
