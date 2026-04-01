@@ -1179,12 +1179,30 @@ function FAQSection() {
                 Explore our detailed documentation or reach out to our Toronto-based support team for specialized inquiries.
               </p>
               
-              <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
-                <h4 className="font-bold text-brand-offwhite mb-2">Still need help?</h4>
-                <p className="text-sm text-brand-gray mb-4">Our technical specialists are available 24/7 for emergency assistance.</p>
-                <button className="w-full py-3 bg-brand-navy text-white text-xs font-bold rounded-xl hover:bg-brand-navy/90 transition-all uppercase tracking-widest">
-                  Contact Support
-                </button>
+              <div className="p-8 rounded-3xl bg-brand-offwhite text-white shadow-xl relative overflow-hidden group/card">
+                {/* Decorative Background Glow */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-purple/20 rounded-full blur-3xl -mr-16 -mt-16 group-hover/card:bg-brand-purple/30 transition-colors" />
+                
+                <div className="relative z-10">
+                  <h4 className="text-xl font-display font-bold mb-3">Still need help?</h4>
+                  <p className="text-sm text-slate-300 mb-6 leading-relaxed">
+                    Our technical specialists are available 24/7 for emergency assistance and specialized vehicle integration support.
+                  </p>
+                  <button className="w-full py-4 bg-brand-purple text-white text-xs font-bold rounded-xl hover:bg-brand-purple-glow transition-all uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(217,70,239,0.3)] hover:shadow-[0_0_25px_rgba(217,70,239,0.5)] active:scale-[0.98]">
+                    Contact Support
+                  </button>
+                  
+                  <div className="mt-6 pt-6 border-t border-white/10 flex items-center gap-3">
+                    <div className="flex -space-x-2">
+                      {[1,2,3].map(i => (
+                        <div key={i} className="w-6 h-6 rounded-full border border-brand-offwhite bg-slate-800 overflow-hidden">
+                          <img src={`https://i.pravatar.cc/60?img=${i+20}`} alt="Support Agent" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
+                        </div>
+                      ))}
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">3 Agents Online</span>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
