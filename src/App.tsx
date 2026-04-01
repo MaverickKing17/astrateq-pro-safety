@@ -16,6 +16,7 @@ import {
   Shield, 
   ChevronRight,
   AlertTriangle,
+  Activity,
   Globe,
   Linkedin,
   Twitter,
@@ -389,6 +390,30 @@ export default function App() {
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                     className="relative aspect-[4/3] border-2 border-brand-purple/30 rounded-2xl flex items-center justify-center overflow-hidden backdrop-blur-[1px]"
                   >
+                    {/* Traffic Data Layer Overlay */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      {/* Traffic Flow Nodes (Perspective) */}
+                      {[1, 2, 3].map((i) => (
+                        <motion.div
+                          key={`traffic-${i}`}
+                          initial={{ opacity: 0, scale: 0.5, y: 100 }}
+                          animate={{ 
+                            opacity: [0, 0.4, 0],
+                            scale: [0.5, 1.2, 1.5],
+                            y: [-20, -100, -200],
+                            x: [i * 20 - 40, i * 30 - 45]
+                          }}
+                          transition={{ 
+                            duration: 4, 
+                            repeat: Infinity, 
+                            delay: i * 1.2,
+                            ease: "linear"
+                          }}
+                          className="absolute bottom-0 left-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-orange-500/40 to-transparent blur-sm"
+                        />
+                      ))}
+                    </div>
+
                     {/* Scanning Line */}
                     <motion.div 
                       animate={{ top: ["-10%", "110%"] }}
@@ -409,6 +434,17 @@ export default function App() {
                         <AlertTriangle size={12} className="text-red-500 animate-pulse" />
                         <span className="text-red-500">HAZARD DETECTED: 12.4m</span>
                       </div>
+                      
+                      {/* Traffic Congestion Alert */}
+                      <motion.div 
+                        animate={{ opacity: [0.4, 1, 0.4] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className="absolute -bottom-7 right-0 flex items-center gap-2 text-[9px] font-mono font-bold text-orange-400 bg-black/90 px-3 py-1 rounded-b-md border-b border-x border-orange-400/30"
+                      >
+                        <Activity size={10} />
+                        CONGESTION AHEAD: 1.2km
+                      </motion.div>
+
                       <div className="text-[9px] font-mono text-brand-purple font-bold uppercase tracking-[0.2em] animate-pulse">Analyzing Surface Friction...</div>
                       <div className="mt-2 flex gap-1">
                         {[1, 2, 3, 4, 5].map(i => (
