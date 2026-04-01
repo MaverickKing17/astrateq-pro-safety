@@ -6,13 +6,13 @@
   --font-display: "Space Grotesk", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  --color-brand-navy: #0A0F1C;
-  --color-brand-slate: #1F2937;
-  --color-brand-cyan: #00E5FF;
-  --color-brand-cyan-glow: #67E8F9;
+  --color-brand-navy: #F8FAFC;
+  --color-brand-slate: #F1F5F9;
+  --color-brand-cyan: #0891B2;
+  --color-brand-cyan-glow: #22D3EE;
   --color-brand-yellow: #FACC15;
-  --color-brand-offwhite: #F1F5F9;
-  --color-brand-gray: #CBD5E1;
+  --color-brand-offwhite: #0F172A;
+  --color-brand-gray: #475569;
 }
 
 @layer base {
@@ -23,15 +23,15 @@
 
 @layer utilities {
   .holographic-glow {
-    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5), 0 0 20px rgba(0, 229, 255, 0.3);
+    text-shadow: 0 0 10px rgba(8, 145, 178, 0.2);
   }
   
   .glass-panel {
-    @apply bg-brand-slate/40 backdrop-blur-md border border-white/10;
+    @apply bg-white/80 backdrop-blur-md border border-slate-200 shadow-sm;
   }
 
   .cyan-border-glow {
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
+    box-shadow: 0 4px 20px rgba(8, 145, 178, 0.08);
   }
 
   @keyframes spin-slow {

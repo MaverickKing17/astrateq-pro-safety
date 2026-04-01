@@ -22,26 +22,26 @@ export default function App() {
     <div className="min-h-screen flex flex-col selection:bg-brand-cyan/30 selection:text-brand-cyan">
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-20 pb-32">
-        {/* Background with Cockpit Feel */}
+        {/* Background with Arctic Feel */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-navy via-brand-navy/40 to-brand-navy/20 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/60 via-brand-navy/90 to-brand-navy z-10" />
           <img 
             src="https://images.unsplash.com/photo-1542362567-b055002b91f4?auto=format&fit=crop&q=80&w=2000" 
             alt="Car Cockpit" 
-            className="w-full h-full object-cover grayscale opacity-40"
+            className="w-full h-full object-cover grayscale opacity-20"
             referrerPolicy="no-referrer"
           />
           
-          {/* HUD Overlays */}
+          {/* HUD Overlays (Adjusted for Light Mode) */}
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.5, ease: "easeOut" }}
-              className="absolute top-1/4 left-1/4 w-64 h-64 border border-brand-cyan/20 rounded-full flex items-center justify-center"
+              className="absolute top-1/4 left-1/4 w-64 h-64 border border-brand-cyan/10 rounded-full flex items-center justify-center"
             >
-              <div className="w-48 h-48 border-2 border-brand-cyan/10 rounded-full border-dashed animate-spin-slow" />
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full text-[10px] font-mono text-brand-cyan/60 tracking-widest uppercase py-2">
+              <div className="w-48 h-48 border-2 border-brand-cyan/5 rounded-full border-dashed animate-spin-slow" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full text-[10px] font-mono text-brand-cyan/40 tracking-widest uppercase py-2">
                 Scanning Terrain
               </div>
             </motion.div>
@@ -50,14 +50,14 @@ export default function App() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="absolute top-1/3 right-10 w-48 p-4 glass-panel rounded-lg border-brand-cyan/30"
+              className="absolute top-1/3 right-10 w-48 p-4 glass-panel rounded-lg border-brand-cyan/20"
             >
               <div className="text-[10px] font-mono text-brand-cyan mb-1 uppercase tracking-tighter">Hazard Detection</div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-brand-cyan rounded-full animate-pulse" />
-                <span className="text-xl font-display font-bold text-brand-cyan">94% ACC</span>
+                <span className="text-xl font-display font-bold text-brand-offwhite">94% ACC</span>
               </div>
-              <div className="mt-2 h-1 bg-brand-cyan/20 rounded-full overflow-hidden">
+              <div className="mt-2 h-1 bg-brand-cyan/10 rounded-full overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: "94%" }}
@@ -74,10 +74,10 @@ export default function App() {
               className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-full max-w-md px-4"
             >
               <div className="flex justify-between items-end mb-2">
-                <div className="text-[10px] font-mono text-brand-cyan/60 uppercase">System Status: Active</div>
-                <div className="text-[10px] font-mono text-brand-cyan/60 uppercase">Toronto, ON</div>
+                <div className="text-[10px] font-mono text-brand-cyan/40 uppercase">System Status: Active</div>
+                <div className="text-[10px] font-mono text-brand-cyan/40 uppercase">Toronto, ON</div>
               </div>
-              <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-brand-cyan/50 to-transparent" />
+              <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent" />
             </motion.div>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight mb-6 leading-[1.1]">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight mb-6 leading-[1.1] text-brand-offwhite">
               Predictive AI for the <br />
               <span className="text-brand-cyan holographic-glow">Modern Canadian Driver.</span>
             </h1>
@@ -105,16 +105,16 @@ export default function App() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex flex-col items-center gap-6"
           >
-            <div className="flex items-center gap-2 px-4 py-2 bg-brand-yellow/10 border border-brand-yellow/20 rounded-full text-brand-yellow text-xs font-medium">
+            <div className="flex items-center gap-2 px-4 py-2 bg-brand-cyan/5 border border-brand-cyan/10 rounded-full text-brand-cyan text-xs font-medium">
               <AlertTriangle size={14} />
               <span>Astrateq gadgets are driver assistance tools only.</span>
             </div>
 
-            <button className="group relative px-8 py-4 bg-brand-yellow text-brand-navy font-bold rounded-lg transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(250,204,21,0.3)] active:scale-95">
+            <button className="group relative px-8 py-4 bg-brand-yellow text-brand-offwhite font-bold rounded-lg transition-all hover:scale-105 hover:shadow-[0_10px_30px_rgba(250,204,21,0.2)] active:scale-95">
               JOIN THE FOUNDING BETA WAITLIST (100 SPOTS REMAINING)
             </button>
 
-            <div className="flex flex-wrap justify-center gap-8 mt-12 text-brand-gray/80">
+            <div className="flex flex-wrap justify-center gap-8 mt-12 text-brand-gray">
               <div className="flex items-center gap-2 text-sm">
                 <ShieldCheck size={18} className="text-brand-cyan" />
                 <span>Transport Canada Compliant</span>
@@ -133,16 +133,16 @@ export default function App() {
       </section>
 
       {/* Vision Section */}
-      <section className="py-24 px-4 bg-gradient-to-b from-brand-navy to-brand-slate/20">
+      <section className="py-24 px-4 bg-brand-slate">
         <div className="max-w-4xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass-panel p-8 md:p-12 rounded-2xl border-brand-cyan/10 relative overflow-hidden"
+            className="glass-panel p-8 md:p-12 rounded-2xl border-white relative overflow-hidden shadow-xl shadow-slate-200/50"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/5 blur-3xl rounded-full" />
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-brand-offwhite">
               Vision Beyond the <span className="text-brand-cyan">Storm.</span>
             </h2>
             <div className="space-y-4 text-brand-gray text-lg leading-relaxed">
@@ -162,7 +162,7 @@ export default function App() {
       <section className="py-32 px-4 bg-brand-navy relative">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-brand-offwhite">
               The <span className="text-brand-cyan">Solution</span>
             </h2>
             <p className="text-brand-gray">Three pillars of intelligent automotive protection</p>
@@ -192,18 +192,15 @@ export default function App() {
             />
           </div>
         </div>
-        
-        {/* Subtle bottom gradient as requested */}
-        <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-brand-cyan/5 to-transparent pointer-events-none" />
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 border-t border-white/5 bg-brand-navy">
+      <footer className="py-12 px-4 border-t border-slate-200 bg-brand-navy">
         <div className="max-w-6xl mx-auto flex flex-col items-center gap-8">
           <div className="flex items-center gap-4 text-sm font-medium text-brand-gray">
             <span className="text-brand-cyan">EN</span>
-            <span className="text-white/20">|</span>
-            <button className="hover:text-white transition-colors">FR</button>
+            <span className="text-slate-300">|</span>
+            <button className="hover:text-brand-offwhite transition-colors">FR</button>
           </div>
           
           <div className="text-center space-y-4">
