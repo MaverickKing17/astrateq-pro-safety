@@ -956,40 +956,49 @@ function SolutionCard({ icon, title, subtitle, description, features, index }: {
   );
 }
 
-function FAQItem({ question, answer }: { question: string, answer: string }) {
+function FAQItem({ question, answer, index }: { question: string, answer: string, index: number }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-slate-100 last:border-none">
+    <div className="group border-b border-slate-100 last:border-none">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-6 flex items-center justify-between text-left group"
+        className="w-full py-6 flex items-start gap-4 text-left transition-all"
       >
-        <span className="text-lg font-display font-bold text-brand-offwhite group-hover:text-brand-purple transition-colors">
-          {question}
+        <span className="text-[10px] font-mono font-bold text-brand-purple/40 mt-1.5">
+          {String(index + 1).padStart(2, '0')}
         </span>
+        <div className="flex-1">
+          <span className="text-lg font-display font-bold text-brand-offwhite group-hover:text-brand-purple transition-colors block mb-1">
+            {question}
+          </span>
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="overflow-hidden"
+              >
+                <div className="pt-2 pb-6">
+                  <div className="pl-4 border-l-2 border-brand-purple/20">
+                    <p className="text-brand-gray text-sm leading-relaxed">
+                      {answer}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
         <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          className="text-brand-purple"
+          animate={{ rotate: isOpen ? 180 : 0, scale: isOpen ? 1.1 : 1 }}
+          className={`mt-1 transition-colors ${isOpen ? 'text-brand-purple' : 'text-brand-gray/30'}`}
         >
           <ChevronDown size={20} />
         </motion.div>
       </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
-            <p className="pb-6 text-brand-gray leading-relaxed">
-              {answer}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
@@ -997,87 +1006,132 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
 function FAQSection() {
   const faqs = [
     {
-      category: "Installation",
+      category: "Installation & Setup",
+      icon: <RotateCcw size={20} />,
       questions: [
         {
           q: "Do I need professional installation?",
-          a: "While DIY installation is possible for some models, we recommend professional installation by an Astrateq certified partner to ensure optimal sensor calibration and integration with your vehicle's systems."
+          a: "While our 'Plug-and-Play' kit is designed for basic functionality via the OBD-II port, the full AlTrak™ experience requires professional sensor mounting and calibration. Our certified technicians ensure that the multi-spectral cameras are perfectly aligned to your vehicle's specific geometry, which is critical for 500ms predictive accuracy. We have 150+ certified installation hubs across Canada, from Vancouver to Halifax."
         },
         {
           q: "How long does the installation take?",
-          a: "A standard installation typically takes between 2 to 4 hours, depending on your vehicle's make and model and the complexity of the sensor integration."
+          a: "A standard professional installation takes approximately 3.5 hours. This includes physical mounting of the front and rear sensor arrays, routing of the high-speed data cables, and a 45-minute software calibration drive where the system 'learns' your vehicle's dynamic profile and blind-spot zones."
         }
       ]
     },
     {
-      category: "Compatibility",
+      category: "Vehicle Compatibility",
+      icon: <Battery size={20} />,
       questions: [
         {
           q: "Is my vehicle compatible?",
-          a: "Astrateq Gadgets are compatible with most vehicles manufactured after 2015. We offer specialized integration for major EV brands including Tesla, Rivian, and Ford F-150 Lightning."
+          a: "Astrateq Gadgets are compatible with 98% of passenger vehicles manufactured after 2015. We offer native CAN-bus integration for major manufacturers. For EV owners, our Battery Intelligence Suite is specifically optimized for Tesla (Model 3/Y), Rivian (R1T/R1S), and the Ford F-150 Lightning, providing deep-level thermal monitoring that standard software misses."
         },
         {
           q: "Does it work with older vehicles?",
-          a: "Vehicles manufactured before 2015 may require additional adapters. Please contact our support team with your VIN for a compatibility check."
+          a: "Vehicles manufactured between 2008 and 2014 are supported via our 'Legacy Link' adapter, though some advanced predictive features may be limited by the vehicle's slower data bus. For vehicles older than 2008, we offer a standalone safety suite that provides visual and audible alerts without direct vehicle control integration."
         }
       ]
     },
     {
-      category: "Data Privacy",
+      category: "Data Privacy & Security",
+      icon: <Shield size={20} />,
       questions: [
         {
           q: "How is my data protected?",
-          a: "We are fully PIPEDA compliant. Our 'Privacy by Design' approach means that sensitive video and sensor data is processed at the edge (on the device itself) and is never uploaded to the cloud without your explicit consent."
+          a: "We employ a 'Zero-Cloud' default policy. 99.9% of all video and sensor processing happens locally on the Astrateq Edge Processor. We are fully PIPEDA and GDPR compliant. Your driving data is encrypted with AES-256 at rest. If you choose to use our 'Incident Cloud Backup', your data is sharded and stored across multiple secure Canadian data centers, accessible only via your biometric-linked Astrateq ID."
         },
         {
           q: "Who owns the data collected by the sensors?",
-          a: "You do. Astrateq Gadgets Inc. does not sell your data. We only use anonymized, aggregated data to improve our safety algorithms if you opt-in to our research program."
+          a: "You are the sole owner of your data. Astrateq Gadgets Inc. does not sell, rent, or trade user data to insurance companies or third parties. We only use anonymized, telemetry-only data (no video, no location) to improve our global safety models if you explicitly opt-in to our 'Community Safety Network'."
         }
       ]
     },
     {
-      category: "Product Features",
+      category: "Extreme Performance",
+      icon: <Zap size={20} />,
       questions: [
         {
           q: "Does it work in extreme cold?",
-          a: "Yes. Our hardware is engineered and tested in Toronto to operate reliably in temperatures as low as -40°C. The multi-spectral sensors are specifically designed to maintain visibility during heavy snowfall and whiteout conditions."
+          a: "Absolutely. Engineered in Toronto, our hardware is MIL-SPEC rated for operation down to -45°C. The sensor lenses feature integrated nano-heating elements that automatically activate to melt ice and prevent fogging. Our AI models are trained on over 2 million kilometers of Canadian winter driving data, specifically optimized for detecting lane markings under snow and identifying black ice patches."
         },
         {
-          q: "What is AlTrak™?",
-          a: "AlTrak™ is our proprietary predictive safety suite that uses 4K sensor fusion to detect potential hazards up to 500ms faster than human reaction time."
+          q: "What is AlTrak™ Predictive Safety?",
+          a: "AlTrak™ is our proprietary sensor fusion engine. It combines 4K optical data, LiDAR-lite depth sensing, and multi-spectral thermal imaging. By processing 120 frames per second, it can predict potential collisions up to 2 seconds before they occur—providing a 500ms 'Safety Window' that is often the difference between a close call and a serious accident."
         }
       ]
     }
   ];
 
   return (
-    <section className="py-32 px-4 bg-white relative overflow-hidden">
-      <div className="max-w-4xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-brand-offwhite mb-4">
-            Frequently Asked <span className="text-brand-purple">Questions</span>
-          </h2>
-          <p className="text-brand-gray">Everything you need to know about Astrateq safety systems</p>
-        </motion.div>
+    <section id="faq" className="py-32 px-4 bg-slate-50 relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-purple/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand-purple/5 rounded-full blur-[120px]" />
+        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #cbd5e1 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+      </div>
 
-        <div className="space-y-12">
-          {faqs.map((group, idx) => (
-            <div key={idx}>
-              <h3 className="text-xs font-mono font-bold text-brand-purple uppercase tracking-[0.3em] mb-6 border-b border-brand-purple/10 pb-2">
-                {group.category}
-              </h3>
-              <div className="divide-y divide-slate-100">
-                {group.questions.map((faq, fIdx) => (
-                  <FAQItem key={fIdx} question={faq.q} answer={faq.a} />
-                ))}
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="flex flex-col lg:flex-row gap-16">
+          {/* Left Side: Header */}
+          <div className="lg:w-1/3">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="sticky top-32"
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purple/10 border border-brand-purple/20 mb-6">
+                <HelpCircle className="text-brand-purple" size={14} />
+                <span className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest">Support Center</span>
               </div>
-            </div>
-          ))}
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-brand-offwhite mb-6 leading-tight">
+                Got <span className="text-brand-purple">Questions?</span><br />
+                We've Got Answers.
+              </h2>
+              <p className="text-brand-gray text-lg mb-8 leading-relaxed">
+                Explore our detailed documentation or reach out to our Toronto-based support team for specialized inquiries.
+              </p>
+              
+              <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                <h4 className="font-bold text-brand-offwhite mb-2">Still need help?</h4>
+                <p className="text-sm text-brand-gray mb-4">Our technical specialists are available 24/7 for emergency assistance.</p>
+                <button className="w-full py-3 bg-brand-navy text-white text-xs font-bold rounded-xl hover:bg-brand-navy/90 transition-all uppercase tracking-widest">
+                  Contact Support
+                </button>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right Side: FAQ Groups */}
+          <div className="lg:w-2/3 space-y-12">
+            {faqs.map((group, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 rounded-2xl bg-brand-purple/10 flex items-center justify-center text-brand-purple border border-brand-purple/20">
+                    {group.icon}
+                  </div>
+                  <h3 className="text-xl font-display font-bold text-brand-offwhite">
+                    {group.category}
+                  </h3>
+                </div>
+                
+                <div className="divide-y divide-slate-100">
+                  {group.questions.map((faq, fIdx) => (
+                    <FAQItem key={fIdx} index={fIdx} question={faq.q} answer={faq.a} />
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
