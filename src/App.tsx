@@ -374,46 +374,65 @@ function CookieBanner() {
 
   return (
     <motion.div 
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 2, duration: 0.8 }}
-      className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:w-[400px] z-[60]"
+      initial={{ y: 100, opacity: 0, scale: 0.95 }}
+      animate={{ y: 0, opacity: 1, scale: 1 }}
+      transition={{ delay: 2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed bottom-6 left-6 right-6 md:left-auto md:right-8 md:w-[420px] z-[60]"
     >
-      <div className="glass-panel p-6 rounded-2xl border-brand-cyan/20 shadow-2xl shadow-brand-cyan/10 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-cyan via-brand-yellow to-brand-cyan" />
+      <div className="relative group">
+        {/* Outer Glow */}
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-cyan/20 via-brand-yellow/10 to-brand-cyan/20 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse" />
         
-        <div className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-xl bg-brand-cyan/10 flex items-center justify-center shrink-0">
-            <Cookie className="text-brand-cyan" size={20} />
-          </div>
-          <div className="space-y-3">
-            <h4 className="font-display font-bold text-brand-offwhite text-sm tracking-tight">
-              Optimizing Your AI Experience
-            </h4>
-            <p className="text-xs text-brand-gray leading-relaxed">
-              Astrateq uses cookies to analyze terrain data patterns and improve our predictive safety algorithms. By continuing, you agree to our <button className="text-brand-cyan hover:underline">AI Data Policy</button>.
-            </p>
-            <div className="flex gap-3 pt-1">
+        <div className="relative glass-panel p-6 rounded-2xl border-brand-cyan/30 shadow-2xl bg-white/90 backdrop-blur-xl overflow-hidden">
+          {/* Animated Top Border */}
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-cyan to-transparent animate-shimmer" />
+          
+          <div className="flex flex-col gap-5">
+            <div className="flex items-start justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-brand-cyan/10 flex items-center justify-center border border-brand-cyan/20 shadow-inner">
+                  <Cookie className="text-brand-cyan" size={24} />
+                </div>
+                <div>
+                  <h4 className="font-display font-bold text-brand-offwhite text-base tracking-tight leading-none mb-1">
+                    Optimizing Your AI Experience
+                  </h4>
+                  <p className="text-[10px] font-mono font-bold text-brand-cyan/60 uppercase tracking-widest">
+                    ASTRATEQ GADGETS <span className="opacity-40">SYSTEM v2.4</span>
+                  </p>
+                </div>
+              </div>
               <button 
                 onClick={() => setIsVisible(false)}
-                className="flex-1 px-4 py-2 bg-brand-offwhite text-white text-[10px] font-bold rounded-lg hover:bg-brand-offwhite/90 transition-colors uppercase tracking-widest"
+                className="p-2 hover:bg-slate-100 rounded-lg text-brand-gray/40 hover:text-brand-cyan transition-colors"
+                aria-label="Close"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <p className="text-xs text-brand-gray leading-relaxed font-medium">
+              <span className="text-brand-offwhite font-bold">Astrateq Gadgets</span> uses advanced cookies to analyze terrain data patterns and improve our predictive safety algorithms. By continuing, you agree to our <button className="text-brand-cyan hover:underline font-bold">AI Data Policy</button>.
+            </p>
+
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setIsVisible(false)}
+                className="flex-1 px-6 py-3 bg-brand-offwhite text-white text-[11px] font-bold rounded-xl hover:bg-brand-offwhite/90 transition-all hover:shadow-lg hover:shadow-brand-offwhite/20 uppercase tracking-widest active:scale-95"
               >
                 Accept All
               </button>
               <button 
                 onClick={() => setIsVisible(false)}
-                className="px-4 py-2 border border-slate-200 text-brand-gray text-[10px] font-bold rounded-lg hover:bg-slate-50 transition-colors uppercase tracking-widest"
+                className="px-6 py-3 border border-slate-200 text-brand-gray text-[11px] font-bold rounded-xl hover:bg-slate-50 transition-all uppercase tracking-widest active:scale-95"
               >
                 Settings
               </button>
             </div>
           </div>
-          <button 
-            onClick={() => setIsVisible(false)}
-            className="absolute top-4 right-4 text-brand-gray/40 hover:text-brand-cyan transition-colors"
-          >
-            <X size={16} />
-          </button>
+
+          {/* Subtle Background Detail */}
+          <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-brand-cyan/5 rounded-full blur-2xl pointer-events-none" />
         </div>
       </div>
     </motion.div>
