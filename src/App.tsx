@@ -242,102 +242,174 @@ export default function App() {
               viewport={{ once: true }}
               className="space-y-8"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purple/10 border border-brand-purple/20 text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest">
-                <div className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse" />
-                Origin Story
+              <div className="flex items-center gap-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purple/10 border border-brand-purple/20 text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest">
+                  <Eye size={14} className="text-brand-purple" />
+                  Vision Intelligence
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                  <span className="text-[10px] font-mono font-bold text-brand-gray/60 uppercase tracking-widest">Live Feed</span>
+                </div>
               </div>
               
               <h2 className="text-4xl md:text-5xl font-display font-bold text-brand-offwhite leading-tight">
-                Vision Beyond the <span className="text-brand-purple">Storm.</span>
+                Vision Beyond <br />
+                <span className="text-brand-purple relative inline-block">
+                  the Storm.
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "100%" }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                    className="absolute -bottom-2 left-0 h-1 bg-brand-purple/30 rounded-full"
+                  />
+                </span>
               </h2>
               
-              <div className="space-y-6 text-brand-gray text-lg leading-relaxed">
-                <p className="border-l-2 border-brand-purple/20 pl-6 italic">
-                  "It started on a highway outside Toronto during a February whiteout... 
-                  Traditional sensors fail in the snow, and driver fatigue is a silent danger."
+              <div className="space-y-6 text-brand-gray text-lg leading-relaxed max-w-xl">
+                <p className="border-l-2 border-brand-purple/20 pl-6 italic bg-brand-purple/5 py-4 rounded-r-xl">
+                  "Standard cameras fail when visibility drops. Our multi-spectral sensor array cuts through whiteouts, heavy rain, and fog by detecting thermal signatures in real-time."
                 </p>
-                <p>
-                  We're engineering <span className="text-brand-purple font-bold">'AI Co-pilots'</span> that see through the blizzard using multi-spectral sensor fusion and real-time terrain analysis.
+                <p className="text-base">
+                  We're engineering <span className="text-brand-offwhite font-bold">AI Co-pilots</span> that see through the blizzard using multi-spectral sensor fusion and real-time terrain analysis.
                 </p>
               </div>
 
-              <div className="flex items-center gap-4 pt-4">
-                <div className="flex -space-x-3">
-                  {[1,2,3,4].map(i => (
-                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center overflow-hidden">
-                      <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                    </div>
-                  ))}
+              <div className="grid grid-cols-2 gap-6 pt-4">
+                <div className="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm hover:border-brand-purple/20 transition-all group/stat">
+                  <div className="text-3xl font-display font-bold text-brand-offwhite group-hover/stat:text-brand-purple transition-colors">500ms</div>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-brand-gray uppercase tracking-widest font-bold">Predictive Window</span>
+                    <span className="text-[9px] text-brand-gray/40 font-mono mt-1">LATENCY: ULTRA-LOW</span>
+                  </div>
                 </div>
-                <div className="text-xs font-medium text-brand-gray">
-                  <span className="text-brand-offwhite font-bold">450+</span> Fleet Managers Joined
+                <div className="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm hover:border-brand-purple/20 transition-all group/stat">
+                  <div className="text-3xl font-display font-bold text-brand-offwhite group-hover/stat:text-brand-purple transition-colors">4K</div>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-brand-gray uppercase tracking-widest font-bold">Sensor Fusion</span>
+                    <span className="text-[9px] text-brand-gray/40 font-mono mt-1">RESOLUTION: NATIVE</span>
+                  </div>
                 </div>
               </div>
             </motion.div>
 
             <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 shadow-2xl group"
+              className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 shadow-2xl group bg-brand-navy"
             >
-              {/* Base Image (Snowy Road) */}
+              {/* Base Image (Snowy Road) - Fixed URL */}
               <img 
-                src="https://images.unsplash.com/photo-1516912481808-34061f8e630c?auto=format&fit=crop&q=80&w=1200" 
-                alt="Snowy Road" 
-                className="w-full h-full object-cover grayscale brightness-50"
+                src="https://images.unsplash.com/photo-1517231939912-d66c8a86584a?auto=format&fit=crop&q=80&w=1200" 
+                alt="Snowy Arctic Road" 
+                className="w-full h-full object-cover grayscale brightness-75 group-hover:scale-105 transition-transform duration-[3s] ease-out"
                 referrerPolicy="no-referrer"
               />
               
-              {/* Thermal Overlay */}
-              <div className="absolute inset-0 bg-brand-purple/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              {/* Thermal / Night Vision Overlay */}
+              <div className="absolute inset-0 bg-brand-purple/10 mix-blend-color opacity-40" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/40 to-transparent" />
+              
+              {/* Terrain Analysis Grid (Perspective) */}
+              <div className="absolute inset-0 [perspective:500px] pointer-events-none opacity-20">
+                <motion.div 
+                  animate={{ 
+                    backgroundPosition: ["0px 0px", "0px 40px"] 
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 [transform:rotateX(60deg)] origin-bottom bg-[linear-gradient(to_right,#D946EF22_1px,transparent_1px),linear-gradient(to_bottom,#D946EF22_1px,transparent_1px)] bg-[size:40px_40px]"
+                />
+              </div>
               
               {/* HUD Elements */}
-              <div className="absolute inset-0 p-8 flex flex-col justify-between pointer-events-none">
+              <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
                 <div className="flex justify-between items-start">
-                  <div className="font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/40 backdrop-blur-sm px-3 py-1 rounded border border-brand-purple/30">
-                    Sensor: Multi-Spectral
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-purple/30">
+                      <div className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse" />
+                      Sensor: Multi-Spectral Lidar
+                    </div>
+                    <div className="flex items-center gap-2 font-mono text-[9px] text-brand-purple/70 font-bold uppercase tracking-widest bg-black/40 backdrop-blur-sm px-2 py-1 rounded border border-brand-purple/10">
+                      Heading: 342° NW
+                    </div>
                   </div>
-                  <div className="font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/40 backdrop-blur-sm px-3 py-1 rounded border border-brand-purple/30">
-                    Lat: 43.6532° N
+                  <div className="text-right space-y-2">
+                    <div className="font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-purple/30">
+                      Lat: 43.6532° N
+                    </div>
+                    <div className="font-mono text-[14px] text-brand-purple font-bold bg-black/40 backdrop-blur-sm px-2 py-1 rounded border border-brand-purple/10">
+                      104 <span className="text-[8px]">KM/H</span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Target Highlight */}
-                <motion.div 
-                  animate={{ 
-                    scale: [1, 1.05, 1],
-                    opacity: [0.6, 1, 0.6]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-32 border-2 border-brand-purple rounded-lg flex items-center justify-center"
-                >
-                  <div className="absolute -top-6 left-0 text-[10px] font-mono font-bold text-brand-purple bg-black/60 px-2 py-0.5 rounded">
-                    HAZARD DETECTED: 12.4m
-                  </div>
-                  <div className="w-full h-[1px] bg-brand-purple/50 animate-scan" />
-                </motion.div>
+                {/* Central Target Reticle */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[300px]">
+                  <motion.div 
+                    animate={{ 
+                      scale: [1, 1.02, 1],
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="relative aspect-[4/3] border-2 border-brand-purple/40 rounded-2xl flex items-center justify-center overflow-hidden"
+                  >
+                    {/* Scanning Line */}
+                    <motion.div 
+                      animate={{ top: ["-10%", "110%"] }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                      className="absolute left-0 right-0 h-[2px] bg-brand-purple shadow-[0_0_15px_#D946EF] z-10"
+                    />
+                    
+                    {/* Target Box */}
+                    <motion.div 
+                      animate={{ 
+                        opacity: [0.4, 1, 0.4],
+                        scale: [0.98, 1, 0.98]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="w-4/5 h-1/2 border border-brand-purple rounded flex flex-col items-center justify-center bg-brand-purple/5 backdrop-blur-[2px]"
+                    >
+                      <div className="absolute -top-7 left-0 flex items-center gap-2 text-[10px] font-mono font-bold text-brand-purple bg-black/80 px-3 py-1 rounded-t-md border-t border-x border-brand-purple/30">
+                        <AlertTriangle size={12} className="animate-pulse" />
+                        HAZARD DETECTED: 12.4m
+                      </div>
+                      <div className="text-[8px] font-mono text-brand-purple/60 uppercase tracking-[0.2em]">Analyzing Surface Friction...</div>
+                    </motion.div>
+
+                    {/* Corner Accents */}
+                    <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-brand-purple" />
+                    <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-brand-purple" />
+                    <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-brand-purple" />
+                    <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-brand-purple" />
+                  </motion.div>
+                </div>
 
                 <div className="flex justify-between items-end">
-                  <div className="space-y-1">
-                    <div className="h-1 w-32 bg-brand-purple/20 rounded-full overflow-hidden">
-                      <motion.div 
-                        animate={{ width: ["20%", "80%", "20%"] }}
-                        transition={{ duration: 3, repeat: Infinity }}
-                        className="h-full bg-brand-purple shadow-[0_0_10px_#D946EF]"
-                      />
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3">
+                      <div className="h-1.5 w-32 bg-brand-purple/20 rounded-full overflow-hidden border border-brand-purple/10">
+                        <motion.div 
+                          animate={{ width: ["10%", "90%", "40%", "70%"] }}
+                          transition={{ duration: 5, repeat: Infinity }}
+                          className="h-full bg-brand-purple shadow-[0_0_10px_#D946EF]"
+                        />
+                      </div>
+                      <span className="text-[9px] font-mono text-brand-purple font-bold tracking-widest">BUFF: ACTIVE</span>
                     </div>
-                    <div className="text-[8px] font-mono text-brand-purple/60 uppercase">Processing Stream...</div>
+                    <div className="text-[8px] font-mono text-brand-purple/60 uppercase tracking-widest flex items-center gap-2">
+                      <div className="w-1 h-1 bg-brand-purple rounded-full animate-ping" />
+                      Processing Real-Time Stream...
+                    </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-display font-bold text-brand-purple">98.2%</div>
-                    <div className="text-[8px] font-mono text-brand-purple/60 uppercase tracking-tighter">Confidence Score</div>
+                    <div className="text-3xl font-display font-bold text-brand-purple drop-shadow-[0_0_10px_rgba(217,70,239,0.5)]">98.2%</div>
+                    <div className="text-[9px] font-mono text-brand-purple/60 uppercase tracking-widest font-bold">Confidence Score</div>
                   </div>
                 </div>
               </div>
 
-              {/* Scanning Line Overlay */}
-              <div className="absolute inset-0 bg-[linear-gradient(transparent_0%,rgba(217,70,239,0.1)_50%,transparent_100%)] bg-[length:100%_4px] animate-scan-lines opacity-20" />
+              {/* Scanning Line Overlay (Global) */}
+              <div className="absolute inset-0 bg-[linear-gradient(transparent_0%,rgba(217,70,239,0.05)_50%,transparent_100%)] bg-[length:100%_10px] animate-scan-lines pointer-events-none" />
             </motion.div>
           </div>
         </div>
