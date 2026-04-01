@@ -74,6 +74,22 @@ function Logo({ className = "" }: { className?: string }) {
 export default function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [activeLegalPage, setActiveLegalPage] = useState<string | null>(null);
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleWaitlistSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsWaitlistOpen(false);
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 5000);
+  };
 
   return (
     <div className="min-h-screen flex flex-col selection:bg-brand-purple/30 selection:text-brand-purple">
@@ -82,9 +98,12 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <Logo />
           <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-brand-gray">
-            <a href="#" className="hover:text-brand-purple transition-colors">Vision</a>
-            <a href="#" className="hover:text-brand-purple transition-colors">Solutions</a>
-            <button className="px-4 py-2 bg-brand-purple text-white rounded-lg hover:bg-brand-purple/90 transition-colors shadow-lg shadow-brand-purple/20">
+            <button onClick={() => scrollToSection('vision')} className="hover:text-brand-purple transition-colors">Vision</button>
+            <button onClick={() => scrollToSection('solutions')} className="hover:text-brand-purple transition-colors">Solutions</button>
+            <button 
+              onClick={() => setIsWaitlistOpen(true)}
+              className="px-4 py-2 bg-brand-purple text-white rounded-lg hover:bg-brand-purple/90 transition-colors shadow-lg shadow-brand-purple/20"
+            >
               Beta Waitlist
             </button>
           </div>
@@ -183,13 +202,14 @@ export default function App() {
               className="flex items-center gap-2 px-4 py-2 bg-brand-purple/5 border border-brand-purple/10 rounded-full text-brand-purple text-xs font-medium"
             >
               <AlertTriangle size={14} />
-              <span>Astrateq gadgets are driver assistance tools only.</span>
+              <span>Astrateq Gadgets are driver assistance tools only.</span>
             </motion.div>
 
             <motion.button 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
+              onClick={() => setIsWaitlistOpen(true)}
               className="group relative px-8 py-4 bg-brand-yellow text-brand-offwhite font-bold rounded-lg transition-all hover:scale-105 hover:shadow-[0_10px_30px_rgba(250,204,21,0.2)] active:scale-95"
             >
               JOIN THE FOUNDING BETA WAITLIST (100 SPOTS REMAINING)
@@ -210,7 +230,7 @@ export default function App() {
       </section>
 
       {/* Vision Section */}
-      <section className="py-32 px-4 bg-white relative overflow-hidden">
+      <section id="vision" className="py-32 px-4 bg-white relative overflow-hidden">
         {/* Background Grid Accent */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
         
@@ -324,7 +344,7 @@ export default function App() {
       </section>
 
       {/* Solutions Section */}
-      <section className="py-32 px-4 bg-brand-navy relative">
+      <section id="solutions" className="py-32 px-4 bg-brand-navy relative">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -517,7 +537,15 @@ export default function App() {
         onClose={() => setActiveLegalPage(null)} 
       />
 
-      <CookieBanner />
+      <CookieBanner onOpenPolicy={() => setActiveLegalPage('Privacy Policy')} />
+      
+      <WaitlistModal 
+        isOpen={isWaitlistOpen} 
+        onClose={() => setIsWaitlistOpen(false)} 
+        onSubmit={handleWaitlistSubmit} 
+      />
+      
+      <SuccessToast isVisible={showSuccess} />
     </div>
   );
 }
@@ -735,7 +763,7 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
   );
 }
 
-function CookieBanner() {
+function CookieBanner({ onOpenPolicy }: { onOpenPolicy: () => void }) {
   const [isVisible, setIsVisible] = useState(true);
 
   if (!isVisible) return null;
@@ -766,7 +794,7 @@ function CookieBanner() {
                     Optimizing Your AI Experience
                   </h4>
                   <p className="text-[10px] font-mono font-bold text-brand-purple/60 uppercase tracking-widest">
-                    ASTRATEQ GADGETS <span className="opacity-40">SYSTEM v2.4</span>
+                    Astrateq Gadgets <span className="opacity-40">SYSTEM v2.4</span>
                   </p>
                 </div>
               </div>
@@ -780,7 +808,7 @@ function CookieBanner() {
             </div>
 
             <p className="text-xs text-brand-gray leading-relaxed font-medium">
-              <span className="text-brand-offwhite font-bold">Astrateq Gadgets</span> uses advanced cookies to analyze terrain data patterns and improve our predictive safety algorithms. By continuing, you agree to our <button className="text-brand-purple hover:underline font-bold">AI Data Policy</button>.
+              <span className="text-brand-offwhite font-bold">Astrateq Gadgets</span> uses advanced cookies to analyze terrain data patterns and improve our predictive safety algorithms. By continuing, you agree to our <button onClick={onOpenPolicy} className="text-brand-purple hover:underline font-bold">AI Data Policy</button>.
             </p>
 
             <div className="flex items-center gap-3">
@@ -1053,5 +1081,98 @@ function FAQSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+function WaitlistModal({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose: () => void, onSubmit: (e: React.FormEvent) => void }) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-brand-navy/80 backdrop-blur-sm"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="relative w-full max-w-lg glass-panel bg-white p-8 rounded-3xl border-brand-purple/30 shadow-2xl"
+          >
+            <button 
+              onClick={onClose}
+              className="absolute top-6 right-6 p-2 hover:bg-slate-100 rounded-lg text-brand-gray transition-colors"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 rounded-2xl bg-brand-purple/10 flex items-center justify-center mx-auto mb-6">
+                <Zap className="text-brand-purple" size={32} />
+              </div>
+              <h3 className="text-3xl font-display font-bold text-brand-offwhite mb-2">Join the Waitlist</h3>
+              <p className="text-brand-gray">Be the first to experience the future of Canadian road safety.</p>
+            </div>
+
+            <form onSubmit={onSubmit} className="space-y-4">
+              <div>
+                <label className="block text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest mb-2">Full Name</label>
+                <input 
+                  required
+                  type="text" 
+                  placeholder="John Doe"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple transition-colors"
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest mb-2">Email Address</label>
+                <input 
+                  required
+                  type="email" 
+                  placeholder="john@example.com"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple transition-colors"
+                />
+              </div>
+              <button 
+                type="submit"
+                className="w-full py-4 bg-brand-purple text-white font-bold rounded-xl hover:bg-brand-purple/90 transition-all shadow-lg shadow-brand-purple/20 active:scale-[0.98]"
+              >
+                SECURE MY SPOT
+              </button>
+            </form>
+
+            <p className="mt-6 text-[10px] text-center text-brand-gray/60 font-medium uppercase tracking-wider">
+              Limited to 100 founding members • No credit card required
+            </p>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+function SuccessToast({ isVisible }: { isVisible: boolean }) {
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0, y: 50, x: "-50%" }}
+          animate={{ opacity: 1, y: 0, x: "-50%" }}
+          exit={{ opacity: 0, y: 50, x: "-50%" }}
+          className="fixed bottom-10 left-1/2 z-[110] px-6 py-4 bg-brand-navy border border-brand-purple/30 rounded-2xl shadow-2xl flex items-center gap-4"
+        >
+          <div className="w-10 h-10 rounded-full bg-brand-purple/20 flex items-center justify-center">
+            <ShieldCheck className="text-brand-purple" size={24} />
+          </div>
+          <div>
+            <h4 className="text-white font-bold text-sm">Success!</h4>
+            <p className="text-brand-gray text-xs">You've been added to the founding beta waitlist.</p>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
