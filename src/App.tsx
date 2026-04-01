@@ -588,64 +588,125 @@ export default function App() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="py-20 px-4 border-t border-slate-200 bg-slate-50"
+        className="py-32 px-4 relative overflow-hidden bg-white text-brand-offwhite border-t border-slate-100"
       >
-        <div className="max-w-6xl mx-auto flex flex-col items-center gap-12">
-          {/* Brand & Language */}
-          <div className="flex flex-col items-center gap-6">
-            <Logo />
-            <div className="flex items-center gap-6 text-sm font-bold tracking-widest text-brand-gray" role="navigation" aria-label="Language selection">
-              <button 
-                className="text-brand-purple cursor-default" 
-                aria-label="English" 
-                aria-current="true"
-              >
-                EN
-              </button>
-              <div className="w-[1px] h-4 bg-slate-300" aria-hidden="true" />
-              <button 
-                className="hover:text-brand-purple transition-colors" 
-                aria-label="Switch to French"
-              >
-                FR
-              </button>
+        {/* Technical Background Detail */}
+        <div className="absolute inset-0 pointer-events-none opacity-5">
+          <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #D946EF 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-brand-purple/10 rounded-full blur-[120px] -translate-y-1/2" />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center gap-20">
+          {/* Brand & Language & Socials */}
+          <div className="w-full flex flex-col md:flex-row items-center justify-between gap-12 pb-12 border-b border-slate-100">
+            <div className="flex flex-col items-center md:items-start gap-4">
+              <Logo />
+              <p className="text-sm text-brand-gray font-medium max-w-[250px] text-center md:text-left">
+                Empowering Canadian drivers with the world's most advanced AI safety systems.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center gap-6">
+              <div className="flex items-center gap-6 text-sm font-bold tracking-widest text-brand-gray" role="navigation" aria-label="Language selection">
+                <button 
+                  className="text-brand-purple cursor-default" 
+                  aria-label="English" 
+                  aria-current="true"
+                >
+                  EN
+                </button>
+                <div className="w-[1px] h-4 bg-slate-200" aria-hidden="true" />
+                <button 
+                  className="hover:text-brand-purple transition-colors" 
+                  aria-label="Switch to French"
+                >
+                  FR
+                </button>
+              </div>
+              
+              {/* Social Links */}
+              <div className="flex items-center gap-4" role="list" aria-label="Social media links">
+                <a 
+                  href="https://linkedin.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-brand-gray hover:text-brand-purple hover:border-brand-purple hover:bg-brand-purple/5 transition-all group"
+                  aria-label="Follow Astrateq Gadgets on LinkedIn"
+                  role="listitem"
+                >
+                  <Linkedin size={20} className="group-hover:scale-110 transition-transform" />
+                </a>
+                <a 
+                  href="https://twitter.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-brand-gray hover:text-brand-purple hover:border-brand-purple hover:bg-brand-purple/5 transition-all group"
+                  aria-label="Follow Astrateq Gadgets on Twitter"
+                  role="listitem"
+                >
+                  <Twitter size={20} className="group-hover:scale-110 transition-transform" />
+                </a>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center md:items-end gap-4">
+              <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest">System Status</div>
+              <div className="flex items-center gap-3 px-4 py-2 bg-emerald-500/5 border border-emerald-500/10 rounded-full">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-xs font-bold text-emerald-500 uppercase tracking-widest">All Systems Nominal</span>
+              </div>
             </div>
           </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-6" role="list" aria-label="Social media links">
-            <a 
-              href="https://linkedin.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-brand-gray hover:text-brand-purple hover:border-brand-purple transition-all"
-              aria-label="Follow Astrateq Gadgets on LinkedIn"
-              role="listitem"
+          {/* Fleet & Family Highlight */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+            <motion.div 
+              whileHover={{ y: -5 }}
+              className="p-8 rounded-3xl bg-slate-50 border border-slate-100 relative overflow-hidden group"
             >
-              <Linkedin size={20} />
-            </a>
-            <a 
-              href="https://twitter.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-brand-gray hover:text-brand-purple hover:border-brand-purple transition-all"
-              aria-label="Follow Astrateq Gadgets on Twitter"
-              role="listitem"
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <Shield size={64} className="text-brand-purple" />
+              </div>
+              <h4 className="text-xl font-display font-bold mb-3 text-brand-offwhite">For Canadian Families</h4>
+              <p className="text-sm text-brand-gray leading-relaxed mb-6">
+                Protect what matters most. Our AI is specifically trained for Canadian road conditions, from icy school zones to dark highway stretches.
+              </p>
+              <button className="text-xs font-bold text-brand-purple uppercase tracking-widest hover:underline flex items-center gap-2">
+                Family Safety Guide <ChevronRight size={14} />
+              </button>
+            </motion.div>
+
+            <motion.div 
+              whileHover={{ y: -5 }}
+              className="p-8 rounded-3xl bg-slate-50 border border-slate-100 relative overflow-hidden group"
             >
-              <Twitter size={20} />
-            </a>
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <Globe size={64} className="text-brand-purple" />
+              </div>
+              <h4 className="text-xl font-display font-bold mb-3 text-brand-offwhite">For Fleet Operations</h4>
+              <p className="text-sm text-brand-gray leading-relaxed mb-6">
+                Reduce liability and optimize performance. Real-time telemetry and predictive maintenance for fleets of any size across North America.
+              </p>
+              <button className="text-xs font-bold text-brand-purple uppercase tracking-widest hover:underline flex items-center gap-2">
+                FleetGuard Pro Solutions <ChevronRight size={14} />
+              </button>
+            </motion.div>
           </div>
           
           {/* AI System Disclaimer */}
-          <div className="max-w-2xl mx-auto px-6 py-4 bg-brand-purple/5 border border-brand-purple/10 rounded-xl flex items-start gap-4 text-left">
-            <AlertTriangle className="text-brand-purple shrink-0 mt-0.5" size={20} />
-            <p className="text-sm text-brand-gray leading-relaxed">
-              <span className="font-bold text-brand-offwhite">Safety Notice:</span> Astrateq Gadgets are driver assistance tools only and do not replace the driver's responsibility. Always maintain full control of your vehicle and stay alert to road conditions.
-            </p>
+          <div className="w-full max-w-4xl mx-auto px-8 py-6 bg-brand-purple/5 border border-brand-purple/10 rounded-3xl flex flex-col md:flex-row items-center gap-6 text-center md:text-left relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1 h-full bg-brand-purple" />
+            <AlertTriangle className="text-brand-purple shrink-0" size={32} />
+            <div className="space-y-1">
+              <h5 className="text-sm font-bold text-brand-offwhite uppercase tracking-widest">Critical Safety Notice</h5>
+              <p className="text-sm text-brand-gray leading-relaxed">
+                Astrateq Gadgets are advanced driver assistance systems (ADAS) and do not replace human judgment. Driver must remain alert and maintain full control of the vehicle at all times.
+              </p>
+            </div>
           </div>
 
           {/* Legal Links Grid */}
-          <div className="flex flex-col md:grid md:grid-cols-4 gap-0 md:gap-12 text-left w-full max-w-6xl pt-12 border-t border-slate-200">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 w-full pt-12 border-t border-slate-100">
             <FooterAccordion 
               title="Core Legal"
               description="Foundational agreements governing your use of Astrateq services."
@@ -693,20 +754,24 @@ export default function App() {
           </div>
 
           {/* Legal & Copyright */}
-          <div className="text-center space-y-6 max-w-3xl">
+          <div className="text-center space-y-8 w-full">
             <div className="space-y-4">
-              <p className="text-xs md:text-sm text-brand-gray font-medium leading-relaxed uppercase tracking-wider">
-                To the maximum extent permitted by applicable law, Astrateq Gadgets Inc. total liability shall not exceed the purchase price. Driver remains primary safety controller.
-              </p>
-              <p className="text-[11px] md:text-xs text-brand-gray/70 font-medium uppercase tracking-[0.15em]">
-                AlTrak, FleetGuard Pro, and EV Battery Intelligence Suite are trademarks of Astrateq Gadgets Inc. Trademark registration pending.
+              <p className="text-[10px] text-brand-gray font-bold leading-relaxed uppercase tracking-[0.2em] max-w-4xl mx-auto">
+                To the maximum extent permitted by applicable law, Astrateq Gadgets Inc. total liability shall not exceed the purchase price. Driver remains primary safety controller. AlTrak, FleetGuard Pro, and EV Battery Intelligence Suite are trademarks of Astrateq Gadgets Inc.
               </p>
             </div>
             
-            <div className="pt-8 border-t border-slate-200">
-              <p className="text-sm text-brand-gray font-semibold">
-                © 2026 Astrateq Gadgets Inc. All rights reserved. Engineered in Toronto.
+            <div className="pt-8 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
+              <p className="text-xs text-brand-gray font-semibold uppercase tracking-widest">
+                © 2026 Astrateq Gadgets Inc. Engineered in Toronto.
               </p>
+              <div className="flex items-center gap-8">
+                <span className="text-[10px] font-mono text-brand-purple font-bold uppercase tracking-widest">v2.4.0-STABLE</span>
+                <div className="flex items-center gap-2 text-xs text-brand-gray font-bold uppercase tracking-widest">
+                  <MapPin size={14} className="text-brand-purple" />
+                  Canada
+                </div>
+              </div>
             </div>
           </div>
         </div>
