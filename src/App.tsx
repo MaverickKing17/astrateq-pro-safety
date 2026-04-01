@@ -528,8 +528,16 @@ export default function App() {
       </section>
 
       {/* Solutions Section */}
-      <section id="solutions" className="py-32 px-4 bg-brand-navy relative">
-        <div className="max-w-6xl mx-auto">
+      <section id="solutions" className="py-32 px-4 bg-white relative overflow-hidden">
+        {/* Decorative Background Elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand-purple/5 rounded-full blur-[120px] -translate-y-1/2" />
+          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] translate-y-1/2" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.03]" 
+               style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #475569 1px, transparent 0)', backgroundSize: '48px 48px' }} />
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -705,23 +713,51 @@ export default function App() {
       </motion.footer>
 
       {/* Floating Chat Button */}
-      <motion.button 
-        onClick={() => setIsChatOpen(true)}
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.1, rotate: 5 }}
-        whileTap={{ scale: 0.9 }}
-        className="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-br from-brand-purple via-brand-purple-glow to-brand-purple text-white rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(217,70,239,0.4)] hover:shadow-[0_0_30px_rgba(217,70,239,0.6)] transition-all z-50 group overflow-hidden"
-        aria-label="Open AI Live Chat"
-      >
-        {/* Animated Background Pulse */}
-        <div className="absolute inset-0 bg-white/20 animate-pulse group-hover:animate-none" />
-        
-        {/* Rotating Border Glow */}
-        <div className="absolute inset-0 border-2 border-white/30 rounded-full animate-spin-slow opacity-50" />
-        
-        <Globe size={28} className="relative z-10 drop-shadow-md" />
-      </motion.button>
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-4">
+        <AnimatePresence>
+          {!isChatOpen && (
+            <motion.div
+              initial={{ opacity: 0, x: 20, scale: 0.8 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 20, scale: 0.8 }}
+              className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-brand-purple/30 shadow-xl mb-2 hidden md:block"
+            >
+              <p className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-brand-purple rounded-full animate-pulse" />
+                AI Safety Assistant Online
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <motion.button 
+          onClick={() => setIsChatOpen(true)}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          whileHover={{ scale: 1.05, y: -4 }}
+          whileTap={{ scale: 0.95 }}
+          className="relative w-20 h-20 bg-brand-offwhite text-white rounded-[2.5rem] flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(15,23,42,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(217,70,239,0.4)] transition-all group overflow-hidden border border-white/10"
+          aria-label="Open AI Live Chat"
+        >
+          {/* Dynamic Gradient Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-purple via-brand-purple-glow to-brand-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          {/* Animated Rings */}
+          <div className="absolute inset-0 border-2 border-brand-purple/20 rounded-[2.5rem] animate-ping opacity-20" />
+          <div className="absolute inset-0 border border-brand-purple/40 rounded-[2.5rem] animate-spin-slow opacity-30" />
+          
+          {/* Notification Dot */}
+          <div className="absolute top-4 right-4 w-3 h-3 bg-brand-purple rounded-full border-2 border-brand-offwhite z-20 shadow-[0_0_10px_#D946EF]" />
+          
+          <div className="relative z-10 flex flex-col items-center gap-1">
+            <Globe size={28} className="group-hover:rotate-12 transition-transform duration-500" />
+            <span className="text-[8px] font-mono font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Chat</span>
+          </div>
+
+          {/* Inner Glow Overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,70,239,0.2)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity" />
+        </motion.button>
+      </div>
 
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
@@ -1109,46 +1145,73 @@ function SolutionCard({ icon, title, subtitle, description, features, index }: {
   features: string[],
   index: number
 }) {
+  const gradients = [
+    "from-brand-purple/20 via-brand-purple/5 to-transparent",
+    "from-blue-500/20 via-blue-500/5 to-transparent",
+    "from-emerald-500/20 via-emerald-500/5 to-transparent"
+  ];
+
+  const iconBgs = [
+    "bg-brand-purple/10 border-brand-purple/20",
+    "bg-blue-500/10 border-blue-500/20",
+    "bg-emerald-500/10 border-emerald-500/20"
+  ];
+
+  const iconColors = [
+    "text-brand-purple",
+    "text-blue-500",
+    "text-emerald-500"
+  ];
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -6 }}
-      className="glass-panel hover-glow p-10 rounded-3xl border-slate-200 group relative overflow-hidden"
+      whileHover={{ y: -10 }}
+      className="glass-panel hover-glow p-10 rounded-[2.5rem] border-slate-200 group relative overflow-hidden bg-white"
     >
-      {/* Technical Background Accent */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-brand-purple/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-brand-purple/8 transition-colors" />
+      {/* Dynamic Background Gradient */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${gradients[index % gradients.length]} opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
       
-      <div className="w-16 h-16 rounded-2xl bg-brand-purple/5 flex items-center justify-center mb-8 group-hover:scale-105 transition-transform duration-500 relative">
-        <div className="absolute inset-0 border border-brand-purple/10 rounded-2xl animate-pulse" />
-        {icon}
+      {/* Technical Background Accent */}
+      <div className="absolute top-0 right-0 w-40 h-40 bg-brand-purple/5 rounded-bl-full -mr-16 -mt-16 group-hover:bg-brand-purple/10 transition-all duration-500 rotate-12" />
+      
+      <div className={`w-20 h-20 rounded-3xl ${iconBgs[index % iconBgs.length]} border flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-500 relative shadow-inner`}>
+        <div className={`absolute inset-0 border border-current rounded-3xl animate-pulse opacity-20 ${iconColors[index % iconColors.length]}`} />
+        {/* Clone the icon to apply dynamic color */}
+        {index === 0 ? <Eye className={iconColors[0]} size={36} /> : 
+         index === 1 ? <Battery className={iconColors[1]} size={36} /> : 
+         <ShieldCheck className={iconColors[2]} size={36} />}
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-6 relative z-10">
         <div>
-          <div className="text-[10px] font-mono text-brand-purple font-bold tracking-[0.25em] mb-2 uppercase opacity-80">
+          <div className={`text-[10px] font-mono font-black tracking-[0.3em] mb-3 uppercase ${iconColors[index % iconColors.length]}`}>
             {subtitle}
           </div>
-          <h3 className="text-2xl font-display font-bold text-brand-offwhite group-hover:text-brand-purple transition-colors duration-300">
+          <h3 className="text-3xl font-display font-bold text-brand-offwhite group-hover:text-brand-offwhite transition-colors duration-300 leading-tight">
             {title}
           </h3>
         </div>
 
-        <p className="text-brand-gray text-base leading-relaxed">
+        <p className="text-brand-gray text-lg leading-relaxed font-medium opacity-80">
           {description}
         </p>
 
-        <div className="pt-6 space-y-3">
+        <div className="pt-8 grid gap-4">
           {features.map((feature, i) => (
-            <div key={i} className="flex items-center gap-3 text-[11px] font-mono text-brand-gray/80 group-hover:text-brand-purple/80 transition-colors">
-              <div className="w-1.5 h-1.5 rounded-full bg-brand-purple/30" />
-              <span className="tracking-wider">{feature}</span>
+            <div key={i} className="flex items-center gap-4 text-xs font-mono text-brand-gray font-bold group-hover:text-brand-offwhite transition-colors">
+              <div className={`w-2 h-2 rounded-full ${index === 0 ? 'bg-brand-purple' : index === 1 ? 'bg-blue-500' : 'bg-emerald-500'} shadow-[0_0_8px_rgba(0,0,0,0.1)]`} />
+              <span className="tracking-widest uppercase">{feature}</span>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Bottom Accent Line */}
+      <div className={`absolute bottom-0 left-0 h-1.5 bg-gradient-to-r ${index === 0 ? 'from-brand-purple' : index === 1 ? 'from-blue-500' : 'from-emerald-500'} to-transparent w-0 group-hover:w-full transition-all duration-700`} />
     </motion.div>
   );
 }
