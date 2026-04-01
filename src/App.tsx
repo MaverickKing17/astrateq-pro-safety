@@ -309,20 +309,39 @@ export default function App() {
               </div>
 
               <div className="grid grid-cols-2 gap-6 pt-4">
-                <div className="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm hover:border-brand-purple/20 transition-all group/stat">
-                  <div className="text-3xl font-display font-bold text-brand-offwhite group-hover/stat:text-brand-purple transition-colors">500ms</div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] text-brand-gray uppercase tracking-widest font-bold">Predictive Window</span>
-                    <span className="text-[9px] text-brand-gray/40 font-mono mt-1">LATENCY: ULTRA-LOW</span>
+                <motion.div 
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  className="p-6 rounded-3xl bg-gradient-to-br from-brand-purple to-brand-purple-glow shadow-xl shadow-brand-purple/20 border border-white/20 relative overflow-hidden group/stat"
+                >
+                  <div className="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-2xl group-hover/stat:bg-white/20 transition-colors" />
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
+                      <Zap className="text-white" size={20} />
+                    </div>
+                    <div className="text-3xl font-display font-black text-white tracking-tighter">500ms</div>
                   </div>
-                </div>
-                <div className="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm hover:border-brand-purple/20 transition-all group/stat">
-                  <div className="text-3xl font-display font-bold text-brand-offwhite group-hover/stat:text-brand-purple transition-colors">4K</div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] text-brand-gray uppercase tracking-widest font-bold">Sensor Fusion</span>
-                    <span className="text-[9px] text-brand-gray/40 font-mono mt-1">RESOLUTION: NATIVE</span>
+                    <span className="text-[10px] text-white uppercase tracking-widest font-bold">Predictive Window</span>
+                    <span className="text-[9px] text-white/70 font-mono mt-1 font-bold">LATENCY: ULTRA-LOW</span>
                   </div>
-                </div>
+                </motion.div>
+
+                <motion.div 
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  className="p-6 rounded-3xl bg-brand-offwhite shadow-xl shadow-brand-offwhite/20 border border-white/10 relative overflow-hidden group/stat"
+                >
+                  <div className="absolute -right-4 -top-4 w-20 h-20 bg-brand-purple/10 rounded-full blur-2xl group-hover/stat:bg-brand-purple/20 transition-colors" />
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-brand-purple/10 backdrop-blur-md flex items-center justify-center border border-brand-purple/20">
+                      <Eye className="text-brand-purple" size={20} />
+                    </div>
+                    <div className="text-3xl font-display font-black text-white tracking-tighter">4K</div>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Sensor Fusion</span>
+                    <span className="text-[9px] text-brand-purple/60 font-mono mt-1 font-bold">RESOLUTION: NATIVE</span>
+                  </div>
+                </motion.div>
               </div>
             </motion.div>
 

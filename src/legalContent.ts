@@ -73,6 +73,9 @@ We continuously audit our terrain detection models to ensure consistent performa
 
 ## 3. Human-in-the-Loop
 Astrateq systems are designed to provide actionable intelligence to the human driver, who remains the final decision-maker.
+
+## 4. Human Oversight
+For our FleetGuard Pro customers, Astrateq integrates a real-time human oversight layer. Critical AI-detected safety events are flagged to our 24/7 Fleet Command Center, where certified human safety operators review multi-spectral data streams in real-time. This ensures that complex ethical decisions or extreme environmental edge cases are validated by human judgment, providing an additional layer of safety and accountability for commercial fleets.
 `,
   "Algorithmic Transparency": `
 # Algorithmic Transparency
