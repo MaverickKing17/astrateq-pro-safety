@@ -331,26 +331,26 @@ export default function App() {
               viewport={{ once: true }}
               className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 shadow-2xl group bg-brand-navy"
             >
-              {/* Base Image (Snowy Road) - Fixed URL */}
+              {/* Base Image (Snowy Road) - Updated for reliability */}
               <img 
-                src="https://images.unsplash.com/photo-1517231939912-d66c8a86584a?auto=format&fit=crop&q=80&w=1200" 
+                src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=1200" 
                 alt="Snowy Arctic Road" 
                 className="w-full h-full object-cover grayscale brightness-75 group-hover:scale-105 transition-transform duration-[3s] ease-out"
                 referrerPolicy="no-referrer"
               />
               
               {/* Thermal / Night Vision Overlay */}
-              <div className="absolute inset-0 bg-brand-purple/10 mix-blend-color opacity-40" />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/40 to-transparent" />
+              <div className="absolute inset-0 bg-brand-purple/15 mix-blend-color opacity-50" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-brand-navy/20" />
               
               {/* Terrain Analysis Grid (Perspective) */}
-              <div className="absolute inset-0 [perspective:500px] pointer-events-none opacity-20">
+              <div className="absolute inset-0 [perspective:500px] pointer-events-none opacity-30">
                 <motion.div 
                   animate={{ 
                     backgroundPosition: ["0px 0px", "0px 40px"] 
                   }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 [transform:rotateX(60deg)] origin-bottom bg-[linear-gradient(to_right,#D946EF22_1px,transparent_1px),linear-gradient(to_bottom,#D946EF22_1px,transparent_1px)] bg-[size:40px_40px]"
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 [transform:rotateX(60deg)] origin-bottom bg-[linear-gradient(to_right,#D946EF33_1px,transparent_1px),linear-gradient(to_bottom,#D946EF33_1px,transparent_1px)] bg-[size:40px_40px]"
                 />
               </div>
               
@@ -358,90 +358,115 @@ export default function App() {
               <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
                 <div className="flex justify-between items-start">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-purple/30">
-                      <div className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse" />
-                      Sensor: Multi-Spectral Lidar
+                    <div className="flex items-center gap-2 font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-purple/40 shadow-[0_0_15px_rgba(217,70,239,0.2)]">
+                      <div className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse shadow-[0_0_8px_#D946EF]" />
+                      Live Feed: Multi-Spectral Lidar
                     </div>
-                    <div className="flex items-center gap-2 font-mono text-[9px] text-brand-purple/70 font-bold uppercase tracking-widest bg-black/40 backdrop-blur-sm px-2 py-1 rounded border border-brand-purple/10">
-                      Heading: 342° NW
+                    <div className="flex items-center gap-2 font-mono text-[9px] text-brand-purple/80 font-bold uppercase tracking-widest bg-black/50 backdrop-blur-sm px-2 py-1 rounded border border-brand-purple/20">
+                      Heading: 342° NW | Uptime: 14:22:09
                     </div>
                   </div>
                   <div className="text-right space-y-2">
-                    <div className="font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-purple/30">
-                      Lat: 43.6532° N
+                    <div className="font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-purple/40">
+                      Lat: 43.6532° N | Lon: 79.3832° W
                     </div>
-                    <div className="font-mono text-[14px] text-brand-purple font-bold bg-black/40 backdrop-blur-sm px-2 py-1 rounded border border-brand-purple/10">
-                      104 <span className="text-[8px]">KM/H</span>
+                    <div className="font-mono text-[14px] text-brand-purple font-bold bg-black/50 backdrop-blur-sm px-2 py-1 rounded border border-brand-purple/20 flex items-center gap-2 justify-end">
+                      <motion.span
+                        animate={{ opacity: [1, 0.5, 1] }}
+                        transition={{ duration: 0.5, repeat: Infinity }}
+                      >104</motion.span>
+                      <span className="text-[8px] opacity-60">KM/H</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Central Target Reticle */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[300px]">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[320px]">
                   <motion.div 
                     animate={{ 
-                      scale: [1, 1.02, 1],
+                      scale: [1, 1.01, 1],
                     }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="relative aspect-[4/3] border-2 border-brand-purple/40 rounded-2xl flex items-center justify-center overflow-hidden"
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className="relative aspect-[4/3] border-2 border-brand-purple/30 rounded-2xl flex items-center justify-center overflow-hidden backdrop-blur-[1px]"
                   >
                     {/* Scanning Line */}
                     <motion.div 
                       animate={{ top: ["-10%", "110%"] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                      className="absolute left-0 right-0 h-[2px] bg-brand-purple shadow-[0_0_15px_#D946EF] z-10"
+                      transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+                      className="absolute left-0 right-0 h-[2px] bg-brand-purple shadow-[0_0_20px_#D946EF] z-10"
                     />
                     
                     {/* Target Box */}
                     <motion.div 
                       animate={{ 
-                        opacity: [0.4, 1, 0.4],
-                        scale: [0.98, 1, 0.98]
+                        opacity: [0.6, 1, 0.6],
+                        scale: [0.99, 1, 0.99]
                       }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="w-4/5 h-1/2 border border-brand-purple rounded flex flex-col items-center justify-center bg-brand-purple/5 backdrop-blur-[2px]"
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                      className="w-4/5 h-1/2 border border-brand-purple/50 rounded flex flex-col items-center justify-center bg-brand-purple/10 backdrop-blur-sm relative"
                     >
-                      <div className="absolute -top-7 left-0 flex items-center gap-2 text-[10px] font-mono font-bold text-brand-purple bg-black/80 px-3 py-1 rounded-t-md border-t border-x border-brand-purple/30">
-                        <AlertTriangle size={12} className="animate-pulse" />
-                        HAZARD DETECTED: 12.4m
+                      <div className="absolute -top-7 left-0 flex items-center gap-2 text-[10px] font-mono font-bold text-brand-purple bg-black/90 px-3 py-1 rounded-t-md border-t border-x border-brand-purple/40">
+                        <AlertTriangle size={12} className="text-red-500 animate-pulse" />
+                        <span className="text-red-500">HAZARD DETECTED: 12.4m</span>
                       </div>
-                      <div className="text-[8px] font-mono text-brand-purple/60 uppercase tracking-[0.2em]">Analyzing Surface Friction...</div>
+                      <div className="text-[9px] font-mono text-brand-purple font-bold uppercase tracking-[0.2em] animate-pulse">Analyzing Surface Friction...</div>
+                      <div className="mt-2 flex gap-1">
+                        {[1, 2, 3, 4, 5].map(i => (
+                          <motion.div 
+                            key={i}
+                            animate={{ height: [4, 12, 4] }}
+                            transition={{ duration: 0.5, delay: i * 0.1, repeat: Infinity }}
+                            className="w-1 bg-brand-purple/60 rounded-full"
+                          />
+                        ))}
+                      </div>
                     </motion.div>
 
                     {/* Corner Accents */}
-                    <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-brand-purple" />
-                    <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-brand-purple" />
-                    <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-brand-purple" />
-                    <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-brand-purple" />
+                    <div className="absolute top-2 left-2 w-5 h-5 border-t-2 border-l-2 border-brand-purple shadow-[-2px_-2px_10px_rgba(217,70,239,0.3)]" />
+                    <div className="absolute top-2 right-2 w-5 h-5 border-t-2 border-r-2 border-brand-purple shadow-[2px_-2px_10px_rgba(217,70,239,0.3)]" />
+                    <div className="absolute bottom-2 left-2 w-5 h-5 border-b-2 border-l-2 border-brand-purple shadow-[-2px_2px_10px_rgba(217,70,239,0.3)]" />
+                    <div className="absolute bottom-2 right-2 w-5 h-5 border-b-2 border-r-2 border-brand-purple shadow-[2px_2px_10px_rgba(217,70,239,0.3)]" />
                   </motion.div>
                 </div>
 
                 <div className="flex justify-between items-end">
                   <div className="space-y-2">
                     <div className="flex items-center gap-3">
-                      <div className="h-1.5 w-32 bg-brand-purple/20 rounded-full overflow-hidden border border-brand-purple/10">
+                      <div className="h-2 w-40 bg-brand-purple/20 rounded-full overflow-hidden border border-brand-purple/20 p-[1px]">
                         <motion.div 
-                          animate={{ width: ["10%", "90%", "40%", "70%"] }}
-                          transition={{ duration: 5, repeat: Infinity }}
-                          className="h-full bg-brand-purple shadow-[0_0_10px_#D946EF]"
+                          animate={{ width: ["10%", "95%", "40%", "85%", "60%"] }}
+                          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                          className="h-full bg-gradient-to-r from-brand-purple to-brand-purple-glow rounded-full shadow-[0_0_15px_#D946EF]"
                         />
                       </div>
-                      <span className="text-[9px] font-mono text-brand-purple font-bold tracking-widest">BUFF: ACTIVE</span>
+                      <span className="text-[9px] font-mono text-brand-purple font-bold tracking-widest bg-black/40 px-2 py-0.5 rounded">BUFF: ACTIVE</span>
                     </div>
-                    <div className="text-[8px] font-mono text-brand-purple/60 uppercase tracking-widest flex items-center gap-2">
-                      <div className="w-1 h-1 bg-brand-purple rounded-full animate-ping" />
+                    <div className="text-[9px] font-mono text-brand-purple/80 uppercase tracking-widest flex items-center gap-2 font-bold">
+                      <div className="w-1.5 h-1.5 bg-brand-purple rounded-full animate-ping" />
                       Processing Real-Time Stream...
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-display font-bold text-brand-purple drop-shadow-[0_0_10px_rgba(217,70,239,0.5)]">98.2%</div>
+                  <div className="text-right bg-black/40 backdrop-blur-md p-3 rounded-xl border border-brand-purple/20">
+                    <motion.div 
+                      animate={{ 
+                        color: ["#D946EF", "#F0ABFC", "#D946EF"]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="text-3xl font-display font-black tracking-tighter"
+                    >
+                      98.<motion.span
+                        animate={{ opacity: [1, 0.7, 1] }}
+                        transition={{ duration: 0.1, repeat: Infinity }}
+                      >2</motion.span>%
+                    </motion.div>
                     <div className="text-[9px] font-mono text-brand-purple/60 uppercase tracking-widest font-bold">Confidence Score</div>
                   </div>
                 </div>
               </div>
 
               {/* Scanning Line Overlay (Global) */}
-              <div className="absolute inset-0 bg-[linear-gradient(transparent_0%,rgba(217,70,239,0.05)_50%,transparent_100%)] bg-[length:100%_10px] animate-scan-lines pointer-events-none" />
+              <div className="absolute inset-0 bg-[linear-gradient(transparent_0%,rgba(217,70,239,0.08)_50%,transparent_100%)] bg-[length:100%_15px] animate-scan-lines pointer-events-none opacity-40" />
             </motion.div>
           </div>
         </div>
