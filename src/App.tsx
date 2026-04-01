@@ -331,11 +331,11 @@ export default function App() {
               viewport={{ once: true }}
               className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 shadow-2xl group bg-brand-navy"
             >
-              {/* Base Image (Snowy Road) - Updated for reliability */}
+              {/* Base Image (Luxury Vehicle on Sunny Snowy Road) */}
               <img 
-                src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=1200" 
-                alt="Snowy Arctic Road" 
-                className="w-full h-full object-cover grayscale brightness-75 group-hover:scale-105 transition-transform duration-[3s] ease-out"
+                src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=1200" 
+                alt="Luxury Vehicle on Sunny Snowy Road" 
+                className="w-full h-full object-cover brightness-90 group-hover:scale-105 transition-transform duration-[3s] ease-out"
                 referrerPolicy="no-referrer"
               />
               
