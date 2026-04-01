@@ -8,8 +8,8 @@
 
   --color-brand-navy: #F8FAFC;
   --color-brand-slate: #F1F5F9;
-  --color-brand-cyan: #0891B2;
-  --color-brand-cyan-glow: #22D3EE;
+  --color-brand-purple: #D946EF;
+  --color-brand-purple-glow: #F0ABFC;
   --color-brand-yellow: #FACC15;
   --color-brand-offwhite: #0F172A;
   --color-brand-gray: #475569;
@@ -23,20 +23,20 @@
 
 @layer utilities {
   .holographic-glow {
-    text-shadow: 0 0 10px rgba(8, 145, 178, 0.2);
+    text-shadow: 0 0 10px rgba(217, 70, 239, 0.2);
   }
   
   .glass-panel {
     @apply bg-white/80 backdrop-blur-md border border-slate-200 shadow-sm transition-all duration-300;
   }
-
+  
   .hover-glow:hover {
-    box-shadow: 0 10px 30px -10px rgba(8, 145, 178, 0.1);
-    @apply border-brand-cyan/20 bg-white/90;
+    box-shadow: 0 10px 30px -10px rgba(217, 70, 239, 0.1);
+    @apply border-brand-purple/20 bg-white/90;
   }
 
   .cyan-border-glow {
-    box-shadow: 0 4px 20px rgba(8, 145, 178, 0.08);
+    box-shadow: 0 4px 20px rgba(217, 70, 239, 0.08);
   }
 
   @keyframes spin-slow {
@@ -45,6 +45,22 @@
   }
   .animate-spin-slow {
     animation: spin-slow 20s linear infinite;
+  }
+
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+  .animate-scan {
+    animation: scan 2s linear infinite;
+  }
+
+  @keyframes scan-lines {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100%; }
+  }
+  .animate-scan-lines {
+    animation: scan-lines 10s linear infinite;
   }
 
   .markdown-body h1 {

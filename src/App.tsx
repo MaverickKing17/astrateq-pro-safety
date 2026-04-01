@@ -29,25 +29,61 @@ import {
   Send,
   User,
   Bot,
-  Minimize2
+  Minimize2,
+  Zap
 } from "lucide-react";
+
+function Logo({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex items-center gap-2 ${className}`}>
+      <div className="relative w-10 h-10 flex items-center justify-center">
+        {/* Animated Glow Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-purple to-brand-purple-glow rounded-xl rotate-45 opacity-20 animate-pulse" />
+        
+        {/* Stylized 'A' SVG inspired by the provided logo */}
+        <svg viewBox="0 0 100 100" className="w-8 h-8 text-brand-purple drop-shadow-[0_0_12px_rgba(217,70,239,0.6)]">
+          <defs>
+            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#D946EF" />
+              <stop offset="100%" stopColor="#F0ABFC" />
+            </linearGradient>
+          </defs>
+          <path 
+            d="M50 10 L15 85 L25 85 L35 65 L65 65 L75 85 L85 85 L50 10 Z M40 55 L50 35 L60 55 L40 55 Z" 
+            fill="url(#logoGradient)" 
+          />
+          <path 
+            d="M30 75 Q50 60 70 75" 
+            fill="none" 
+            stroke="url(#logoGradient)" 
+            strokeWidth="4" 
+            strokeLinecap="round"
+            className="animate-pulse"
+          />
+        </svg>
+      </div>
+      <div className="flex flex-col leading-none">
+        <span className="text-xl font-display font-black text-brand-offwhite tracking-tighter">ASTRATEQ</span>
+        <span className="text-[9px] font-mono font-bold text-brand-purple tracking-[0.4em] uppercase">Gadgets</span>
+      </div>
+    </div>
+  );
+}
 
 export default function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [activeLegalPage, setActiveLegalPage] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen flex flex-col selection:bg-brand-cyan/30 selection:text-brand-cyan">
+    <div className="min-h-screen flex flex-col selection:bg-brand-purple/30 selection:text-brand-purple">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="text-xl font-display font-bold text-brand-offwhite tracking-tight">
-            ASTRATEQ GADGETS<span className="text-brand-cyan">.</span>
-          </div>
+          <Logo />
           <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-brand-gray">
-            <a href="#" className="hover:text-brand-cyan transition-colors">Vision</a>
-            <a href="#" className="hover:text-brand-cyan transition-colors">Solutions</a>
-            <button className="px-4 py-2 bg-brand-cyan text-white rounded-lg hover:bg-brand-cyan/90 transition-colors">
+            <a href="#" className="hover:text-brand-purple transition-colors">Vision</a>
+            <a href="#" className="hover:text-brand-purple transition-colors">Solutions</a>
+            <button className="px-4 py-2 bg-brand-purple text-white rounded-lg hover:bg-brand-purple/90 transition-colors shadow-lg shadow-brand-purple/20">
               Beta Waitlist
             </button>
           </div>
@@ -72,10 +108,10 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.5, ease: "easeOut" }}
-              className="absolute top-1/4 left-1/4 w-64 h-64 border border-brand-cyan/10 rounded-full flex items-center justify-center"
+              className="absolute top-1/4 left-1/4 w-64 h-64 border border-brand-purple/10 rounded-full flex items-center justify-center"
             >
-              <div className="w-48 h-48 border-2 border-brand-cyan/5 rounded-full border-dashed animate-spin-slow" />
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full text-[10px] font-mono text-brand-cyan/40 tracking-widest uppercase py-2">
+              <div className="w-48 h-48 border-2 border-brand-purple/5 rounded-full border-dashed animate-spin-slow" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full text-[10px] font-mono text-brand-purple/40 tracking-widest uppercase py-2">
                 Scanning Terrain
               </div>
             </motion.div>
@@ -84,19 +120,19 @@ export default function App() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="absolute top-1/3 right-10 w-48 p-4 glass-panel rounded-lg border-brand-cyan/20"
+              className="absolute top-1/3 right-10 w-48 p-4 glass-panel rounded-lg border-brand-purple/20"
             >
-              <div className="text-[10px] font-mono text-brand-cyan mb-1 uppercase tracking-tighter">Hazard Detection</div>
+              <div className="text-[10px] font-mono text-brand-purple mb-1 uppercase tracking-tighter">Hazard Detection</div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-brand-cyan rounded-full animate-pulse" />
+                <div className="w-2 h-2 bg-brand-purple rounded-full animate-pulse" />
                 <span className="text-xl font-display font-bold text-brand-offwhite">94% ACC</span>
               </div>
-              <div className="mt-2 h-1 bg-brand-cyan/10 rounded-full overflow-hidden">
+              <div className="mt-2 h-1 bg-brand-purple/10 rounded-full overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: "94%" }}
                   transition={{ duration: 2, delay: 1 }}
-                  className="h-full bg-brand-cyan"
+                  className="h-full bg-brand-purple"
                 />
               </div>
             </motion.div>
@@ -108,10 +144,10 @@ export default function App() {
               className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-full max-w-md px-4"
             >
               <div className="flex justify-between items-end mb-2">
-                <div className="text-[10px] font-mono text-brand-cyan/40 uppercase">System Status: Active</div>
-                <div className="text-[10px] font-mono text-brand-cyan/40 uppercase">Toronto, ON</div>
+                <div className="text-[10px] font-mono text-brand-purple/40 uppercase">System Status: Active</div>
+                <div className="text-[10px] font-mono text-brand-purple/40 uppercase">Toronto, ON</div>
               </div>
-              <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent" />
+              <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-brand-purple/20 to-transparent" />
             </motion.div>
           </div>
         </div>
@@ -125,7 +161,7 @@ export default function App() {
           >
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight mb-6 leading-[1.1] text-brand-offwhite">
               Predictive AI for the <br />
-              <span className="text-brand-cyan holographic-glow">Modern Canadian Driver.</span>
+              <span className="text-brand-purple holographic-glow">Modern Canadian Driver.</span>
             </h1>
             <p className="text-lg md:text-xl text-brand-gray max-w-2xl mx-auto mb-10 leading-relaxed">
               Anticipate road hazards and optimize battery health with 94% accuracy. 
@@ -143,7 +179,7 @@ export default function App() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex items-center gap-2 px-4 py-2 bg-brand-cyan/5 border border-brand-cyan/10 rounded-full text-brand-cyan text-xs font-medium"
+              className="flex items-center gap-2 px-4 py-2 bg-brand-purple/5 border border-brand-purple/10 rounded-full text-brand-purple text-xs font-medium"
             >
               <AlertTriangle size={14} />
               <span>Astrateq gadgets are driver assistance tools only.</span>
@@ -164,37 +200,125 @@ export default function App() {
               transition={{ duration: 0.8, delay: 1.2 }}
               className="flex flex-wrap justify-center gap-8 mt-12 text-brand-gray"
             >
-              <HeroBadge icon={<ShieldCheck size={18} className="text-brand-cyan" />} text="Transport Canada Compliant" delay={1.3} />
-              <HeroBadge icon={<RotateCcw size={18} className="text-brand-cyan" />} text="60-Day Returns" delay={1.4} />
-              <HeroBadge icon={<MapPin size={18} className="text-brand-cyan" />} text="Toronto Engineered & Shipped" delay={1.5} />
+              <HeroBadge icon={<ShieldCheck size={18} className="text-brand-purple" />} text="Transport Canada Compliant" delay={1.3} />
+              <HeroBadge icon={<RotateCcw size={18} className="text-brand-purple" />} text="60-Day Returns" delay={1.4} />
+              <HeroBadge icon={<MapPin size={18} className="text-brand-purple" />} text="Toronto Engineered & Shipped" delay={1.5} />
             </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Vision Section */}
-      <section className="py-24 px-4 bg-brand-slate">
-        <div className="max-w-4xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="glass-panel p-8 md:p-12 rounded-2xl border-white relative overflow-hidden shadow-xl shadow-slate-200/50"
-          >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/5 blur-3xl rounded-full" />
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-brand-offwhite">
-              Vision Beyond the <span className="text-brand-cyan">Storm.</span>
-            </h2>
-            <div className="space-y-4 text-brand-gray text-lg leading-relaxed">
-              <p>
-                It started on a highway outside Toronto during a February whiteout... 
-                Traditional sensors fail in the snow, and driver fatigue is a silent danger.
-              </p>
-              <p>
-                We're engineering <span className="text-brand-cyan font-medium">'AI Co-pilots'</span> that see through the blizzard.
-              </p>
-            </div>
-          </motion.div>
+      <section className="py-32 px-4 bg-white relative overflow-hidden">
+        {/* Background Grid Accent */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+        
+        <div className="max-w-6xl mx-auto relative">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purple/10 border border-brand-purple/20 text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest">
+                <div className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse" />
+                Origin Story
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-brand-offwhite leading-tight">
+                Vision Beyond the <span className="text-brand-purple">Storm.</span>
+              </h2>
+              
+              <div className="space-y-6 text-brand-gray text-lg leading-relaxed">
+                <p className="border-l-2 border-brand-purple/20 pl-6 italic">
+                  "It started on a highway outside Toronto during a February whiteout... 
+                  Traditional sensors fail in the snow, and driver fatigue is a silent danger."
+                </p>
+                <p>
+                  We're engineering <span className="text-brand-purple font-bold">'AI Co-pilots'</span> that see through the blizzard using multi-spectral sensor fusion and real-time terrain analysis.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-4 pt-4">
+                <div className="flex -space-x-3">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center overflow-hidden">
+                      <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    </div>
+                  ))}
+                </div>
+                <div className="text-xs font-medium text-brand-gray">
+                  <span className="text-brand-offwhite font-bold">450+</span> Fleet Managers Joined
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 shadow-2xl group"
+            >
+              {/* Base Image (Snowy Road) */}
+              <img 
+                src="https://images.unsplash.com/photo-1516912481808-34061f8e630c?auto=format&fit=crop&q=80&w=1200" 
+                alt="Snowy Road" 
+                className="w-full h-full object-cover grayscale brightness-50"
+                referrerPolicy="no-referrer"
+              />
+              
+              {/* Thermal Overlay */}
+              <div className="absolute inset-0 bg-brand-purple/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              
+              {/* HUD Elements */}
+              <div className="absolute inset-0 p-8 flex flex-col justify-between pointer-events-none">
+                <div className="flex justify-between items-start">
+                  <div className="font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/40 backdrop-blur-sm px-3 py-1 rounded border border-brand-purple/30">
+                    Sensor: Multi-Spectral
+                  </div>
+                  <div className="font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/40 backdrop-blur-sm px-3 py-1 rounded border border-brand-purple/30">
+                    Lat: 43.6532° N
+                  </div>
+                </div>
+
+                {/* Target Highlight */}
+                <motion.div 
+                  animate={{ 
+                    scale: [1, 1.05, 1],
+                    opacity: [0.6, 1, 0.6]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-32 border-2 border-brand-purple rounded-lg flex items-center justify-center"
+                >
+                  <div className="absolute -top-6 left-0 text-[10px] font-mono font-bold text-brand-purple bg-black/60 px-2 py-0.5 rounded">
+                    HAZARD DETECTED: 12.4m
+                  </div>
+                  <div className="w-full h-[1px] bg-brand-purple/50 animate-scan" />
+                </motion.div>
+
+                <div className="flex justify-between items-end">
+                  <div className="space-y-1">
+                    <div className="h-1 w-32 bg-brand-purple/20 rounded-full overflow-hidden">
+                      <motion.div 
+                        animate={{ width: ["20%", "80%", "20%"] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                        className="h-full bg-brand-purple shadow-[0_0_10px_#D946EF]"
+                      />
+                    </div>
+                    <div className="text-[8px] font-mono text-brand-purple/60 uppercase">Processing Stream...</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-display font-bold text-brand-purple">98.2%</div>
+                    <div className="text-[8px] font-mono text-brand-purple/60 uppercase tracking-tighter">Confidence Score</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Scanning Line Overlay */}
+              <div className="absolute inset-0 bg-[linear-gradient(transparent_0%,rgba(217,70,239,0.1)_50%,transparent_100%)] bg-[length:100%_4px] animate-scan-lines opacity-20" />
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -209,7 +333,7 @@ export default function App() {
             className="text-center mb-20"
           >
             <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-brand-offwhite">
-              The <span className="text-brand-cyan">Solution</span>
+              The <span className="text-brand-purple">Solution</span>
             </h2>
             <p className="text-brand-gray">Three pillars of intelligent automotive protection</p>
           </motion.div>
@@ -217,7 +341,7 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <SolutionCard 
               index={0}
-              icon={<Eye className="text-brand-cyan" />}
+              icon={<Eye className="text-brand-purple" />}
               title="AlTrak™"
               subtitle="PREDICTIVE SAFETY"
               description="Our AI system detects hazards before human reaction time, analyzing thousands of data points per second to keep you one step ahead on every road."
@@ -225,7 +349,7 @@ export default function App() {
             />
             <SolutionCard 
               index={1}
-              icon={<Battery className="text-brand-cyan" />}
+              icon={<Battery className="text-brand-purple" />}
               title="EV Battery Intelligence"
               subtitle="RANGE CONFIDENCE"
               description="Drive from Toronto to Montreal with total peace of mind. Our AI optimizes thermal management to give you up to 500 miles of Range Confidence, even in Canadian winters."
@@ -233,7 +357,7 @@ export default function App() {
             />
             <SolutionCard 
               index={2}
-              icon={<Shield className="text-brand-cyan" />}
+              icon={<Shield className="text-brand-purple" />}
               title="Guardian Mode"
               subtitle="24/7 ASSET MONITORING"
               description="Proactive around-the-clock asset monitoring and security. Your vehicle is always watched, always protected, always connected."
@@ -254,12 +378,10 @@ export default function App() {
         <div className="max-w-6xl mx-auto flex flex-col items-center gap-12">
           {/* Brand & Language */}
           <div className="flex flex-col items-center gap-6">
-            <div className="text-2xl font-display font-bold text-brand-offwhite tracking-tight">
-              ASTRATEQ GADGETS<span className="text-brand-cyan">.</span>
-            </div>
+            <Logo />
             <div className="flex items-center gap-6 text-sm font-bold tracking-widest text-brand-gray" role="navigation" aria-label="Language selection">
               <button 
-                className="text-brand-cyan cursor-default" 
+                className="text-brand-purple cursor-default" 
                 aria-label="English" 
                 aria-current="true"
               >
@@ -267,7 +389,7 @@ export default function App() {
               </button>
               <div className="w-[1px] h-4 bg-slate-300" aria-hidden="true" />
               <button 
-                className="hover:text-brand-cyan transition-colors" 
+                className="hover:text-brand-purple transition-colors" 
                 aria-label="Switch to French"
               >
                 FR
@@ -281,7 +403,7 @@ export default function App() {
               href="https://linkedin.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-brand-gray hover:text-brand-cyan hover:border-brand-cyan transition-all"
+              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-brand-gray hover:text-brand-purple hover:border-brand-purple transition-all"
               aria-label="Follow Astrateq Gadgets on LinkedIn"
               role="listitem"
             >
@@ -291,7 +413,7 @@ export default function App() {
               href="https://twitter.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-brand-gray hover:text-brand-cyan hover:border-brand-cyan transition-all"
+              className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-brand-gray hover:text-brand-purple hover:border-brand-purple transition-all"
               aria-label="Follow Astrateq Gadgets on Twitter"
               role="listitem"
             >
@@ -300,8 +422,8 @@ export default function App() {
           </div>
           
           {/* AI System Disclaimer */}
-          <div className="max-w-2xl mx-auto px-6 py-4 bg-brand-cyan/5 border border-brand-cyan/10 rounded-xl flex items-start gap-4 text-left">
-            <AlertTriangle className="text-brand-cyan shrink-0 mt-0.5" size={20} />
+          <div className="max-w-2xl mx-auto px-6 py-4 bg-brand-purple/5 border border-brand-purple/10 rounded-xl flex items-start gap-4 text-left">
+            <AlertTriangle className="text-brand-purple shrink-0 mt-0.5" size={20} />
             <p className="text-sm text-brand-gray leading-relaxed">
               <span className="font-bold text-brand-offwhite">Safety Notice:</span> Astrateq Gadgets are driver assistance tools only and do not replace the driver's responsibility. Always maintain full control of your vehicle and stay alert to road conditions.
             </p>
@@ -378,7 +500,7 @@ export default function App() {
       {/* Floating Chat Button */}
       <button 
         onClick={() => setIsChatOpen(true)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-brand-cyan text-brand-navy rounded-full flex items-center justify-center shadow-lg shadow-brand-cyan/20 hover:scale-110 transition-transform z-50"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-brand-purple text-brand-navy rounded-full flex items-center justify-center shadow-lg shadow-brand-purple/20 hover:scale-110 transition-transform z-50"
         aria-label="Open AI Live Chat"
       >
         <Globe size={24} />
@@ -415,8 +537,8 @@ function LegalModal({ isOpen, content, onClose }: { isOpen: boolean, content: st
           >
             <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-brand-cyan/10 flex items-center justify-center">
-                  <ShieldAlert className="text-brand-cyan" size={20} />
+                <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center">
+                  <ShieldAlert className="text-brand-purple" size={20} />
                 </div>
                 <h3 className="text-lg font-display font-bold text-brand-offwhite tracking-tight">Legal Documentation</h3>
               </div>
@@ -429,7 +551,7 @@ function LegalModal({ isOpen, content, onClose }: { isOpen: boolean, content: st
             </div>
             
             <div className="flex-1 overflow-y-auto p-8 md:p-12 scrollbar-hide">
-              <div className="prose prose-slate max-w-none prose-headings:font-display prose-headings:text-brand-offwhite prose-p:text-brand-gray prose-strong:text-brand-offwhite prose-a:text-brand-cyan">
+              <div className="prose prose-slate max-w-none prose-headings:font-display prose-headings:text-brand-offwhite prose-p:text-brand-gray prose-strong:text-brand-offwhite prose-a:text-brand-purple">
                 <div className="markdown-body">
                   <Markdown>{content}</Markdown>
                 </div>
@@ -536,18 +658,18 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
       }}
       className="fixed bottom-24 right-6 w-[350px] md:w-[400px] h-[500px] z-[70] flex flex-col"
     >
-      <div className="glass-panel flex-1 rounded-3xl border-brand-cyan/30 shadow-2xl overflow-hidden flex flex-col bg-white/95 backdrop-blur-2xl">
+      <div className="glass-panel flex-1 rounded-3xl border-brand-purple/30 shadow-2xl overflow-hidden flex flex-col bg-white/95 backdrop-blur-2xl">
         {/* Header */}
         <div className="p-5 bg-brand-navy text-white flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-cyan/20 flex items-center justify-center border border-brand-cyan/30">
-              <Bot className="text-brand-cyan" size={20} />
+            <div className="w-10 h-10 rounded-xl bg-brand-purple/20 flex items-center justify-center border border-brand-purple/30">
+              <Bot className="text-brand-purple" size={20} />
             </div>
             <div>
               <h3 className="font-display font-bold text-sm tracking-tight">Astrateq AI Support</h3>
               <div className="flex items-center gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse" />
-                <span className="text-[10px] font-mono font-bold text-brand-cyan/80 uppercase tracking-widest">System Active</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse" />
+                <span className="text-[10px] font-mono font-bold text-brand-purple/80 uppercase tracking-widest">System Active</span>
               </div>
             </div>
           </div>
@@ -565,7 +687,7 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${
                 msg.role === 'user' 
-                  ? 'bg-brand-cyan text-brand-navy font-medium rounded-tr-none' 
+                  ? 'bg-brand-purple text-brand-navy font-medium rounded-tr-none' 
                   : 'bg-slate-100 text-brand-gray font-medium rounded-tl-none'
               }`}>
                 {msg.text}
@@ -592,11 +714,11 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Ask about Astrateq systems..."
-              className="w-full pl-4 pr-12 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-cyan transition-colors placeholder:text-slate-400"
+              className="w-full pl-4 pr-12 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-purple transition-colors placeholder:text-slate-400"
             />
             <button 
               onClick={handleSend}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-brand-cyan hover:bg-brand-cyan/10 rounded-lg transition-colors"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-brand-purple hover:bg-brand-purple/10 rounded-lg transition-colors"
             >
               <Send size={18} />
             </button>
@@ -624,30 +746,30 @@ function CookieBanner() {
     >
       <div className="relative group">
         {/* Outer Glow */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-cyan/20 via-brand-yellow/10 to-brand-cyan/20 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse" />
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-purple/20 via-brand-yellow/10 to-brand-purple/20 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse" />
         
-        <div className="relative glass-panel p-6 rounded-2xl border-brand-cyan/30 shadow-2xl bg-white/90 backdrop-blur-xl overflow-hidden">
+        <div className="relative glass-panel p-6 rounded-2xl border-brand-purple/30 shadow-2xl bg-white/90 backdrop-blur-xl overflow-hidden">
           {/* Animated Top Border */}
-          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-cyan to-transparent animate-shimmer" />
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-purple to-transparent animate-shimmer" />
           
           <div className="flex flex-col gap-5">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-brand-cyan/10 flex items-center justify-center border border-brand-cyan/20 shadow-inner">
-                  <Cookie className="text-brand-cyan" size={24} />
+                <div className="w-12 h-12 rounded-2xl bg-brand-purple/10 flex items-center justify-center border border-brand-purple/20 shadow-inner">
+                  <Cookie className="text-brand-purple" size={24} />
                 </div>
                 <div>
                   <h4 className="font-display font-bold text-brand-offwhite text-base tracking-tight leading-none mb-1">
                     Optimizing Your AI Experience
                   </h4>
-                  <p className="text-[10px] font-mono font-bold text-brand-cyan/60 uppercase tracking-widest">
+                  <p className="text-[10px] font-mono font-bold text-brand-purple/60 uppercase tracking-widest">
                     ASTRATEQ GADGETS <span className="opacity-40">SYSTEM v2.4</span>
                   </p>
                 </div>
               </div>
               <button 
                 onClick={() => setIsVisible(false)}
-                className="p-2 hover:bg-slate-100 rounded-lg text-brand-gray/40 hover:text-brand-cyan transition-colors"
+                className="p-2 hover:bg-slate-100 rounded-lg text-brand-gray/40 hover:text-brand-purple transition-colors"
                 aria-label="Close"
               >
                 <X size={18} />
@@ -655,7 +777,7 @@ function CookieBanner() {
             </div>
 
             <p className="text-xs text-brand-gray leading-relaxed font-medium">
-              <span className="text-brand-offwhite font-bold">Astrateq Gadgets</span> uses advanced cookies to analyze terrain data patterns and improve our predictive safety algorithms. By continuing, you agree to our <button className="text-brand-cyan hover:underline font-bold">AI Data Policy</button>.
+              <span className="text-brand-offwhite font-bold">Astrateq Gadgets</span> uses advanced cookies to analyze terrain data patterns and improve our predictive safety algorithms. By continuing, you agree to our <button className="text-brand-purple hover:underline font-bold">AI Data Policy</button>.
             </p>
 
             <div className="flex items-center gap-3">
@@ -675,7 +797,7 @@ function CookieBanner() {
           </div>
 
           {/* Subtle Background Detail */}
-          <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-brand-cyan/5 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-brand-purple/5 rounded-full blur-2xl pointer-events-none" />
         </div>
       </div>
     </motion.div>
@@ -697,7 +819,7 @@ function FooterAccordion({ title, description, onLinkClick, links }: {
         className="flex items-center justify-between w-full md:cursor-default md:pointer-events-none py-2 md:py-0 mb-0 md:mb-6 group"
       >
         <div className="text-left">
-          <h5 className="text-xs font-mono font-bold text-brand-cyan uppercase tracking-[0.25em] group-hover:text-brand-cyan-glow transition-colors mb-2">
+          <h5 className="text-xs font-mono font-bold text-brand-purple uppercase tracking-[0.25em] group-hover:text-brand-purple-glow transition-colors mb-2">
             {title}
           </h5>
           <p className="hidden md:block text-[11px] text-brand-gray/60 font-medium uppercase tracking-wider max-w-[200px] leading-relaxed">
@@ -725,7 +847,7 @@ function FooterAccordion({ title, description, onLinkClick, links }: {
             <li key={i}>
               <button 
                 onClick={() => onLinkClick(link.label)}
-                className="hover:text-brand-cyan transition-colors block py-1.5 md:py-0 border-l-2 border-transparent hover:border-brand-cyan hover:pl-3 md:hover:pl-0 md:border-none transition-all duration-300 text-left w-full"
+                className="hover:text-brand-purple transition-colors block py-1.5 md:py-0 border-l-2 border-transparent hover:border-brand-purple hover:pl-3 md:hover:pl-0 md:border-none transition-all duration-300 text-left w-full"
               >
                 {link.label}
               </button>
@@ -743,7 +865,7 @@ function HeroBadge({ icon, text, delay }: { icon: ReactNode, text: string, delay
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-full text-xs font-semibold text-brand-gray shadow-sm hover:border-brand-cyan/30 transition-colors"
+      className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-full text-xs font-semibold text-brand-gray shadow-sm hover:border-brand-purple/30 transition-colors"
     >
       {icon}
       <span>{text}</span>
@@ -769,19 +891,19 @@ function SolutionCard({ icon, title, subtitle, description, features, index }: {
       className="glass-panel hover-glow p-10 rounded-3xl border-slate-200 group relative overflow-hidden"
     >
       {/* Technical Background Accent */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-brand-cyan/8 transition-colors" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-brand-purple/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-brand-purple/8 transition-colors" />
       
-      <div className="w-16 h-16 rounded-2xl bg-brand-cyan/5 flex items-center justify-center mb-8 group-hover:scale-105 transition-transform duration-500 relative">
-        <div className="absolute inset-0 border border-brand-cyan/10 rounded-2xl animate-pulse" />
+      <div className="w-16 h-16 rounded-2xl bg-brand-purple/5 flex items-center justify-center mb-8 group-hover:scale-105 transition-transform duration-500 relative">
+        <div className="absolute inset-0 border border-brand-purple/10 rounded-2xl animate-pulse" />
         {icon}
       </div>
 
       <div className="space-y-4">
         <div>
-          <div className="text-[10px] font-mono text-brand-cyan font-bold tracking-[0.25em] mb-2 uppercase opacity-80">
+          <div className="text-[10px] font-mono text-brand-purple font-bold tracking-[0.25em] mb-2 uppercase opacity-80">
             {subtitle}
           </div>
-          <h3 className="text-2xl font-display font-bold text-brand-offwhite group-hover:text-brand-cyan transition-colors duration-300">
+          <h3 className="text-2xl font-display font-bold text-brand-offwhite group-hover:text-brand-purple transition-colors duration-300">
             {title}
           </h3>
         </div>
@@ -792,8 +914,8 @@ function SolutionCard({ icon, title, subtitle, description, features, index }: {
 
         <div className="pt-6 space-y-3">
           {features.map((feature, i) => (
-            <div key={i} className="flex items-center gap-3 text-[11px] font-mono text-brand-gray/80 group-hover:text-brand-cyan/80 transition-colors">
-              <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan/30" />
+            <div key={i} className="flex items-center gap-3 text-[11px] font-mono text-brand-gray/80 group-hover:text-brand-purple/80 transition-colors">
+              <div className="w-1.5 h-1.5 rounded-full bg-brand-purple/30" />
               <span className="tracking-wider">{feature}</span>
             </div>
           ))}
