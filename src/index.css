@@ -27,7 +27,12 @@
   }
   
   .glass-panel {
-    @apply bg-white/80 backdrop-blur-md border border-slate-200 shadow-sm;
+    @apply bg-white/80 backdrop-blur-md border border-slate-200 shadow-sm transition-all duration-300;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 30px rgba(8, 145, 178, 0.15), 0 0 60px rgba(8, 145, 178, 0.05);
+    @apply border-brand-cyan/30 bg-white/95;
   }
 
   .cyan-border-glow {

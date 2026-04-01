@@ -215,25 +215,37 @@ export default function App() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="py-12 px-4 border-t border-slate-200 bg-brand-navy"
+        className="py-20 px-4 border-t border-slate-200 bg-slate-50"
       >
-        <div className="max-w-6xl mx-auto flex flex-col items-center gap-8">
-          <div className="flex items-center gap-4 text-sm font-medium text-brand-gray">
-            <span className="text-brand-cyan">EN</span>
-            <span className="text-slate-300">|</span>
-            <button className="hover:text-brand-offwhite transition-colors">FR</button>
+        <div className="max-w-6xl mx-auto flex flex-col items-center gap-12">
+          {/* Brand & Language */}
+          <div className="flex flex-col items-center gap-6">
+            <div className="text-2xl font-display font-bold text-brand-offwhite tracking-tight">
+              ASTRATEQ<span className="text-brand-cyan">.</span>
+            </div>
+            <div className="flex items-center gap-6 text-sm font-bold tracking-widest text-brand-gray">
+              <span className="text-brand-cyan cursor-default">EN</span>
+              <div className="w-[1px] h-4 bg-slate-300" />
+              <button className="hover:text-brand-cyan transition-colors">FR</button>
+            </div>
           </div>
           
-          <div className="text-center space-y-4">
-            <p className="text-[10px] text-brand-gray/60 max-w-2xl uppercase tracking-widest">
-              To the maximum extent permitted by applicable law, Astrateq Gadgets Inc. total liability shall not exceed the purchase price. Driver remains primary safety controller.
-            </p>
-            <p className="text-[10px] text-brand-gray/40 uppercase tracking-[0.2em]">
-              AlTrak, FleetGuard Pro, and EV Battery Intelligence Suite are trademarks of Astrateq Gadgets Inc. Trademark registration pending.
-            </p>
-            <p className="text-xs text-brand-gray/60 pt-4">
-              © 2026 Astrateq Gadgets Inc. All rights reserved.
-            </p>
+          {/* Legal & Copyright */}
+          <div className="text-center space-y-6 max-w-3xl">
+            <div className="space-y-4">
+              <p className="text-xs md:text-sm text-brand-gray font-medium leading-relaxed uppercase tracking-wider">
+                To the maximum extent permitted by applicable law, Astrateq Gadgets Inc. total liability shall not exceed the purchase price. Driver remains primary safety controller.
+              </p>
+              <p className="text-[11px] md:text-xs text-brand-gray/70 font-medium uppercase tracking-[0.15em]">
+                AlTrak, FleetGuard Pro, and EV Battery Intelligence Suite are trademarks of Astrateq Gadgets Inc. Trademark registration pending.
+              </p>
+            </div>
+            
+            <div className="pt-8 border-t border-slate-200">
+              <p className="text-sm text-brand-gray font-semibold">
+                © 2026 Astrateq Gadgets Inc. All rights reserved. Engineered in Toronto.
+              </p>
+            </div>
           </div>
         </div>
       </motion.footer>
@@ -274,25 +286,40 @@ function SolutionCard({ icon, title, subtitle, description, features, index }: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -10 }}
-      className="glass-panel p-8 rounded-2xl border-brand-cyan/5 hover:border-brand-cyan/30 transition-colors group"
+      whileHover={{ y: -12 }}
+      className="glass-panel hover-glow p-10 rounded-3xl border-slate-200 group relative overflow-hidden"
     >
-      <div className="w-12 h-12 rounded-lg bg-brand-cyan/10 flex items-center justify-center mb-6 group-hover:bg-brand-cyan/20 transition-colors">
+      {/* Technical Background Accent */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-brand-cyan/10 transition-colors" />
+      
+      <div className="w-16 h-16 rounded-2xl bg-brand-cyan/5 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500 relative">
+        <div className="absolute inset-0 border border-brand-cyan/10 rounded-2xl animate-pulse" />
         {icon}
       </div>
-      <h3 className="text-2xl font-display font-bold mb-1">{title}</h3>
-      <div className="text-[10px] font-mono text-brand-cyan tracking-[0.2em] mb-4">{subtitle}</div>
-      <p className="text-brand-gray text-sm leading-relaxed mb-8">
-        {description}
-      </p>
-      <ul className="space-y-3">
-        {features.map((feature, i) => (
-          <li key={i} className="flex items-center gap-2 text-[10px] font-mono text-brand-cyan/80">
-            <ChevronRight size={12} />
-            {feature}
-          </li>
-        ))}
-      </ul>
+
+      <div className="space-y-4">
+        <div>
+          <div className="text-[10px] font-mono text-brand-cyan font-bold tracking-[0.25em] mb-2 uppercase opacity-80">
+            {subtitle}
+          </div>
+          <h3 className="text-2xl font-display font-bold text-brand-offwhite group-hover:text-brand-cyan transition-colors duration-300">
+            {title}
+          </h3>
+        </div>
+
+        <p className="text-brand-gray text-base leading-relaxed">
+          {description}
+        </p>
+
+        <div className="pt-6 space-y-3">
+          {features.map((feature, i) => (
+            <div key={i} className="flex items-center gap-3 text-[11px] font-mono text-brand-gray/80 group-hover:text-brand-cyan/80 transition-colors">
+              <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan/30" />
+              <span className="tracking-wider">{feature}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </motion.div>
   );
 }
