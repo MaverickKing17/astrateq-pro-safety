@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Markdown from "react-markdown";
+import { GoogleGenAI } from "@google/genai";
 import { LEGAL_CONTENT } from "./legalContent";
 import { 
   ShieldCheck, 
@@ -30,11 +31,11 @@ import {
   Send,
   User,
   Bot,
-  Minimize2,
   Zap,
   HelpCircle,
   Lock,
-  Heart
+  Heart,
+  ArrowUpRight
 } from "lucide-react";
 
 function Logo({ className = "", event }: { className?: string, event?: any }) {
@@ -616,6 +617,79 @@ export default function App() {
               features={["24/7 MONITORING", "INSTANT ALERTS", "GEO-FENCING"]}
             />
           </div>
+
+          {/* Product Spotlight: EV Battery Intelligence */}
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mt-32 relative group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-[3rem] blur-3xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+            <div className="glass-panel p-8 md:p-12 rounded-[3.5rem] border-slate-200 overflow-hidden bg-white/80 backdrop-blur-xl shadow-2xl">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div className="space-y-8">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold tracking-widest uppercase">
+                    <Zap size={14} className="animate-pulse" />
+                    Product Spotlight
+                  </div>
+                  <h3 className="text-4xl md:text-5xl font-display font-black text-slate-900 leading-tight">
+                    EV Battery <span className="text-blue-500">Intelligence</span> Suite
+                  </h3>
+                  <p className="text-lg text-slate-600 leading-relaxed max-w-xl">
+                    Our proprietary AI algorithms monitor cell-level health in real-time, predicting degradation patterns and optimizing thermal management for the harsh Canadian climate.
+                  </p>
+                  
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition-colors group/stat">
+                      <div className="text-3xl font-black text-blue-600 mb-1 group-hover/stat:scale-110 transition-transform">92%</div>
+                      <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Avg. Health Retained</div>
+                    </div>
+                    <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition-colors group/stat">
+                      <div className="text-3xl font-black text-blue-600 mb-1 group-hover/stat:scale-110 transition-transform">500mi</div>
+                      <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Optimized Range</div>
+                    </div>
+                  </div>
+
+                  <button className="flex items-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-blue-600 transition-all group/btn shadow-lg shadow-slate-900/20">
+                    Explore Technical Specs
+                    <ArrowUpRight size={20} className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
+                  </button>
+                </div>
+
+                <div className="relative">
+                  <div className="absolute -inset-4 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-[2.5rem] blur-2xl opacity-20 animate-pulse" />
+                  <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-white shadow-2xl group/img">
+                    <img 
+                      src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=2072" 
+                      alt="EV Battery Intelligence Interface" 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    {/* Floating Data Tag */}
+                    <motion.div 
+                      animate={{ y: [0, -10, 0] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                      className="absolute bottom-8 left-8 p-4 glass-panel rounded-2xl border-white/40 bg-white/20 backdrop-blur-md"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center text-white shadow-lg">
+                          <Activity size={20} />
+                        </div>
+                        <div>
+                          <div className="text-[10px] font-bold text-white/70 uppercase tracking-widest">Real-time Status</div>
+                          <div className="text-sm font-black text-white">System Nominal</div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -1162,72 +1236,57 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const knowledgeBase = [
-    {
-      keywords: ["altrak", "terrain", "sensor", "4k"],
-      response: "AlTrak is our flagship 4K sensor suite. It provides real-time terrain analysis and predictive safety alerts with sub-10ms latency, ensuring maximum reaction time for drivers."
-    },
-    {
-      keywords: ["fleetguard", "fleet", "enterprise", "management"],
-      response: "FleetGuard Pro is designed for enterprise fleet management. It features advanced driver behavior monitoring, route optimization, and comprehensive efficiency analytics."
-    },
-    {
-      keywords: ["battery", "ev", "range", "thermal", "intelligence"],
-      response: "The EV Battery Intelligence Suite offers cell-level monitoring and thermal management. It predicts range more accurately by accounting for terrain and ambient temperature."
-    },
-    {
-      keywords: ["pipeda", "privacy", "data", "protection"],
-      response: "Astrateq Gadgets is fully PIPEDA compliant. We prioritize edge-processing, meaning most sensitive data never leaves your vehicle, ensuring your privacy is protected by design."
-    },
-    {
-      keywords: ["transport canada", "regulation", "standard", "safety"],
-      response: "Our hardware meets or exceeds all Transport Canada safety standards. We work closely with regulators to ensure our AI assistance tools are safe for Canadian roads."
-    },
-    {
-      keywords: ["aoda", "accessibility", "ontario"],
-      response: "We are committed to AODA standards. Our interfaces are designed with high contrast and intuitive layouts to be accessible to all drivers, regardless of ability."
-    },
-    {
-      keywords: ["spec", "technical", "resolution", "latency", "temperature", "weather"],
-      response: "Technical Specifications: 4K HDR optics, <10ms processing latency, IP67 weather sealing, and a wide operating range of -40°C to +85°C for Canadian winters."
-    },
-    {
-      keywords: ["casl", "spam", "email", "consent"],
-      response: "Astrateq Gadgets strictly adheres to CASL (Canada's Anti-Spam Legislation). We only send communications to users who have provided explicit consent."
-    },
-    {
-      keywords: ["warranty", "repair", "guarantee"],
-      response: "Astrateq Gadgets come with a 24-month limited hardware warranty. For repair requests, please visit our support portal or contact a certified installer."
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  ];
+  }, [messages, isTyping]);
 
-  const handleSend = () => {
-    if (!input.trim()) return;
+  const handleSend = async () => {
+    if (!input.trim() || isTyping) return;
 
     const userMsg = input.trim();
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setInput("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      const lowerMsg = userMsg.toLowerCase();
-      let botResponse = "";
+    try {
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+      const response = await ai.models.generateContent({
+        model: "gemini-3-flash-preview",
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: `You are the Astrateq Gadgets AI Safety Assistant. 
+            Astrateq Gadgets is a Canadian tech-luxury brand specializing in AI-powered automotive safety.
+            Key Products:
+            - AlTrak: 4K sensor suite for terrain analysis and predictive safety.
+            - FleetGuard Pro: Enterprise fleet management with driver behavior monitoring.
+            - EV Battery Intelligence Suite: Cell-level monitoring and thermal management.
+            
+            Company Values:
+            - PIPEDA & CASL Compliant.
+            - Edge-First processing for maximum privacy.
+            - Engineered in Toronto for Canadian winters (-40°C to +85°C).
+            
+            User Question: ${userMsg}` }]
+          }
+        ],
+        config: {
+          systemInstruction: "You are a professional, helpful, and technically sophisticated AI assistant for Astrateq Gadgets. Use a 'Tech-Luxury' tone. Be concise but informative. Always prioritize safety and privacy in your answers. Reference Canadian standards where applicable."
+        }
+      });
 
-      // Find the best match in the knowledge base
-      const match = knowledgeBase.find(item => 
-        item.keywords.some(keyword => lowerMsg.includes(keyword))
-      );
-
-      if (match) {
-        botResponse = match.response;
-      } else {
-        botResponse = "I'm sorry, I don't have specific information on that topic in my current knowledge base. Would you like to contact a human specialist? You can reach us at support@astrateq.com or call 1-800-ASTRATEQ.";
-      }
-
+      const botResponse = response.text || "I'm sorry, I encountered an error processing your request. Please try again or contact support@astrateq.com.";
       setMessages(prev => [...prev, { role: 'bot', text: botResponse }]);
+    } catch (error) {
+      console.error("AI Chat Error:", error);
+      setMessages(prev => [...prev, { role: 'bot', text: "I'm currently experiencing a high volume of requests. Please try again in a moment or contact our Toronto command center for immediate assistance." }]);
+    } finally {
       setIsTyping(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -1239,7 +1298,7 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
         y: isOpen ? 0 : 20,
         pointerEvents: isOpen ? 'auto' : 'none'
       }}
-      className="fixed bottom-24 right-6 w-[350px] md:w-[400px] h-[500px] z-[70] flex flex-col"
+      className="fixed bottom-24 right-6 w-[350px] md:w-[450px] h-[600px] z-[70] flex flex-col"
     >
       <div className="glass-panel flex-1 rounded-3xl border-brand-purple/30 shadow-2xl overflow-hidden flex flex-col bg-white/95 backdrop-blur-2xl">
         {/* Header */}
@@ -1261,28 +1320,34 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
           </div>
           <button 
             onClick={onClose}
-            className="p-2 hover:bg-white/10 rounded-xl transition-all hover:scale-110 active:scale-95 relative z-10"
+            className="p-2 hover:bg-white/10 rounded-xl transition-all hover:scale-110 active:scale-95 relative z-10 group"
+            aria-label="Close Chat"
           >
-            <Minimize2 size={20} className="text-white/60 hover:text-white" />
+            <X size={24} className="text-white/60 group-hover:text-white group-hover:rotate-90 transition-all duration-300" />
           </button>
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-4 scrollbar-hide">
+        <div 
+          ref={scrollRef}
+          className="flex-1 overflow-y-auto p-5 space-y-4 scrollbar-hide"
+        >
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed ${
+              <div className={`max-w-[90%] p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${
                 msg.role === 'user' 
                   ? 'bg-brand-purple text-brand-navy font-medium rounded-tr-none' 
                   : 'bg-slate-100 text-brand-gray font-medium rounded-tl-none'
               }`}>
-                {msg.text}
+                <div className="prose prose-sm prose-slate max-w-none">
+                  <Markdown>{msg.text}</Markdown>
+                </div>
               </div>
             </div>
           ))}
           {isTyping && (
             <div className="flex justify-start">
-              <div className="bg-slate-100 p-4 rounded-2xl rounded-tl-none flex gap-1">
+              <div className="bg-slate-100 p-4 rounded-2xl rounded-tl-none flex gap-1 shadow-sm">
                 <div className="w-1.5 h-1.5 bg-brand-gray/30 rounded-full animate-bounce" />
                 <div className="w-1.5 h-1.5 bg-brand-gray/30 rounded-full animate-bounce [animation-delay:0.2s]" />
                 <div className="w-1.5 h-1.5 bg-brand-gray/30 rounded-full animate-bounce [animation-delay:0.4s]" />
@@ -1300,11 +1365,15 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Ask about Astrateq Gadgets systems..."
-              className="w-full pl-4 pr-12 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-purple transition-colors placeholder:text-slate-400"
+              className="w-full pl-4 pr-12 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-purple transition-shadow focus:shadow-[0_0_15px_rgba(217,70,239,0.15)] placeholder:text-slate-400"
+              disabled={isTyping}
             />
             <button 
               onClick={handleSend}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-brand-purple hover:bg-brand-purple/10 rounded-lg transition-colors"
+              disabled={isTyping}
+              className={`absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg transition-all ${
+                isTyping ? 'text-slate-300 cursor-not-allowed' : 'text-brand-purple hover:bg-brand-purple/10'
+              }`}
             >
               <Send size={18} />
             </button>
