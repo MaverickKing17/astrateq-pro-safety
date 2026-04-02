@@ -588,7 +588,7 @@ export default function App() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="py-32 px-4 relative overflow-hidden bg-white text-brand-offwhite border-t border-slate-100"
+        className="py-32 px-4 relative overflow-hidden bg-gradient-to-b from-white via-white to-slate-50/50 text-brand-offwhite border-t border-slate-100"
       >
         {/* Technical Background Detail */}
         <div className="absolute inset-0 pointer-events-none opacity-5">
@@ -597,63 +597,93 @@ export default function App() {
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center gap-20">
-          {/* Brand & Language & Socials */}
-          <div className="w-full flex flex-col md:flex-row items-center justify-between gap-12 pb-12 border-b border-slate-100">
-            <div className="flex flex-col items-center md:items-start gap-4">
+          {/* Brand & Lead Gen & Utilities */}
+          <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-12 pb-12 border-b border-slate-100/50 items-start">
+            {/* Column 1: Brand */}
+            <div className="flex flex-col items-center lg:items-start gap-4">
               <Logo />
-              <p className="text-sm text-brand-gray font-medium max-w-[250px] text-center md:text-left">
-                Empowering Canadian drivers with the world's most advanced AI safety systems.
+              <p className="text-sm text-brand-gray font-medium max-w-[280px] text-center lg:text-left leading-relaxed">
+                Empowering Canadian drivers with the world's most advanced AI safety systems. Engineered for the Great North.
               </p>
             </div>
 
-            <div className="flex flex-col items-center gap-6">
-              <div className="flex items-center gap-6 text-sm font-bold tracking-widest text-brand-gray" role="navigation" aria-label="Language selection">
-                <button 
-                  className="text-brand-purple cursor-default" 
-                  aria-label="English" 
-                  aria-current="true"
+            {/* Column 2: Lead Generation (CRO Focus) */}
+            <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto">
+              <div className="w-full space-y-3">
+                <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest text-center">Stay in the Loop</div>
+                <form 
+                  className="flex gap-2" 
+                  onSubmit={(e) => { 
+                    e.preventDefault(); 
+                    setIsWaitlistOpen(true); 
+                  }}
                 >
-                  EN
-                </button>
-                <div className="w-[1px] h-4 bg-slate-200" aria-hidden="true" />
-                <button 
-                  className="hover:text-brand-purple transition-colors" 
-                  aria-label="Switch to French"
-                >
-                  FR
-                </button>
-              </div>
-              
-              {/* Social Links */}
-              <div className="flex items-center gap-4" role="list" aria-label="Social media links">
-                <a 
-                  href="https://linkedin.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-brand-gray hover:text-brand-purple hover:border-brand-purple hover:bg-brand-purple/5 transition-all group"
-                  aria-label="Follow Astrateq Gadgets on LinkedIn"
-                  role="listitem"
-                >
-                  <Linkedin size={20} className="group-hover:scale-110 transition-transform" />
-                </a>
-                <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-brand-gray hover:text-brand-purple hover:border-brand-purple hover:bg-brand-purple/5 transition-all group"
-                  aria-label="Follow Astrateq Gadgets on Twitter"
-                  role="listitem"
-                >
-                  <Twitter size={20} className="group-hover:scale-110 transition-transform" />
-                </a>
+                  <input 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-purple transition-all shadow-inner"
+                    required
+                  />
+                  <button 
+                    type="submit"
+                    className="px-6 py-2.5 bg-brand-purple text-white text-xs font-bold rounded-xl hover:bg-brand-purple/90 transition-all shadow-lg shadow-brand-purple/20 uppercase tracking-widest active:scale-95"
+                  >
+                    Join
+                  </button>
+                </form>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="flex -space-x-1.5">
+                    {[1,2,3].map(i => (
+                      <div key={i} className="w-4 h-4 rounded-full border border-white bg-slate-200 overflow-hidden">
+                        <img src={`https://i.pravatar.cc/40?img=${i+10}`} alt="User" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[9px] text-brand-gray/60 font-bold uppercase tracking-wider">
+                    Join <span className="text-brand-purple">2,400+</span> drivers receiving updates
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center md:items-end gap-4">
-              <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest">System Status</div>
-              <div className="flex items-center gap-3 px-4 py-2 bg-emerald-500/5 border border-emerald-500/10 rounded-full">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-xs font-bold text-emerald-500 uppercase tracking-widest">All Systems Nominal</span>
+            {/* Column 3: Status & Utilities */}
+            <div className="flex flex-col items-center lg:items-end gap-6">
+              <div className="space-y-3 text-center lg:text-right">
+                <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest">System Status</div>
+                <div className="flex items-center gap-3 px-4 py-2 bg-emerald-500/5 border border-emerald-500/20 rounded-full shadow-sm">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-bold text-emerald-500 uppercase tracking-widest">All Systems Nominal</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center lg:items-end gap-4">
+                <div className="flex items-center gap-4">
+                  {/* Trust Badges */}
+                  <div className="flex items-center gap-3 opacity-40 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                    <div title="Transport Canada Compliant" className="flex flex-col items-center">
+                      <ShieldCheck size={16} className="text-brand-purple" />
+                      <span className="text-[7px] font-bold uppercase mt-0.5">TC Compliant</span>
+                    </div>
+                    <div className="w-[1px] h-4 bg-slate-200" />
+                    <div title="ISO 9001 Certified" className="flex flex-col items-center">
+                      <Scale size={16} className="text-brand-purple" />
+                      <span className="text-[7px] font-bold uppercase mt-0.5">ISO 9001</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-4 text-[10px] font-bold tracking-widest text-brand-gray" role="navigation" aria-label="Language selection">
+                    <button className="text-brand-purple relative">EN</button>
+                    <div className="w-[1px] h-3 bg-slate-200" />
+                    <button className="hover:text-brand-purple transition-colors">FR</button>
+                  </div>
+                  <div className="w-[1px] h-4 bg-slate-200" />
+                  <div className="flex items-center gap-3">
+                    <a href="#" className="text-brand-gray hover:text-brand-purple transition-colors"><Linkedin size={16} /></a>
+                    <a href="#" className="text-brand-gray hover:text-brand-purple transition-colors"><Twitter size={16} /></a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -661,8 +691,8 @@ export default function App() {
           {/* Fleet & Family Highlight */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
             <motion.div 
-              whileHover={{ y: -5 }}
-              className="p-8 rounded-3xl bg-slate-50 border border-slate-100 relative overflow-hidden group"
+              whileHover={{ y: -5, borderColor: 'rgba(217, 70, 239, 0.3)' }}
+              className="p-8 rounded-3xl bg-white border border-slate-100 relative overflow-hidden group shadow-sm hover:shadow-xl hover:shadow-brand-purple/5 transition-all duration-500"
             >
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                 <Shield size={64} className="text-brand-purple" />
@@ -671,14 +701,14 @@ export default function App() {
               <p className="text-sm text-brand-gray leading-relaxed mb-6">
                 Protect what matters most. Our AI is specifically trained for Canadian road conditions, from icy school zones to dark highway stretches.
               </p>
-              <button className="text-xs font-bold text-brand-purple uppercase tracking-widest hover:underline flex items-center gap-2">
-                Family Safety Guide <ChevronRight size={14} />
+              <button className="text-xs font-bold text-brand-purple uppercase tracking-widest hover:underline flex items-center gap-2 group/btn">
+                Family Safety Guide <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </button>
             </motion.div>
 
             <motion.div 
-              whileHover={{ y: -5 }}
-              className="p-8 rounded-3xl bg-slate-50 border border-slate-100 relative overflow-hidden group"
+              whileHover={{ y: -5, borderColor: 'rgba(217, 70, 239, 0.3)' }}
+              className="p-8 rounded-3xl bg-white border border-slate-100 relative overflow-hidden group shadow-sm hover:shadow-xl hover:shadow-brand-purple/5 transition-all duration-500"
             >
               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                 <Globe size={64} className="text-brand-purple" />
@@ -687,15 +717,16 @@ export default function App() {
               <p className="text-sm text-brand-gray leading-relaxed mb-6">
                 Reduce liability and optimize performance. Real-time telemetry and predictive maintenance for fleets of any size across North America.
               </p>
-              <button className="text-xs font-bold text-brand-purple uppercase tracking-widest hover:underline flex items-center gap-2">
-                FleetGuard Pro Solutions <ChevronRight size={14} />
+              <button className="text-xs font-bold text-brand-purple uppercase tracking-widest hover:underline flex items-center gap-2 group/btn">
+                FleetGuard Pro Solutions <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </button>
             </motion.div>
           </div>
           
           {/* AI System Disclaimer */}
-          <div className="w-full max-w-4xl mx-auto px-8 py-6 bg-brand-purple/5 border border-brand-purple/10 rounded-3xl flex flex-col md:flex-row items-center gap-6 text-center md:text-left relative overflow-hidden">
+          <div className="w-full max-w-4xl mx-auto px-8 py-6 bg-brand-purple/5 border border-brand-purple/10 rounded-3xl flex flex-col md:flex-row items-center gap-6 text-center md:text-left relative overflow-hidden shadow-inner">
             <div className="absolute top-0 left-0 w-1 h-full bg-brand-purple" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-purple/5 rounded-full blur-3xl -mr-16 -mt-16" />
             <AlertTriangle className="text-brand-purple shrink-0" size={32} />
             <div className="space-y-1">
               <h5 className="text-sm font-bold text-brand-offwhite uppercase tracking-widest">Critical Safety Notice</h5>
@@ -770,6 +801,7 @@ export default function App() {
                 <div className="flex items-center gap-2 text-xs text-brand-gray font-bold uppercase tracking-widest">
                   <MapPin size={14} className="text-brand-purple" />
                   Canada
+                  <span className="text-brand-purple ml-1" role="img" aria-label="Canada">🍁</span>
                 </div>
               </div>
             </div>
@@ -1176,9 +1208,14 @@ function FooterAccordion({ title, description, onLinkClick, links }: {
             <li key={i}>
               <button 
                 onClick={() => onLinkClick(link.label)}
-                className="hover:text-brand-purple transition-colors block py-1.5 md:py-0 border-l-2 border-transparent hover:border-brand-purple hover:pl-3 md:hover:pl-0 md:border-none transition-all duration-300 text-left w-full"
+                className="hover:text-brand-purple transition-all block py-1.5 md:py-0 border-l-2 border-transparent hover:border-brand-purple hover:pl-3 md:hover:pl-4 relative group/link text-left w-full"
               >
-                {link.label}
+                <span className="relative z-10">{link.label}</span>
+                <motion.div 
+                  className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-brand-purple rounded-full opacity-0 group-hover/link:opacity-100 transition-opacity hidden md:block"
+                  initial={{ scale: 0 }}
+                  whileHover={{ scale: 1 }}
+                />
               </button>
             </li>
           ))}
