@@ -253,7 +253,7 @@ export default function App() {
             <button onClick={() => scrollToSection('solutions')} className="hover:text-brand-purple transition-colors">Solutions</button>
             <button 
               onClick={() => setIsWaitlistOpen(true)}
-              className="px-4 py-2 bg-brand-purple text-white rounded-lg hover:bg-brand-purple/90 transition-colors shadow-lg shadow-brand-purple/20"
+              className="px-4 py-2 bg-brand-ember text-[#1A1A1A] rounded-[6px] hover:bg-brand-ember/90 transition-colors shadow-lg shadow-brand-ember/20"
             >
               Beta Waitlist
             </button>
@@ -373,7 +373,7 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
               onClick={() => setIsWaitlistOpen(true)}
-              className="group relative px-8 py-4 bg-brand-yellow text-brand-offwhite font-bold rounded-lg transition-all hover:scale-105 hover:shadow-[0_10px_30px_rgba(250,204,21,0.2)] active:scale-95"
+              className="group relative px-8 py-4 bg-brand-ember text-[#1A1A1A] font-bold rounded-[6px] transition-all hover:scale-105 hover:shadow-[0_10px_30px_rgba(255,184,0,0.2)] active:scale-95"
             >
               JOIN THE FOUNDING BETA WAITLIST (100 SPOTS REMAINING)
             </motion.button>
