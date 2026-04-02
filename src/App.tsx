@@ -1058,18 +1058,18 @@ export default function App() {
           animate={{ scale: 1, opacity: 1 }}
           whileHover={{ scale: 1.05, y: -4 }}
           whileTap={{ scale: 0.95 }}
-          className="relative w-20 h-20 bg-brand-offwhite text-white rounded-[2.5rem] flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(15,23,42,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(217,70,239,0.4)] transition-all group overflow-hidden border border-white/10"
+          className="relative w-20 h-20 bg-orange-500 text-white rounded-[2.5rem] flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(59,130,246,0.4)] hover:shadow-[0_25px_50px_-12px_rgba(59,130,246,0.6)] transition-all group overflow-hidden border border-white/20"
           aria-label="Open AI Live Chat"
         >
           {/* Dynamic Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-purple via-brand-purple-glow to-brand-purple opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
           {/* Animated Rings */}
-          <div className="absolute inset-0 border-2 border-brand-purple/20 rounded-[2.5rem] animate-ping opacity-20" />
-          <div className="absolute inset-0 border border-brand-purple/40 rounded-[2.5rem] animate-spin-slow opacity-30" />
+          <div className="absolute inset-0 border-2 border-blue-400/20 rounded-[2.5rem] animate-ping opacity-20" />
+          <div className="absolute inset-0 border border-blue-400/40 rounded-[2.5rem] animate-spin-slow opacity-30" />
           
           {/* Notification Dot */}
-          <div className="absolute top-4 right-4 w-3 h-3 bg-brand-purple rounded-full border-2 border-brand-offwhite z-20 shadow-[0_0_10px_#D946EF]" />
+          <div className="absolute top-4 right-4 w-3 h-3 bg-blue-500 rounded-full border-2 border-orange-500 z-20 shadow-[0_0_10px_#3b82f6]" />
           
           <div className="relative z-10 flex flex-col items-center gap-1">
             <Globe size={28} className="group-hover:rotate-12 transition-transform duration-500" />
@@ -1077,7 +1077,7 @@ export default function App() {
           </div>
 
           {/* Inner Glow Overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(217,70,239,0.2)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.3)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity" />
         </motion.button>
       </div>
 
