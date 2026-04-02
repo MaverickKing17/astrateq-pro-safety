@@ -35,7 +35,9 @@ import {
   HelpCircle,
   Lock,
   Heart,
-  ArrowUpRight
+  ArrowUpRight,
+  Play,
+  RefreshCw
 } from "lucide-react";
 
 function Logo({ className = "", event }: { className?: string, event?: any }) {
@@ -128,7 +130,83 @@ export default function App() {
   const [activeLegalPage, setActiveLegalPage] = useState<string | null>(null);
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [heroVideoUrl, setHeroVideoUrl] = useState<string | null>(null);
+  const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
+  const [videoGenStatus, setVideoGenStatus] = useState("");
   const currentEvent = getCanadianEvent();
+
+  const generateHeroVideo = async () => {
+    // @ts-ignore
+    if (!(await window.aistudio.hasSelectedApiKey())) {
+      // @ts-ignore
+      await window.aistudio.openSelectKey();
+      return;
+    }
+
+    setIsGeneratingVideo(true);
+    setVideoGenStatus("Initializing cinematic engine...");
+
+    try {
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const prompt = `4K cinematic, hyper-realistic hero video loop for Astrateq Gadgets. High-angle POV inside a luxury EV driving through a vibrant Toronto cityscape at twilight. The windshield shows a rain-slicked road with colorful neon reflections. A sleek AlTrak™ unit is mounted on the dash, projecting a sharp, mathematical Glacial Cyan (#00E5FF) wireframe grid onto the road. Translucent HUD elements float in the air, displaying "94% Hazard Accuracy" and "Active 360° Shield." The lighting is premium and moody, using Chiaroscuro to highlight leather textures. The video transitions into a smooth pan showing the Guardian Mode pulse in Safety Ember (#FFB800). No people visible, focus is on the technology and the environment. Smooth, slow-motion 60fps.`;
+
+      const statusMessages = [
+        "Calibrating Glacial Cyan wireframe...",
+        "Rendering Toronto twilight reflections...",
+        "Simulating rain-slicked road physics...",
+        "Optimizing 4K Chiaroscuro lighting...",
+        "Finalizing 60fps cinematic loop..."
+      ];
+
+      let msgIndex = 0;
+      const interval = setInterval(() => {
+        setVideoGenStatus(statusMessages[msgIndex % statusMessages.length]);
+        msgIndex++;
+      }, 8000);
+
+      // @ts-ignore
+      let operation = await ai.models.generateVideos({
+        model: 'veo-3.1-generate-preview',
+        prompt: prompt,
+        config: {
+          numberOfVideos: 1,
+          resolution: '1080p',
+          aspectRatio: '16:9'
+        }
+      });
+
+      while (!operation.done) {
+        await new Promise(resolve => setTimeout(resolve, 10000));
+        // @ts-ignore
+        operation = await ai.operations.getVideosOperation({ operation: operation });
+      }
+
+      clearInterval(interval);
+      const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
+      
+      if (downloadLink) {
+        const response = await fetch(downloadLink, {
+          method: 'GET',
+          headers: {
+            'x-goog-api-key': process.env.API_KEY || '',
+          },
+        });
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        setHeroVideoUrl(url);
+      }
+    } catch (error) {
+      console.error("Video generation failed:", error);
+      // @ts-ignore
+      if (error.message?.includes("Requested entity was not found")) {
+        // @ts-ignore
+        await window.aistudio.openSelectKey();
+      }
+    } finally {
+      setIsGeneratingVideo(false);
+      setVideoGenStatus("");
+    }
+  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -188,12 +266,24 @@ export default function App() {
         {/* Background with Arctic Feel */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/60 via-brand-navy/90 to-brand-navy z-10" />
-          <img 
-            src="https://images.unsplash.com/photo-1542362567-b055002b91f4?auto=format&fit=crop&q=80&w=2000" 
-            alt="Car Cockpit" 
-            className="w-full h-full object-cover grayscale opacity-20"
-            referrerPolicy="no-referrer"
-          />
+          
+          {heroVideoUrl ? (
+            <video 
+              src={heroVideoUrl} 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="w-full h-full object-cover opacity-40"
+            />
+          ) : (
+            <img 
+              src="https://images.unsplash.com/photo-1542362567-b055002b91f4?auto=format&fit=crop&q=80&w=2000" 
+              alt="Car Cockpit" 
+              className="w-full h-full object-cover grayscale opacity-20"
+              referrerPolicy="no-referrer"
+            />
+          )}
           
           {/* HUD Overlays (Adjusted for Light Mode) */}
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
@@ -287,6 +377,29 @@ export default function App() {
             >
               JOIN THE FOUNDING BETA WAITLIST (100 SPOTS REMAINING)
             </motion.button>
+
+            {!heroVideoUrl && (
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5 }}
+                onClick={generateHeroVideo}
+                disabled={isGeneratingVideo}
+                className="mt-4 flex items-center gap-2 text-xs font-mono text-brand-purple/60 hover:text-brand-purple transition-colors disabled:opacity-50"
+              >
+                {isGeneratingVideo ? (
+                  <div className="flex items-center gap-3">
+                    <RefreshCw size={14} className="animate-spin" />
+                    <span>{videoGenStatus}</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 group">
+                    <Play size={14} className="group-hover:scale-125 transition-transform" />
+                    <span>GENERATE CINEMATIC HERO (4K VEO)</span>
+                  </div>
+                )}
+              </motion.button>
+            )}
 
             <motion.div 
               initial={{ opacity: 0 }}
@@ -617,6 +730,7 @@ export default function App() {
               subtitle="24/7 ASSET MONITORING"
               description="Proactive around-the-clock asset monitoring and security. Your vehicle is always watched, always protected, always connected."
               features={["24/7 MONITORING", "INSTANT ALERTS", "GEO-FENCING"]}
+              image="https://i.ibb.co/Nn1hgkdL/To-implement-the-202604021814.jpg"
             />
           </div>
 
