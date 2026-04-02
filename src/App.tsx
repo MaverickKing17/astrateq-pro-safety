@@ -37,21 +37,21 @@ import {
   Heart
 } from "lucide-react";
 
-function Logo({ className = "" }: { className?: string }) {
+function Logo({ className = "", event }: { className?: string, event?: any }) {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       <div className="relative w-12 h-12 flex items-center justify-center">
         {/* Animated Glow Background */}
-        <div className="absolute inset-0 bg-brand-purple/20 rounded-2xl blur-xl animate-pulse" />
+        <div className={`absolute inset-0 ${event ? event.accent + '/20' : 'bg-brand-purple/20'} rounded-2xl blur-xl animate-pulse`} />
         
         {/* Official Astrateq Icon (Recreated with SVG) */}
         <div className="relative z-10 w-10 h-10 flex items-center justify-center">
           <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_8px_rgba(217,70,239,0.5)]">
             <defs>
               <linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#D946EF" />
-                <stop offset="50%" stopColor="#A21CAF" />
-                <stop offset="100%" stopColor="#701A75" />
+                <stop offset="0%" stopColor={event ? (event.color.includes('red') ? '#ef4444' : event.color.includes('orange') ? '#f97316' : event.color.includes('emerald') ? '#10b981' : '#D946EF') : '#D946EF'} />
+                <stop offset="50%" stopColor={event ? (event.color.includes('red') ? '#dc2626' : event.color.includes('orange') ? '#ea580c' : event.color.includes('emerald') ? '#059669' : '#A21CAF') : '#A21CAF'} />
+                <stop offset="100%" stopColor={event ? (event.color.includes('red') ? '#b91c1c' : event.color.includes('orange') ? '#c2410c' : event.color.includes('emerald') ? '#047857' : '#701A75') : '#701A75'} />
               </linearGradient>
             </defs>
             {/* Stylized Ribbon 'A' */}
@@ -80,17 +80,54 @@ function Logo({ className = "" }: { className?: string }) {
       </div>
       <div className="flex flex-col leading-none">
         <span className="text-2xl font-display font-black text-brand-offwhite tracking-tighter">ASTRATEQ</span>
-        <span className="text-[10px] font-mono font-bold text-brand-purple tracking-[0.5em] uppercase mt-0.5">Gadgets</span>
+        <div className="flex items-center gap-2">
+          <span className={`text-[10px] font-mono font-bold ${event ? event.color : 'text-brand-purple'} tracking-[0.5em] uppercase mt-0.5`}>Gadgets</span>
+          {event && (
+            <span className="text-[10px] animate-bounce" title={event.name}>{event.icon}</span>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
+const getCanadianEvent = () => {
+  const now = new Date();
+  const month = now.getMonth(); // 0-indexed
+  const day = now.getDate();
+
+  // Canada Day: July 1
+  if (month === 6 && day === 1) return { name: "Canada Day", icon: "🇨🇦", color: "text-red-600", accent: "bg-red-600" };
+  
+  // Remembrance Day: Nov 11
+  if (month === 10 && day === 11) return { name: "Remembrance Day", icon: "🌺", color: "text-red-800", accent: "bg-red-800" };
+
+  // Truth and Reconciliation: Sept 30
+  if (month === 8 && day === 30) return { name: "National Day for Truth and Reconciliation", icon: "🧡", color: "text-orange-500", accent: "bg-orange-500" };
+
+  // 2026 Specific Holidays (Approximate or Fixed)
+  // Good Friday: April 3, 2026
+  if (month === 3 && day === 3) return { name: "Good Friday", icon: "🐣", color: "text-emerald-500", accent: "bg-emerald-500" };
+  // Easter Monday: April 6, 2026
+  if (month === 3 && day === 6) return { name: "Easter Monday", icon: "🐣", color: "text-emerald-500", accent: "bg-emerald-500" };
+  // Victoria Day: May 18, 2026
+  if (month === 4 && day === 18) return { name: "Victoria Day", icon: "👑", color: "text-blue-600", accent: "bg-blue-600" };
+  // Thanksgiving: Oct 12, 2026
+  if (month === 9 && day === 12) return { name: "Thanksgiving", icon: "🍂", color: "text-orange-600", accent: "bg-orange-600" };
+
+  // Seasonal
+  if (month === 3) return { name: "Spring Season", icon: "🌱", color: "text-emerald-400", accent: "bg-emerald-400" };
+  if (month === 11) return { name: "Holiday Season", icon: "❄️", color: "text-blue-400", accent: "bg-blue-400" };
+
+  return null;
+};
 
 export default function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [activeLegalPage, setActiveLegalPage] = useState<string | null>(null);
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const currentEvent = getCanadianEvent();
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -131,7 +168,7 @@ export default function App() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Logo />
+          <Logo event={currentEvent} />
           <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-brand-gray">
             <button onClick={() => scrollToSection('vision')} className="hover:text-brand-purple transition-colors">Vision</button>
             <button onClick={() => scrollToSection('solutions')} className="hover:text-brand-purple transition-colors">Solutions</button>
@@ -582,7 +619,7 @@ export default function App() {
         </div>
       </section>
 
-      <FAQSection />
+      <FAQSection onContactSupport={() => setIsChatOpen(true)} />
 
       {/* Footer */}
       <motion.footer 
@@ -603,7 +640,7 @@ export default function App() {
           <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-12 pb-12 border-b border-slate-100/50 items-start">
             {/* Column 1: Brand */}
             <div className="flex flex-col items-center lg:items-start gap-4">
-              <Logo />
+              <Logo event={currentEvent} />
               <p className="text-sm text-brand-gray font-medium max-w-[280px] text-center lg:text-left leading-relaxed">
                 Empowering Canadian drivers with the world's most advanced AI safety systems. Engineered for the Great North.
               </p>
@@ -926,7 +963,7 @@ export default function App() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 w-full pt-12 border-t border-slate-100">
             <FooterAccordion 
               title="Core Legal"
-              description="Foundational agreements governing your use of Astrateq services."
+              description="Foundational agreements governing your use of Astrateq Gadgets services."
               onLinkClick={setActiveLegalPage}
               links={[
                 { label: "Privacy Policy", href: "#" },
@@ -974,20 +1011,22 @@ export default function App() {
           <div className="text-center space-y-8 w-full">
             <div className="space-y-4">
               <p className="text-[10px] text-brand-gray font-bold leading-relaxed uppercase tracking-[0.2em] max-w-4xl mx-auto">
-                To the maximum extent permitted by applicable law, Astrateq Gadgets Inc. total liability shall not exceed the purchase price. Driver remains primary safety controller. AlTrak, FleetGuard Pro, and EV Battery Intelligence Suite are trademarks of Astrateq Gadgets Inc.
+                To the maximum extent permitted by applicable law, Astrateq Gadgets total liability shall not exceed the purchase price. Driver remains primary safety controller. AlTrak, FleetGuard Pro, and EV Battery Intelligence Suite are trademarks of Astrateq Gadgets.
               </p>
             </div>
             
             <div className="pt-8 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
               <p className="text-xs text-brand-gray font-semibold uppercase tracking-widest">
-                © 2026 Astrateq Gadgets Inc. Engineered in Toronto.
+                © 2026 Astrateq Gadgets. Engineered in Toronto.
               </p>
               <div className="flex items-center gap-8">
                 <span className="text-[10px] font-mono text-brand-purple font-bold uppercase tracking-widest">v2.4.0-STABLE</span>
                 <div className="flex items-center gap-2 text-xs text-brand-gray font-bold uppercase tracking-widest">
-                  <MapPin size={14} className="text-brand-purple" />
+                  <MapPin size={14} className={currentEvent ? currentEvent.color : "text-brand-purple"} />
                   Canada
-                  <span className="text-brand-purple ml-1" role="img" aria-label="Canada">🍁</span>
+                  <span className={currentEvent ? currentEvent.color + " ml-1" : "text-brand-purple ml-1"} role="img" aria-label={currentEvent ? currentEvent.name : "Canada"}>
+                    {currentEvent ? currentEvent.icon : "🍁"}
+                  </span>
                 </div>
               </div>
             </div>
@@ -1119,7 +1158,7 @@ function LegalModal({ isOpen, content, onClose }: { isOpen: boolean, content: st
 
 function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
   const [messages, setMessages] = useState<{ role: 'user' | 'bot', text: string }[]>([
-    { role: 'bot', text: "Welcome to Astrateq Support. I am your AI Safety Assistant. How can I help you optimize your journey today?" }
+    { role: 'bot', text: "Welcome to Astrateq Gadgets Support. I am your AI Safety Assistant. How can I help you optimize your journey today?" }
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -1139,7 +1178,7 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
     },
     {
       keywords: ["pipeda", "privacy", "data", "protection"],
-      response: "Astrateq is fully PIPEDA compliant. We prioritize edge-processing, meaning most sensitive data never leaves your vehicle, ensuring your privacy is protected by design."
+      response: "Astrateq Gadgets is fully PIPEDA compliant. We prioritize edge-processing, meaning most sensitive data never leaves your vehicle, ensuring your privacy is protected by design."
     },
     {
       keywords: ["transport canada", "regulation", "standard", "safety"],
@@ -1155,7 +1194,7 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
     },
     {
       keywords: ["casl", "spam", "email", "consent"],
-      response: "Astrateq strictly adheres to CASL (Canada's Anti-Spam Legislation). We only send communications to users who have provided explicit consent."
+      response: "Astrateq Gadgets strictly adheres to CASL (Canada's Anti-Spam Legislation). We only send communications to users who have provided explicit consent."
     },
     {
       keywords: ["warranty", "repair", "guarantee"],
@@ -1213,7 +1252,7 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
               <Bot className="text-white" size={24} />
             </div>
             <div>
-              <h3 className="font-display font-bold text-base tracking-tight text-white leading-none mb-1.5">Astrateq AI Support</h3>
+              <h3 className="font-display font-bold text-base tracking-tight text-white leading-none mb-1.5">Astrateq Gadgets AI Support</h3>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-brand-purple animate-pulse shadow-[0_0_8px_#D946EF]" />
                 <span className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-[0.2em]">System Active</span>
@@ -1260,7 +1299,7 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              placeholder="Ask about Astrateq systems..."
+              placeholder="Ask about Astrateq Gadgets systems..."
               className="w-full pl-4 pr-12 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-purple transition-colors placeholder:text-slate-400"
             />
             <button 
@@ -1551,7 +1590,7 @@ function FAQItem({ question, answer, index }: { question: string, answer: string
   );
 }
 
-function FAQSection() {
+function FAQSection({ onContactSupport }: { onContactSupport: () => void }) {
   const faqs = [
     {
       category: "Installation & Setup",
@@ -1564,6 +1603,10 @@ function FAQSection() {
         {
           q: "How long does the installation take?",
           a: "A standard professional installation takes approximately 3.5 hours. This includes physical mounting of the front and rear sensor arrays, routing of the high-speed data cables, and a 45-minute software calibration drive where the system 'learns' your vehicle's dynamic profile and blind-spot zones."
+        },
+        {
+          q: "Can I transfer the system to a new vehicle?",
+          a: "Yes. Astrateq Gadgets systems are designed to be modular. If you trade in your vehicle, our technicians can decommission the hardware and reinstall it in your new vehicle. A recalibration service is required to ensure the AI models are tuned to the new vehicle's height, wheelbase, and sensor positioning. This process typically takes 2 hours."
         }
       ]
     },
@@ -1576,8 +1619,48 @@ function FAQSection() {
           a: "Astrateq Gadgets are compatible with 98% of passenger vehicles manufactured after 2015. We offer native CAN-bus integration for major manufacturers. For EV owners, our Battery Intelligence Suite is specifically optimized for Tesla (Model 3/Y), Rivian (R1T/R1S), and the Ford F-150 Lightning, providing deep-level thermal monitoring that standard software misses."
         },
         {
+          q: "Does it support trailers or heavy-duty towing?",
+          a: "Absolutely. Our 'Tow-Link' module extends the AI's predictive capabilities to include trailer sway detection and blind-spot monitoring for loads up to 30 feet. The system automatically adjusts braking pressure and steering assistance algorithms when it detects a connected trailer, accounting for the increased mass and different center of gravity."
+        },
+        {
           q: "Does it work with older vehicles?",
           a: "Vehicles manufactured between 2008 and 2014 are supported via our 'Legacy Link' adapter, though some advanced predictive features may be limited by the vehicle's slower data bus. For vehicles older than 2008, we offer a standalone safety suite that provides visual and audible alerts without direct vehicle control integration."
+        }
+      ]
+    },
+    {
+      category: "Fleet & ROI Optimization",
+      icon: <Activity size={20} />,
+      questions: [
+        {
+          q: "How does FleetGuard Pro improve my bottom line?",
+          a: "FleetGuard Pro delivers a measurable ROI within 6-9 months by reducing fuel consumption by up to 15% through AI-optimized routing and idling reduction. Additionally, our predictive maintenance alerts reduce unscheduled downtime by 30%, and our safety suite can lower insurance premiums by up to 20% through verified safe-driving telemetry."
+        },
+        {
+          q: "How does the system handle multi-driver authentication?",
+          a: "For fleets, we offer biometric and NFC-based driver identification. This ensures that safety scores and driving logs are accurately attributed to the correct operator. The system can automatically adjust seat positions, mirror angles, and even speed governors based on the specific driver's profile and authorization level."
+        },
+        {
+          q: "Does Astrateq Gadgets help with ELD compliance in Canada?",
+          a: "Yes. Our systems are fully certified for Canadian ELD (Electronic Logging Device) mandates. We provide seamless integration with major dispatch software, ensuring your drivers remain compliant with Hours of Service (HOS) regulations while automating the reporting process to save your administrative team hours of manual work."
+        }
+      ]
+    },
+    {
+      category: "Family Safety & AI Ethics",
+      icon: <ShieldCheck size={20} />,
+      questions: [
+        {
+          q: "Is the AI safe for my children? How does it interact with safety features?",
+          a: "Safety is our core mission. Astrateq Gadgets AI is designed to augment your vehicle's existing safety systems (like ABS and ESC), not override them. For families, our 'Guardian Mode' provides enhanced child-presence detection and cabin climate monitoring. The AI acts as a 'second set of eyes' that never gets tired, specifically tuned to detect unpredictable movements like a child or pet darting into the road."
+        },
+        {
+          q: "How does the AI handle ethical dilemmas in split-second decisions?",
+          a: "Astrateq Gadgets follows a 'Human-in-the-Loop' philosophy. Our AI is programmed to prioritize the safety of all road users by maximizing braking force and identifying the path of least resistance (e.g., steering toward an empty shoulder rather than another vehicle). We do not use 'trolley problem' logic; instead, our algorithms focus on physics-based collision avoidance and mitigation of force."
+        },
+        {
+          q: "What kind of ongoing support do you provide?",
+          a: "Every Astrateq Gadgets installation includes a lifetime subscription to our 'Safety Cloud' updates, ensuring your AI models are always learning from the latest road data. We provide 24/7 technical support via our Toronto-based command center, and every hardware unit is backed by a 24-month comprehensive warranty with on-site service available for fleet customers."
         }
       ]
     },
@@ -1587,11 +1670,29 @@ function FAQSection() {
       questions: [
         {
           q: "How is my data protected?",
-          a: "We employ a 'Zero-Cloud' default policy. 99.9% of all video and sensor processing happens locally on the Astrateq Edge Processor. We are fully PIPEDA and GDPR compliant. Your driving data is encrypted with AES-256 at rest. If you choose to use our 'Incident Cloud Backup', your data is sharded and stored across multiple secure Canadian data centers, accessible only via your biometric-linked Astrateq ID."
+          a: "We employ a 'Zero-Cloud' default policy. 99.9% of all video and sensor processing happens locally on the Astrateq Gadgets Edge Processor. We are fully PIPEDA and GDPR compliant. Your driving data is encrypted with AES-256 at rest. If you choose to use our 'Incident Cloud Backup', your data is sharded and stored across multiple secure Canadian data centers, accessible only via your biometric-linked Astrateq Gadgets ID."
+        },
+        {
+          q: "Is my data shared with law enforcement?",
+          a: "We do not provide law enforcement with a 'backdoor' to your data. We will only release specific incident data if compelled by a valid Canadian court order or warrant. Because we prioritize local storage, in many cases, we do not even possess the data required to fulfill such requests unless you have explicitly enabled cloud backups."
         },
         {
           q: "Who owns the data collected by the sensors?",
-          a: "You are the sole owner of your data. Astrateq Gadgets Inc. does not sell, rent, or trade user data to insurance companies or third parties. We only use anonymized, telemetry-only data (no video, no location) to improve our global safety models if you explicitly opt-in to our 'Community Safety Network'."
+          a: "You are the sole owner of your data. Astrateq Gadgets does not sell, rent, or trade user data to insurance companies or third parties. We only use anonymized, telemetry-only data (no video, no location) to improve our global safety models if you explicitly opt-in to our 'Community Safety Network'."
+        }
+      ]
+    },
+    {
+      category: "Connectivity & Updates",
+      icon: <Globe size={20} />,
+      questions: [
+        {
+          q: "Does the system require a constant cellular connection?",
+          a: "No. The core safety and predictive algorithms run entirely offline on the internal Edge Processor. A cellular connection (via the integrated 5G eSIM) is only required for real-time traffic updates, cloud backups, and receiving over-the-air (OTA) software improvements. The system remains 100% functional even in remote areas with zero reception."
+        },
+        {
+          q: "How are software updates delivered?",
+          a: "Updates are delivered Over-the-Air (OTA) during periods of inactivity (e.g., while the vehicle is parked at night). We use a dual-partition 'A/B' update system, meaning the new software is verified before it is activated. If an update fails, the system automatically rolls back to the previous stable version, ensuring your vehicle is never 'bricked' or unsafe."
         }
       ]
     },
@@ -1602,6 +1703,10 @@ function FAQSection() {
         {
           q: "Does it work in extreme cold?",
           a: "Absolutely. Engineered in Toronto, our hardware is MIL-SPEC rated for operation down to -45°C. The sensor lenses feature integrated nano-heating elements that automatically activate to melt ice and prevent fogging. Our AI models are trained on over 2 million kilometers of Canadian winter driving data, specifically optimized for detecting lane markings under snow and identifying black ice patches."
+        },
+        {
+          q: "How does the system perform in heavy rain or fog?",
+          a: "While optical cameras can be limited by low visibility, our AlTrak™ suite uses multi-spectral thermal imaging and LiDAR-lite depth sensing to 'see' through fog and heavy downpours. These sensors detect heat signatures and physical distances that are invisible to the human eye, providing reliable safety alerts even when visibility is near zero."
         },
         {
           q: "What is AlTrak™ Predictive Safety?",
@@ -1651,7 +1756,10 @@ function FAQSection() {
                   <p className="text-sm text-slate-300 mb-6 leading-relaxed">
                     Our technical specialists are available 24/7 for emergency assistance and specialized vehicle integration support.
                   </p>
-                  <button className="w-full py-4 bg-brand-purple text-white text-xs font-bold rounded-xl hover:bg-brand-purple-glow transition-all uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(217,70,239,0.3)] hover:shadow-[0_0_25px_rgba(217,70,239,0.5)] active:scale-[0.98]">
+                  <button 
+                    onClick={onContactSupport}
+                    className="w-full py-4 bg-brand-purple text-white text-xs font-bold rounded-xl hover:bg-brand-purple-glow transition-all uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(217,70,239,0.3)] hover:shadow-[0_0_25px_rgba(217,70,239,0.5)] active:scale-[0.98]"
+                  >
                     Contact Support
                   </button>
                   

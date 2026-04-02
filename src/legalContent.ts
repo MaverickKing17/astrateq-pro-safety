@@ -3,7 +3,7 @@ export const LEGAL_CONTENT: Record<string, string> = {
 # Privacy Policy
 **Last Updated: April 1, 2026**
 
-Astrateq Gadgets Inc. ("Astrateq", "we", "us", or "our") is committed to protecting the privacy of our users. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI-powered automotive safety products and services.
+Astrateq Gadgets ("we", "us", or "our") is committed to protecting the privacy of our users. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI-powered automotive safety products and services.
 
 ## 1. Data Collection & PIPEDA Compliance
 We adhere to the Personal Information Protection and Electronic Documents Act (PIPEDA). We collect:
@@ -13,7 +13,7 @@ We adhere to the Personal Information Protection and Electronic Documents Act (P
 - **Usage Data:** Information on how you interact with our mobile app and dashboard interfaces.
 
 ## 2. Edge-First Processing
-To maximize privacy, Astrateq utilizes "Edge-First" processing. Most video and sensor data is processed locally on the hardware. Only anonymized metadata is transmitted to our Canadian-based servers for safety algorithm refinement. Raw video footage is never uploaded to our servers without your explicit, one-time consent for specific incident analysis.
+To maximize privacy, Astrateq Gadgets utilizes "Edge-First" processing. Most video and sensor data is processed locally on the hardware. Only anonymized metadata is transmitted to our Canadian-based servers for safety algorithm refinement. Raw video footage is never uploaded to our servers without your explicit, one-time consent for specific incident analysis.
 
 ## 3. Data Residency & Security
 All personal data is stored on secure servers located within Canada, ensuring compliance with provincial and federal data residency requirements. We implement robust security measures, including:
@@ -54,10 +54,10 @@ By using Astrateq Gadgets, you agree to these Terms of Service. Please read them
 **CRITICAL:** Astrateq Gadgets are advanced driver assistance systems (ADAS) only. They are NOT autonomous driving systems.
 - **Final Authority:** The human driver remains the final decision-maker and primary safety controller.
 - **Attention:** You must maintain full attention on the road and keep your hands on the wheel at all times.
-- **Liability:** Astrateq is not liable for accidents, injuries, or damages resulting from driver inattention, misuse of the system, or reliance on AI predictions in extreme conditions.
+- **Liability:** Astrateq Gadgets is not liable for accidents, injuries, or damages resulting from driver inattention, misuse of the system, or reliance on AI predictions in extreme conditions.
 
 ## 2. License Grant & Software
-We grant you a limited, non-exclusive, non-transferable license to use the Astrateq AI software embedded in your hardware.
+We grant you a limited, non-exclusive, non-transferable license to use the Astrateq Gadgets AI software embedded in your hardware.
 - **Updates:** We may provide over-the-air (OTA) updates to improve safety and performance. You agree to receive these updates automatically.
 - **Restrictions:** You may not reverse-engineer, decompile, or attempt to extract the source code of our AI models or sensor firmware.
 
@@ -73,7 +73,7 @@ You agree not to:
 - Use the data provided by the system for unauthorized commercial purposes.
 
 ## 5. Limitation of Liability
-To the maximum extent permitted by law, Astrateq Gadgets Inc. shall not be liable for any indirect, incidental, special, or consequential damages. Our total liability for any claim shall not exceed the amount paid for the hardware.
+To the maximum extent permitted by law, Astrateq Gadgets shall not be liable for any indirect, incidental, special, or consequential damages. Our total liability for any claim shall not exceed the amount paid for the hardware.
 
 ## 6. Governing Law & Dispute Resolution
 These terms are governed by the laws of the Province of Ontario and the federal laws of Canada. Any disputes shall be resolved through binding arbitration in Toronto, Ontario.
@@ -82,7 +82,7 @@ These terms are governed by the laws of the Province of Ontario and the federal 
 # Cookie Policy
 **Last Updated: April 1, 2026**
 
-Astrateq Gadgets Inc. uses cookies and similar tracking technologies to enhance your experience on our digital platforms, including our website and the FleetGuard Pro dashboard.
+Astrateq Gadgets uses cookies and similar tracking technologies to enhance your experience on our digital platforms, including our website and the FleetGuard Pro dashboard.
 
 ## 1. What are Cookies?
 Cookies are small text files stored on your device that help us recognize your browser and remember certain information. We also use "web beacons" or "pixels" to track how you interact with our content.
@@ -105,7 +105,7 @@ For more information, contact our Data Protection Team at privacy@astrateq.com.
 `,
   "DMCA / IP Policy": `
 # DMCA / Intellectual Property Policy
-Astrateq Gadgets Inc. respects the intellectual property rights of others and expects our users to do the same.
+Astrateq Gadgets respects the intellectual property rights of others and expects our users to do the same.
 
 ## 1. Copyright & Ownership
 All content on our platforms, including but not limited to:
@@ -113,7 +113,7 @@ All content on our platforms, including but not limited to:
 - **Software:** All embedded firmware, mobile applications, and dashboard code.
 - **Designs:** Hardware sensor layouts and industrial designs.
 - **Content:** Text, graphics, logos, and icons.
-Are the exclusive property of Astrateq Gadgets Inc. or its licensors and are protected by Canadian and international copyright and trademark laws.
+Are the exclusive property of Astrateq Gadgets or its licensors and are protected by Canadian and international copyright and trademark laws.
 
 ## 2. Digital Millennium Copyright Act (DMCA) Notice
 If you believe that your copyrighted work has been copied in a way that constitutes copyright infringement and is accessible via our services, please notify our Copyright Agent. Your notice must include:
@@ -127,17 +127,17 @@ If you believe that your copyrighted work has been copied in a way that constitu
 ## 3. Contact Information
 Please send DMCA notices to:
 **Copyright Agent**
-Astrateq Gadgets Inc.
+Astrateq Gadgets
 100 Innovation Drive, Suite 400
 Toronto, ON M5J 2T3, Canada
 Email: legal@astrateq.com
 
 ## 4. Trademarks
-"Astrateq", "AlTrak", "FleetGuard Pro", and "EV Battery Intelligence Suite" are trademarks of Astrateq Gadgets Inc. Unauthorized use is strictly prohibited.
+"Astrateq Gadgets", "AlTrak", "FleetGuard Pro", and "EV Battery Intelligence Suite" are trademarks of Astrateq Gadgets. Unauthorized use is strictly prohibited.
 `,
   "AI Ethics Statement": `
 # AI Ethics Statement
-At Astrateq, we believe AI should enhance human capability, not replace it. Our commitment to ethical AI is built on four core pillars.
+At Astrateq Gadgets, we believe AI should enhance human capability, not replace it. Our commitment to ethical AI is built on four core pillars.
 
 ## 1. Safety First & Non-Maleficence
 Our algorithms are tuned to prioritize the safety of vehicle occupants and pedestrians above all other metrics. We follow a "Safety-by-Design" approach, ensuring that every model update undergoes rigorous stress testing against extreme Canadian weather scenarios.
@@ -146,10 +146,10 @@ Our algorithms are tuned to prioritize the safety of vehicle occupants and pedes
 We recognize that AI can inherit biases from training data. We continuously audit our terrain detection and obstacle classification models to ensure consistent performance across diverse Canadian landscapes—from high-density urban centers to remote, unpaved northern routes. We actively work to prevent demographic bias in our sensing technologies.
 
 ## 3. Human-in-the-Loop & Agency
-Astrateq systems are designed to provide actionable intelligence to the human driver, who remains the final decision-maker. We aim to augment human perception, providing "super-human" awareness without stripping the driver of their agency or responsibility.
+Astrateq Gadgets systems are designed to provide actionable intelligence to the human driver, who remains the final decision-maker. We aim to augment human perception, providing "super-human" awareness without stripping the driver of their agency or responsibility.
 
 ## 4. Human Oversight & Accountability
-For our FleetGuard Pro customers, Astrateq integrates a real-time human oversight layer. Critical AI-detected safety events are flagged to our 24/7 Fleet Command Center, where certified human safety operators review multi-spectral data streams in real-time. This ensures that complex ethical decisions or extreme environmental edge cases are validated by human judgment, providing an additional layer of safety and accountability for commercial fleets.
+For our FleetGuard Pro customers, Astrateq Gadgets integrates a real-time human oversight layer. Critical AI-detected safety events are flagged to our 24/7 Fleet Command Center, where certified human safety operators review multi-spectral data streams in real-time. This ensures that complex ethical decisions or extreme environmental edge cases are validated by human judgment, providing an additional layer of safety and accountability for commercial fleets.
 
 ## 5. Transparency & Explainability
 We strive to make our AI's "thinking" understandable. Our HMI (Human-Machine Interface) is designed to communicate *why* an alert is being issued, helping drivers build trust through understanding rather than blind reliance.
@@ -180,8 +180,8 @@ We maintain secure, encrypted logs of system decisions. In the event of a safety
 # Data Processing Addendum (DPA)
 This DPA applies to our enterprise FleetGuard Pro customers.
 
-## 1. Role of Astrateq
-Astrateq acts as a Data Processor for fleet telemetry data.
+## 1. Role of Astrateq Gadgets
+Astrateq Gadgets acts as a Data Processor for fleet telemetry data.
 
 ## 2. Security Measures
 We implement industry-standard encryption (AES-256) for all data in transit and at rest.
@@ -204,7 +204,7 @@ The system is calibrated to trigger alerts when the probability of a collision e
 `,
   "PIPEDA Compliance": `
 # PIPEDA Compliance Statement
-Astrateq Gadgets Inc. is fully committed to compliance with the **Personal Information Protection and Electronic Documents Act (PIPEDA)**, Canada's federal private-sector privacy law.
+Astrateq Gadgets is fully committed to compliance with the **Personal Information Protection and Electronic Documents Act (PIPEDA)**, Canada's federal private-sector privacy law.
 
 ## 1. The Ten Principles of PIPEDA
 We adhere to the ten fair information principles:
@@ -225,12 +225,12 @@ In the event of a "real risk of significant harm" resulting from a data breach, 
 ## 3. Contacting the Privacy Officer
 For any questions regarding our PIPEDA compliance, please contact:
 **Privacy Officer**
-Astrateq Gadgets Inc.
+Astrateq Gadgets
 Email: privacy@astrateq.com
 `,
   "CASL (Anti-Spam)": `
 # CASL (Anti-Spam) Compliance
-Astrateq Gadgets Inc. strictly adheres to **Canada's Anti-Spam Legislation (CASL)** to ensure our communications are respectful and authorized.
+Astrateq Gadgets strictly adheres to **Canada's Anti-Spam Legislation (CASL)** to ensure our communications are respectful and authorized.
 
 ## 1. Consent-Based Marketing
 We only send commercial electronic messages (CEMs) to individuals who have provided:
@@ -239,7 +239,7 @@ We only send commercial electronic messages (CEMs) to individuals who have provi
 
 ## 2. Clear Identification
 Every CEM we send clearly identifies:
-- **The Sender:** Astrateq Gadgets Inc.
+- **The Sender:** Astrateq Gadgets
 - **Contact Info:** Our physical mailing address and a functional email or phone number.
 
 ## 3. Easy Unsubscribe
@@ -254,7 +254,7 @@ For any CASL-related inquiries, please contact compliance@astrateq.com.
 `,
   "Transport Canada Standards": `
 # Transport Canada Standards & Regulatory Alignment
-Astrateq hardware and software are engineered to meet and exceed the safety guidelines set forth by **Transport Canada**.
+Astrateq Gadgets hardware and software are engineered to meet and exceed the safety guidelines set forth by **Transport Canada**.
 
 ## 1. Motor Vehicle Safety Act (MVSA)
 While our products are aftermarket devices, we ensure they do not interfere with the original safety systems mandated by the MVSA. Our AlTrak sensors are designed to complement, not override, factory-installed safety features.
@@ -278,15 +278,15 @@ We actively monitor Transport Canada's regulatory updates and participate in ind
 # Accessibility Statement
 **Last Updated: April 1, 2026**
 
-Astrateq Gadgets Inc. is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience for everyone and applying the relevant accessibility standards.
+Astrateq Gadgets is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience for everyone and applying the relevant accessibility standards.
 
 ## 1. Conformance Status
 The [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/) defines requirements for designers and developers to improve accessibility for people with disabilities. It defines three levels of conformance: Level A, Level AA, and Level AAA.
 
-Astrateq Gadgets Inc. is partially conformant with **WCAG 2.1 Level AA**. Partially conformant means that some parts of the content do not fully conform to the accessibility standard (e.g., some real-time AI telemetry visualizations may have high-contrast requirements that are still being optimized).
+Astrateq Gadgets is partially conformant with **WCAG 2.1 Level AA**. Partially conformant means that some parts of the content do not fully conform to the accessibility standard (e.g., some real-time AI telemetry visualizations may have high-contrast requirements that are still being optimized).
 
 ## 2. AODA Compliance
-In accordance with the **Accessibility for Ontarians with Disabilities Act (AODA)**, Astrateq Gadgets Inc. is committed to meeting the accessibility needs of persons with disabilities in a timely manner. We are dedicated to providing our services in a way that respects the dignity and independence of people with disabilities.
+In accordance with the **Accessibility for Ontarians with Disabilities Act (AODA)**, Astrateq Gadgets is committed to meeting the accessibility needs of persons with disabilities in a timely manner. We are dedicated to providing our services in a way that respects the dignity and independence of people with disabilities.
 
 ## 3. Assistive Technology Compatibility
 Our digital platforms are designed to be compatible with the following assistive technologies:
@@ -296,14 +296,14 @@ Our digital platforms are designed to be compatible with the following assistive
 - Standard keyboard navigation.
 
 ## 4. Technical Specifications
-Accessibility of Astrateq Gadgets Inc. relies on the following technologies to work with the particular combination of web browser and any assistive technologies or plugins installed on your computer:
+Accessibility of Astrateq Gadgets relies on the following technologies to work with the particular combination of web browser and any assistive technologies or plugins installed on your computer:
 - HTML
 - WAI-ARIA
 - CSS
 - JavaScript
 
 ## 5. Feedback Process
-We welcome your feedback on the accessibility of Astrateq Gadgets Inc. Please let us know if you encounter accessibility barriers:
+We welcome your feedback on the accessibility of Astrateq Gadgets. Please let us know if you encounter accessibility barriers:
 - **Email:** accessibility@astrateq.com
 - **Phone:** +1 (800) ASTRATEQ (Ext. 4)
 - **Mailing Address:** 100 Innovation Drive, Suite 400, Toronto, ON M5J 2T3, Canada
@@ -332,14 +332,14 @@ AI assistance may not detect all hazards. The system's performance can be limite
 - **Unpredictable Behavior:** Sudden, erratic movements by other road users that fall outside probabilistic models.
 
 ## 3. Legal & Regulatory Compliance
-The driver remains legally responsible for the operation of the vehicle under all provincial Highway Traffic Acts across Canada. Use of Astrateq systems does not exempt you from traffic laws or the duty of care owed to other road users.
+The driver remains legally responsible for the operation of the vehicle under all provincial Highway Traffic Acts across Canada. Use of Astrateq Gadgets systems does not exempt you from traffic laws or the duty of care owed to other road users.
 
 ## 4. Hands-on-Wheel Requirement
 Our systems utilize capacitive touch and visual monitoring to ensure the driver's hands remain on the wheel and eyes remain on the road. Bypassing these safety checks is a violation of the Terms of Service and significantly increases accident risk.
 `,
   "Hardware Warranty": `
 # Hardware Warranty
-Astrateq Gadgets Inc. stands behind the quality of our engineering. We provide a **24-month limited warranty** on all hardware components.
+Astrateq Gadgets stands behind the quality of our engineering. We provide a **24-month limited warranty** on all hardware components.
 
 ## 1. What is Covered
 This warranty covers defects in materials and workmanship under normal use. If a component fails due to a manufacturing defect within 24 months of the original purchase date, we will:
@@ -364,7 +364,7 @@ This warranty is non-transferable and applies only to the original purchaser of 
 `,
   "Recall Information": `
 # Recall & Safety Updates
-At Astrateq, safety is our absolute priority. We maintain a proactive stance on product monitoring and safety communications.
+At Astrateq Gadgets, safety is our absolute priority. We maintain a proactive stance on product monitoring and safety communications.
 
 ## 1. Monitoring & Reporting
 We continuously monitor field data from our AlTrak units. If we identify a trend that suggests a potential safety defect, we will conduct a thorough investigation and, if necessary, initiate a recall in coordination with **Transport Canada**.
@@ -382,11 +382,11 @@ Many performance optimizations and safety refinements are delivered via OTA upda
 You can check if your specific unit is subject to any active recalls by entering your Serial Number on our [Safety Portal](#).
 
 ## 5. Current Status
-As of **April 1, 2026**, there are no active safety recalls for any Astrateq hardware models.
+As of **April 1, 2026**, there are no active safety recalls for any Astrateq Gadgets hardware models.
 `,
   "Safety Certifications": `
 # Safety Certifications & Independent Validation
-Astrateq products undergo rigorous testing by independent third-party laboratories to ensure they meet the highest global safety and quality standards.
+Astrateq Gadgets products undergo rigorous testing by independent third-party laboratories to ensure they meet the highest global safety and quality standards.
 
 ## 1. Electrical & Product Safety
 - **CSA Group:** Certified for use in automotive electrical systems (C22.2 No. 60950-1).
