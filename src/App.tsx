@@ -607,6 +607,7 @@ export default function App() {
               subtitle="RANGE CONFIDENCE"
               description="Drive from Toronto to Montreal with total peace of mind. Our AI optimizes thermal management to give you up to 500 miles of Range Confidence, even in Canadian winters."
               features={["500MI RANGE OPTIMIZED", "THERMAL AI MANAGEMENT", "WINTER-TESTED"]}
+              image="https://i.ibb.co/Qvh1LVns/Can-you-add-202604021625.jpg"
             />
             <SolutionCard 
               index={2}
@@ -662,7 +663,7 @@ export default function App() {
                   <div className="absolute -inset-4 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-[2.5rem] blur-2xl opacity-20 animate-pulse" />
                   <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-white shadow-2xl group/img">
                     <img 
-                      src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=2072" 
+                      src="https://i.ibb.co/Qvh1LVns/Can-you-add-202604021625.jpg" 
                       alt="EV Battery Intelligence Interface" 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
                       referrerPolicy="no-referrer"
@@ -1533,13 +1534,14 @@ function HeroBadge({ icon, text, delay }: { icon: ReactNode, text: string, delay
   );
 }
 
-function SolutionCard({ icon, title, subtitle, description, features, index }: { 
+function SolutionCard({ icon, title, subtitle, description, features, index, image }: { 
   icon: ReactNode, 
   title: string, 
   subtitle: string, 
   description: string, 
   features: string[],
-  index: number
+  index: number,
+  image?: string
 }) {
   const gradients = [
     "from-brand-purple/20 via-brand-purple/5 to-transparent",
@@ -1574,6 +1576,18 @@ function SolutionCard({ icon, title, subtitle, description, features, index }: {
       {/* Technical Background Accent */}
       <div className="absolute top-0 right-0 w-40 h-40 bg-brand-purple/5 rounded-bl-full -mr-16 -mt-16 group-hover:bg-brand-purple/10 transition-all duration-500 rotate-12" />
       
+      {image && (
+        <div className="mb-8 -mx-10 -mt-10 overflow-hidden h-48 relative">
+          <img 
+            src={image} 
+            alt={title} 
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+        </div>
+      )}
+
       <div className={`w-20 h-20 rounded-3xl ${iconBgs[index % iconBgs.length]} border flex items-center justify-center mb-10 group-hover:scale-110 transition-transform duration-500 relative shadow-inner`}>
         <div className={`absolute inset-0 border border-current rounded-3xl animate-pulse opacity-20 ${iconColors[index % iconColors.length]}`} />
         {/* Clone the icon to apply dynamic color */}
