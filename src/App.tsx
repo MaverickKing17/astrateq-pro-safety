@@ -599,6 +599,7 @@ export default function App() {
               subtitle="PREDICTIVE SAFETY"
               description="Our AI system detects hazards before human reaction time, analyzing thousands of data points per second to keep you one step ahead on every road."
               features={["< 50MS REACTION TIME", "94% HAZARD PREDICTION", "360° COVERAGE"]}
+              image="https://i.ibb.co/DPz0TMCF/4-K-professional-product-202604021635.jpg"
             />
             <SolutionCard 
               index={1}
