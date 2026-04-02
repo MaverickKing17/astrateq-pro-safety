@@ -609,79 +609,140 @@ export default function App() {
 
             {/* Column 2: Lead Generation (CRO Focus) */}
             <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto">
-              <div className="w-full space-y-3">
-                <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest text-center">Stay in the Loop</div>
-                <form 
-                  className="flex gap-2" 
-                  onSubmit={(e) => { 
-                    e.preventDefault(); 
-                    setIsWaitlistOpen(true); 
-                  }}
-                >
-                  <input 
-                    type="email" 
-                    placeholder="Enter your email" 
-                    className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-purple transition-all shadow-inner"
-                    required
-                  />
-                  <button 
-                    type="submit"
-                    className="px-6 py-2.5 bg-brand-purple text-white text-xs font-bold rounded-xl hover:bg-brand-purple/90 transition-all shadow-lg shadow-brand-purple/20 uppercase tracking-widest active:scale-95"
+              <div className="w-full space-y-4 relative group/form">
+                {/* Decorative Glow */}
+                <div className="absolute -inset-4 bg-brand-purple/5 rounded-[2rem] blur-2xl opacity-0 group-hover/form:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                
+                <div className="relative space-y-3">
+                  <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-[0.3em] text-center">Stay in the Loop</div>
+                  <form 
+                    className="flex gap-2 p-1 bg-white border border-slate-200 rounded-2xl shadow-sm focus-within:border-brand-purple/50 focus-within:shadow-lg focus-within:shadow-brand-purple/5 transition-all duration-300" 
+                    onSubmit={async (e) => { 
+                      e.preventDefault(); 
+                      const form = e.currentTarget;
+                      const formData = new FormData(form);
+                      const submitBtn = form.querySelector('button');
+                      if (submitBtn) submitBtn.disabled = true;
+                      
+                      try {
+                        const response = await fetch("https://formspree.io/f/mbdpkqrd", {
+                          method: "POST",
+                          body: formData,
+                          headers: { 'Accept': 'application/json' }
+                        });
+                        if (response.ok) {
+                          setShowSuccess(true);
+                          setTimeout(() => setShowSuccess(false), 5000);
+                          form.reset();
+                        }
+                      } catch (error) {
+                        console.error("Newsletter submission error", error);
+                      } finally {
+                        if (submitBtn) submitBtn.disabled = false;
+                      }
+                    }}
                   >
-                    Join
-                  </button>
-                </form>
-                <div className="flex items-center justify-center gap-2">
-                  <div className="flex -space-x-1.5">
-                    {[1,2,3].map(i => (
-                      <div key={i} className="w-4 h-4 rounded-full border border-white bg-slate-200 overflow-hidden">
-                        <img src={`https://i.pravatar.cc/40?img=${i+10}`} alt="User" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
+                    <input 
+                      type="email" 
+                      name="email"
+                      placeholder="Enter your email" 
+                      className="flex-1 px-4 py-2.5 bg-transparent text-sm focus:outline-none placeholder:text-slate-400"
+                      required
+                    />
+                    <button 
+                      type="submit"
+                      className="px-6 py-2.5 bg-brand-purple text-white text-xs font-bold rounded-xl hover:bg-brand-purple-glow transition-all shadow-md hover:shadow-brand-purple/30 uppercase tracking-widest active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Join
+                    </button>
+                  </form>
+                  
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="flex -space-x-1.5">
+                        {[1,2,3].map(i => (
+                          <div key={i} className="w-5 h-5 rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-sm">
+                            <img src={`https://i.pravatar.cc/40?img=${i+10}`} alt="User" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                      <p className="text-[9px] text-brand-gray/60 font-bold uppercase tracking-wider">
+                        Join <span className="text-brand-purple">2,400+</span> drivers receiving updates
+                      </p>
+                    </div>
+                    <p className="text-[8px] text-brand-gray/40 font-bold uppercase tracking-widest flex items-center gap-1.5">
+                      <Shield size={10} className="text-brand-purple/40" />
+                      Privacy Guaranteed • No Spam
+                    </p>
                   </div>
-                  <p className="text-[9px] text-brand-gray/60 font-bold uppercase tracking-wider">
-                    Join <span className="text-brand-purple">2,400+</span> drivers receiving updates
-                  </p>
                 </div>
               </div>
             </div>
 
             {/* Column 3: Status & Utilities */}
             <div className="flex flex-col items-center lg:items-end gap-6">
-              <div className="space-y-3 text-center lg:text-right">
-                <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest">System Status</div>
-                <div className="flex items-center gap-3 px-4 py-2 bg-emerald-500/5 border border-emerald-500/20 rounded-full shadow-sm">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-xs font-bold text-emerald-500 uppercase tracking-widest">All Systems Nominal</span>
+              <div className="space-y-3 text-center lg:text-right group/status">
+                <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-[0.3em] group-hover/status:text-brand-purple-glow transition-colors">System Status</div>
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-emerald-500/20 rounded-full blur opacity-0 group-hover/status:opacity-100 transition-opacity" />
+                  <div className="relative flex items-center gap-3 px-5 py-2.5 bg-emerald-500/5 border border-emerald-500/20 rounded-full shadow-sm backdrop-blur-sm">
+                    <div className="relative flex items-center justify-center">
+                      <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <div className="absolute w-4 h-4 rounded-full border border-emerald-500/30 animate-ping" />
+                    </div>
+                    <div className="flex flex-col items-start leading-none">
+                      <span className="text-xs font-black text-emerald-500 uppercase tracking-widest">All Systems Nominal</span>
+                      <span className="text-[8px] font-mono text-emerald-500/60 font-bold mt-0.5">LATENCY: 8MS | UPTIME: 99.9%</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex flex-col items-center lg:items-end gap-4">
+              <div className="flex flex-col items-center lg:items-end gap-6">
                 <div className="flex items-center gap-4">
                   {/* Trust Badges */}
-                  <div className="flex items-center gap-3 opacity-40 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                    <div title="Transport Canada Compliant" className="flex flex-col items-center">
-                      <ShieldCheck size={16} className="text-brand-purple" />
-                      <span className="text-[7px] font-bold uppercase mt-0.5">TC Compliant</span>
+                  <div className="flex items-center gap-6 p-4 bg-slate-50/50 rounded-2xl border border-slate-100 shadow-inner group/badges">
+                    <div title="Transport Canada Compliant" className="flex flex-col items-center gap-1.5 group/badge cursor-help">
+                      <div className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center border border-slate-100 group-hover/badge:border-brand-purple/30 transition-all">
+                        <ShieldCheck size={18} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors" />
+                      </div>
+                      <span className="text-[8px] font-bold text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-widest transition-colors">TC Compliant</span>
                     </div>
-                    <div className="w-[1px] h-4 bg-slate-200" />
-                    <div title="ISO 9001 Certified" className="flex flex-col items-center">
-                      <Scale size={16} className="text-brand-purple" />
-                      <span className="text-[7px] font-bold uppercase mt-0.5">ISO 9001</span>
+                    <div className="w-[1px] h-8 bg-slate-200" />
+                    <div title="ISO 9001 Certified" className="flex flex-col items-center gap-1.5 group/badge cursor-help">
+                      <div className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center border border-slate-100 group-hover/badge:border-brand-purple/30 transition-all">
+                        <Scale size={18} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors" />
+                      </div>
+                      <span className="text-[8px] font-bold text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-widest transition-colors">ISO 9001</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-6">
-                  <div className="flex items-center gap-4 text-[10px] font-bold tracking-widest text-brand-gray" role="navigation" aria-label="Language selection">
-                    <button className="text-brand-purple relative">EN</button>
-                    <div className="w-[1px] h-3 bg-slate-200" />
-                    <button className="hover:text-brand-purple transition-colors">FR</button>
-                  </div>
-                  <div className="w-[1px] h-4 bg-slate-200" />
-                  <div className="flex items-center gap-3">
-                    <a href="#" className="text-brand-gray hover:text-brand-purple transition-colors"><Linkedin size={16} /></a>
-                    <a href="#" className="text-brand-gray hover:text-brand-purple transition-colors"><Twitter size={16} /></a>
+                <div className="flex flex-col items-center lg:items-end gap-4">
+                  <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-4 text-[10px] font-bold tracking-widest text-brand-gray" role="navigation" aria-label="Language selection">
+                      <button className="text-brand-purple relative group/lang">
+                        EN
+                        <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand-purple rounded-full" />
+                      </button>
+                      <div className="w-[1px] h-3 bg-slate-200" />
+                      <button className="hover:text-brand-purple transition-colors">FR</button>
+                    </div>
+                    <div className="w-[1px] h-6 bg-slate-200" />
+                    <div className="flex items-center gap-4">
+                      <a href="#" className="w-8 h-8 rounded-lg bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-brand-purple hover:border-brand-purple/30 hover:shadow-lg hover:shadow-brand-purple/5 transition-all group/social" title="LinkedIn">
+                        <Linkedin size={16} className="group-hover/social:scale-110 transition-transform" />
+                      </a>
+                      <a href="#" className="w-8 h-8 rounded-lg bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-brand-purple hover:border-brand-purple/30 hover:shadow-lg hover:shadow-brand-purple/5 transition-all group/social" title="Twitter">
+                        <Twitter size={16} className="group-hover/social:scale-110 transition-transform" />
+                      </a>
+                      <a href="#" className="w-8 h-8 rounded-lg bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-brand-purple hover:border-brand-purple/30 hover:shadow-lg hover:shadow-brand-purple/5 transition-all group/social" title="Instagram">
+                        <motion.div whileHover={{ rotate: 15 }}><Activity size={16} className="group-hover/social:scale-110 transition-transform" /></motion.div>
+                      </a>
+                      <a href="#" className="w-8 h-8 rounded-lg bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-brand-purple hover:border-brand-purple/30 hover:shadow-lg hover:shadow-brand-purple/5 transition-all group/social" title="YouTube">
+                        <Zap size={16} className="group-hover/social:scale-110 transition-transform" />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
