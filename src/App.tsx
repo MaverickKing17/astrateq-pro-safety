@@ -32,7 +32,9 @@ import {
   Bot,
   Minimize2,
   Zap,
-  HelpCircle
+  HelpCircle,
+  Lock,
+  Heart
 } from "lucide-react";
 
 function Logo({ className = "" }: { className?: string }) {
@@ -875,25 +877,43 @@ export default function App() {
             </div>
 
             {/* AI System Disclaimer & Trust Badges */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center">
-              <div className="lg:col-span-1 flex items-center gap-8 p-6 bg-slate-50/50 rounded-[2.5rem] border border-slate-100 shadow-inner">
-                <div title="Transport Canada Compliant" className="flex flex-col items-center gap-2 group/badge cursor-help flex-1">
-                  <ShieldCheck size={24} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors" />
-                  <span className="text-[9px] font-black text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-widest transition-colors">TC Compliant</span>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-stretch">
+              <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-gradient-to-br from-brand-purple/10 via-white to-brand-yellow/10 rounded-[2.5rem] border border-brand-purple/20 shadow-xl shadow-brand-purple/5">
+                <div title="Transport Canada Compliant" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/50 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-brand-purple/10 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
+                    <ShieldCheck size={28} className="text-brand-purple" />
+                  </div>
+                  <span className="text-[10px] font-black text-brand-offwhite uppercase tracking-widest text-center">TC Compliant</span>
                 </div>
-                <div className="w-[1px] h-10 bg-slate-200" />
-                <div title="ISO 9001 Certified" className="flex flex-col items-center gap-2 group/badge cursor-help flex-1">
-                  <Scale size={24} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors" />
-                  <span className="text-[9px] font-black text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-widest transition-colors">ISO 9001</span>
+                
+                <div title="ISO 9001 Certified" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/50 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-brand-yellow/10 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
+                    <Scale size={28} className="text-brand-yellow-darker" style={{ color: '#854d0e' }} />
+                  </div>
+                  <span className="text-[10px] font-black text-brand-offwhite uppercase tracking-widest text-center">ISO 9001</span>
+                </div>
+
+                <div title="PIPEDA Compliant (Data Privacy)" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/50 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
+                    <Lock size={28} className="text-emerald-600" />
+                  </div>
+                  <span className="text-[10px] font-black text-brand-offwhite uppercase tracking-widest text-center">PIPEDA Ready</span>
+                </div>
+
+                <div title="Proudly Engineered in Canada" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/50 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-rose-100 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
+                    <Heart size={28} className="text-rose-600" />
+                  </div>
+                  <span className="text-[10px] font-black text-brand-offwhite uppercase tracking-widest text-center">Proudly Canadian</span>
                 </div>
               </div>
 
               <div className="lg:col-span-2 relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-brand-purple/10 via-brand-yellow/5 to-brand-purple/10 rounded-3xl blur-lg opacity-50 group-hover:opacity-100 transition duration-1000" />
-                <div className="relative px-8 py-6 bg-white border border-slate-200 rounded-3xl flex items-center gap-6 shadow-sm overflow-hidden">
-                  <div className="absolute top-0 left-0 w-1 h-full bg-brand-purple" />
-                  <ShieldAlert className="text-brand-purple shrink-0 animate-pulse" size={28} />
-                  <p className="text-[11px] text-brand-gray leading-relaxed font-medium">
+                <div className="absolute -inset-1 bg-gradient-to-r from-brand-purple/20 via-brand-yellow/10 to-brand-purple/20 rounded-[2.5rem] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000" />
+                <div className="relative h-full px-8 py-6 bg-white border border-slate-200 rounded-[2.5rem] flex items-center gap-6 shadow-sm overflow-hidden">
+                  <div className="absolute top-0 left-0 w-1.5 h-full bg-brand-purple" />
+                  <ShieldAlert className="text-brand-purple shrink-0 animate-pulse" size={32} />
+                  <p className="text-xs text-brand-gray leading-relaxed font-medium">
                     <span className="text-brand-offwhite font-black uppercase tracking-widest mr-2">Safety Protocol:</span>
                     Astrateq Gadgets are Advanced Driver Assistance Systems (ADAS). They augment, not replace, human judgment. Maintain 100% situational awareness at all times.
                   </p>
