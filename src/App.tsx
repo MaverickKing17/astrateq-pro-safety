@@ -666,12 +666,12 @@ export default function App() {
                           </div>
                         ))}
                       </div>
-                      <p className="text-[9px] text-brand-gray/60 font-bold uppercase tracking-wider">
+                      <p className="text-[11px] text-brand-gray/70 font-bold uppercase tracking-wider">
                         Join <span className="text-brand-purple">2,400+</span> drivers receiving updates
                       </p>
                     </div>
-                    <p className="text-[8px] text-brand-gray/40 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                      <Shield size={10} className="text-brand-purple/40" />
+                    <p className="text-[10px] text-brand-gray/50 font-bold uppercase tracking-widest flex items-center gap-1.5">
+                      <Shield size={12} className="text-brand-purple/50" />
                       Privacy Guaranteed • No Spam
                     </p>
                   </div>
@@ -680,67 +680,88 @@ export default function App() {
             </div>
 
             {/* Column 3: Status & Utilities */}
-            <div className="flex flex-col items-center lg:items-end gap-6">
+            <div className="flex flex-col items-center lg:items-end gap-8">
+              {/* System Status - Enhanced with Radar Effect */}
               <div className="space-y-3 text-center lg:text-right group/status">
-                <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-[0.3em] group-hover/status:text-brand-purple-glow transition-colors">System Status</div>
+                <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-[0.4em] group-hover/status:text-brand-purple-glow transition-all duration-500">System Status</div>
                 <div className="relative">
-                  <div className="absolute -inset-1 bg-emerald-500/20 rounded-full blur opacity-0 group-hover/status:opacity-100 transition-opacity" />
-                  <div className="relative flex items-center gap-3 px-5 py-2.5 bg-emerald-500/5 border border-emerald-500/20 rounded-full shadow-sm backdrop-blur-sm">
+                  {/* Radar Pulse Rings */}
+                  <div className="absolute -inset-2 bg-emerald-500/10 rounded-full blur-xl opacity-0 group-hover/status:opacity-100 transition-opacity duration-700" />
+                  
+                  <div className="relative flex items-center gap-4 px-6 py-3 bg-white border border-emerald-500/20 rounded-2xl shadow-[0_4px_20px_-4px_rgba(16,185,129,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(16,185,129,0.2)] transition-all duration-500 backdrop-blur-md group-hover/status:border-emerald-500/40">
                     <div className="relative flex items-center justify-center">
-                      <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                      <div className="absolute w-4 h-4 rounded-full border border-emerald-500/30 animate-ping" />
+                      <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse" />
+                      <div className="absolute w-6 h-6 rounded-full border border-emerald-500/40 animate-ping opacity-40" />
+                      <div className="absolute w-8 h-8 rounded-full border border-emerald-500/20 animate-ping [animation-delay:0.5s] opacity-20" />
                     </div>
                     <div className="flex flex-col items-start leading-none">
-                      <span className="text-xs font-black text-emerald-500 uppercase tracking-widest">All Systems Nominal</span>
-                      <span className="text-[8px] font-mono text-emerald-500/60 font-bold mt-0.5">LATENCY: 8MS | UPTIME: 99.9%</span>
+                      <span className="text-[13px] font-black text-emerald-600 uppercase tracking-tighter">All Systems Nominal</span>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-[9px] font-mono text-emerald-600/60 font-bold">LATENCY: 8MS</span>
+                        <div className="w-1 h-1 rounded-full bg-emerald-600/30" />
+                        <span className="text-[9px] font-mono text-emerald-600/60 font-bold">UPTIME: 99.9%</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col items-center lg:items-end gap-6">
+              <div className="flex flex-col items-center lg:items-end gap-8">
+                {/* Trust Badges - Enhanced Glassmorphism */}
                 <div className="flex items-center gap-4">
-                  {/* Trust Badges */}
-                  <div className="flex items-center gap-6 p-4 bg-slate-50/50 rounded-2xl border border-slate-100 shadow-inner group/badges">
-                    <div title="Transport Canada Compliant" className="flex flex-col items-center gap-1.5 group/badge cursor-help">
-                      <div className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center border border-slate-100 group-hover/badge:border-brand-purple/30 transition-all">
-                        <ShieldCheck size={18} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors" />
+                  <div className="flex items-center gap-8 p-5 bg-white/40 backdrop-blur-xl rounded-[2rem] border border-slate-200/60 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] group/badges relative overflow-hidden">
+                    {/* Subtle Background Glow */}
+                    <div className="absolute -top-10 -right-10 w-20 h-20 bg-brand-purple/5 rounded-full blur-2xl group-hover/badges:bg-brand-purple/10 transition-colors duration-700" />
+                    
+                    <div title="Transport Canada Compliant" className="flex flex-col items-center gap-2 group/badge cursor-help">
+                      <div className="w-10 h-10 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-slate-100 group-hover/badge:border-brand-purple/40 group-hover/badge:shadow-lg group-hover/badge:shadow-brand-purple/5 transition-all duration-300">
+                        <ShieldCheck size={20} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors duration-300" />
                       </div>
-                      <span className="text-[8px] font-bold text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-widest transition-colors">TC Compliant</span>
+                      <span className="text-[9px] font-black text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-[0.15em] transition-colors duration-300">TC Compliant</span>
                     </div>
-                    <div className="w-[1px] h-8 bg-slate-200" />
-                    <div title="ISO 9001 Certified" className="flex flex-col items-center gap-1.5 group/badge cursor-help">
-                      <div className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center border border-slate-100 group-hover/badge:border-brand-purple/30 transition-all">
-                        <Scale size={18} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors" />
+                    
+                    <div className="w-[1px] h-10 bg-gradient-to-b from-transparent via-slate-200 to-transparent" />
+                    
+                    <div title="ISO 9001 Certified" className="flex flex-col items-center gap-2 group/badge cursor-help">
+                      <div className="w-10 h-10 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-slate-100 group-hover/badge:border-brand-purple/40 group-hover/badge:shadow-lg group-hover/badge:shadow-brand-purple/5 transition-all duration-300">
+                        <Scale size={20} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors duration-300" />
                       </div>
-                      <span className="text-[8px] font-bold text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-widest transition-colors">ISO 9001</span>
+                      <span className="text-[9px] font-black text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-[0.15em] transition-colors duration-300">ISO 9001</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex flex-col items-center lg:items-end gap-4">
-                  <div className="flex items-center gap-6">
-                    <div className="flex items-center gap-4 text-[10px] font-bold tracking-widest text-brand-gray" role="navigation" aria-label="Language selection">
+                {/* Utilities & Socials - Enhanced Interactivity */}
+                <div className="flex flex-col items-center lg:items-end gap-5">
+                  <div className="flex items-center gap-8">
+                    {/* Language Toggle - Refined */}
+                    <div className="flex items-center gap-5 text-[11px] font-black tracking-[0.2em] text-brand-gray" role="navigation" aria-label="Language selection">
                       <button className="text-brand-purple relative group/lang">
                         EN
-                        <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand-purple rounded-full" />
+                        <motion.div 
+                          layoutId="footer-lang-active"
+                          className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-brand-purple rounded-full shadow-[0_0_8px_#D946EF]" 
+                        />
                       </button>
-                      <div className="w-[1px] h-3 bg-slate-200" />
-                      <button className="hover:text-brand-purple transition-colors">FR</button>
+                      <div className="w-[1px] h-4 bg-slate-200" />
+                      <button className="hover:text-brand-purple transition-colors duration-300">FR</button>
                     </div>
-                    <div className="w-[1px] h-6 bg-slate-200" />
+                    
+                    <div className="w-[1px] h-8 bg-slate-200" />
+                    
+                    {/* Social Icons - Brand Specific Colors */}
                     <div className="flex items-center gap-4">
-                      <a href="#" className="w-8 h-8 rounded-lg bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-brand-purple hover:border-brand-purple/30 hover:shadow-lg hover:shadow-brand-purple/5 transition-all group/social" title="LinkedIn">
-                        <Linkedin size={16} className="group-hover/social:scale-110 transition-transform" />
+                      <a href="#" className="w-10 h-10 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-[#0077b5] hover:border-[#0077b5]/30 hover:shadow-xl hover:shadow-[#0077b5]/10 transition-all duration-300 group/social" title="LinkedIn">
+                        <Linkedin size={18} className="group-hover/social:scale-110 transition-transform" />
                       </a>
-                      <a href="#" className="w-8 h-8 rounded-lg bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-brand-purple hover:border-brand-purple/30 hover:shadow-lg hover:shadow-brand-purple/5 transition-all group/social" title="Twitter">
-                        <Twitter size={16} className="group-hover/social:scale-110 transition-transform" />
+                      <a href="#" className="w-10 h-10 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-[#1DA1F2] hover:border-[#1DA1F2]/30 hover:shadow-xl hover:shadow-[#1DA1F2]/10 transition-all duration-300 group/social" title="Twitter">
+                        <Twitter size={18} className="group-hover/social:scale-110 transition-transform" />
                       </a>
-                      <a href="#" className="w-8 h-8 rounded-lg bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-brand-purple hover:border-brand-purple/30 hover:shadow-lg hover:shadow-brand-purple/5 transition-all group/social" title="Instagram">
-                        <motion.div whileHover={{ rotate: 15 }}><Activity size={16} className="group-hover/social:scale-110 transition-transform" /></motion.div>
+                      <a href="#" className="w-10 h-10 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-[#E4405F] hover:border-[#E4405F]/30 hover:shadow-xl hover:shadow-[#E4405F]/10 transition-all duration-300 group/social" title="Instagram">
+                        <motion.div whileHover={{ rotate: 15 }}><Activity size={18} className="group-hover/social:scale-110 transition-transform" /></motion.div>
                       </a>
-                      <a href="#" className="w-8 h-8 rounded-lg bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-brand-purple hover:border-brand-purple/30 hover:shadow-lg hover:shadow-brand-purple/5 transition-all group/social" title="YouTube">
-                        <Zap size={16} className="group-hover/social:scale-110 transition-transform" />
+                      <a href="#" className="w-10 h-10 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-[#FF0000] hover:border-[#FF0000]/30 hover:shadow-xl hover:shadow-[#FF0000]/10 transition-all duration-300 group/social" title="YouTube">
+                        <Zap size={18} className="group-hover/social:scale-110 transition-transform" />
                       </a>
                     </div>
                   </div>
@@ -749,51 +770,135 @@ export default function App() {
             </div>
           </div>
 
-          {/* Fleet & Family Highlight */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-            <motion.div 
-              whileHover={{ y: -5, borderColor: 'rgba(217, 70, 239, 0.3)' }}
-              className="p-8 rounded-3xl bg-white border border-slate-100 relative overflow-hidden group shadow-sm hover:shadow-xl hover:shadow-brand-purple/5 transition-all duration-500"
-            >
-              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Shield size={64} className="text-brand-purple" />
-              </div>
-              <h4 className="text-xl font-display font-bold mb-3 text-brand-offwhite">For Canadian Families</h4>
-              <p className="text-sm text-brand-gray leading-relaxed mb-6">
-                Protect what matters most. Our AI is specifically trained for Canadian road conditions, from icy school zones to dark highway stretches.
-              </p>
-              <button className="text-xs font-bold text-brand-purple uppercase tracking-widest hover:underline flex items-center gap-2 group/btn">
-                Family Safety Guide <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-            </motion.div>
+          {/* Middle Section: Fleet & Family (Full Width) */}
+          <div className="py-20 space-y-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {/* Family Card: Refined Tech-Luxury */}
+              <motion.div 
+                whileHover={{ y: -8, scale: 1.01 }}
+                className="group relative p-10 rounded-[3rem] overflow-hidden border border-slate-200 bg-white shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-700 hover:shadow-[0_40px_80px_-20px_rgba(217,70,239,0.1)] hover:border-brand-purple/20"
+              >
+                {/* Subtle Gradient & Pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/[0.02] via-white to-brand-purple/[0.05] opacity-100" />
+                <div className="absolute -right-20 -top-20 w-80 h-80 bg-brand-purple/5 rounded-full blur-[100px] group-hover:bg-brand-purple/10 transition-colors duration-1000" />
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none group-hover:opacity-[0.05] transition-opacity duration-700" 
+                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #D946EF 1.5px, transparent 0)', backgroundSize: '24px 24px' }} />
 
-            <motion.div 
-              whileHover={{ y: -5, borderColor: 'rgba(217, 70, 239, 0.3)' }}
-              className="p-8 rounded-3xl bg-white border border-slate-100 relative overflow-hidden group shadow-sm hover:shadow-xl hover:shadow-brand-purple/5 transition-all duration-500"
-            >
-              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                <Globe size={64} className="text-brand-purple" />
+                <div className="relative z-10 space-y-8">
+                  <div className="flex items-center justify-between">
+                    <div className="relative">
+                      <div className="absolute -inset-2 bg-brand-purple/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-purple to-brand-purple-glow flex items-center justify-center shadow-xl shadow-brand-purple/20 group-hover:scale-105 transition-transform duration-500">
+                        <Shield className="text-white" size={32} />
+                      </div>
+                    </div>
+                    <div className="px-4 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-[10px] font-mono font-bold text-brand-purple uppercase tracking-[0.2em] shadow-sm group-hover:bg-brand-purple/5 group-hover:border-brand-purple/10 transition-all">
+                      Family Protection Suite
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h4 className="text-3xl font-display font-black text-brand-offwhite tracking-tight group-hover:text-brand-purple transition-colors duration-500">
+                      For Canadian Families
+                    </h4>
+                    <p className="text-base text-brand-gray leading-relaxed font-medium">
+                      Protect your "Golden Assets." Our AI is specifically trained for the unique hazards of Canadian school zones and dark rural stretches.
+                    </p>
+                  </div>
+
+                  <div className="pt-8 border-t border-slate-100">
+                    <button 
+                      onClick={() => setIsWaitlistOpen(true)}
+                      className="group/btn flex items-center gap-4 text-xs font-black text-brand-purple uppercase tracking-[0.3em]"
+                    >
+                      <span className="relative">
+                        Get the 2026 Safety Blueprint
+                        <div className="absolute -bottom-1.5 left-0 w-0 h-1 bg-brand-purple group-hover/btn:w-full transition-all duration-500 rounded-full" />
+                      </span>
+                      <div className="w-10 h-10 rounded-full bg-brand-purple/5 flex items-center justify-center group-hover/btn:bg-brand-purple group-hover/btn:text-white group-hover/btn:shadow-lg group-hover/btn:shadow-brand-purple/30 transition-all duration-500">
+                        <ChevronRight size={20} />
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Fleet Card: Professional Cyber-Tech */}
+              <motion.div 
+                whileHover={{ y: -8, scale: 1.01 }}
+                className="group relative p-10 rounded-[3rem] overflow-hidden border border-slate-200 bg-white shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-700 hover:shadow-[0_40px_80px_-20px_rgba(15,23,42,0.1)] hover:border-brand-purple/20"
+              >
+                {/* Subtle Gradient & Pattern */}
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-brand-purple/[0.02] opacity-100" />
+                <div className="absolute -right-20 -top-20 w-80 h-80 bg-brand-purple/5 rounded-full blur-[100px] group-hover:bg-brand-purple/10 transition-colors duration-1000" />
+                <div className="absolute inset-0 opacity-[0.02] pointer-events-none group-hover:opacity-[0.04] transition-opacity duration-700" 
+                     style={{ backgroundImage: 'linear-gradient(#D946EF 1px, transparent 1px), linear-gradient(90deg, #D946EF 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+
+                <div className="relative z-10 space-y-8">
+                  <div className="flex items-center justify-between">
+                    <div className="relative">
+                      <div className="absolute -inset-2 bg-brand-purple/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="relative w-16 h-16 rounded-2xl bg-brand-offwhite flex items-center justify-center shadow-xl shadow-brand-offwhite/10 group-hover:bg-brand-purple group-hover:scale-105 transition-all duration-500">
+                        <Globe className="text-white" size={32} />
+                      </div>
+                    </div>
+                    <div className="px-4 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-[10px] font-mono font-bold text-brand-gray uppercase tracking-[0.2em] shadow-sm group-hover:bg-brand-purple/5 group-hover:border-brand-purple/10 group-hover:text-brand-purple transition-all duration-500">
+                      Enterprise Telemetry
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h4 className="text-3xl font-display font-black text-brand-offwhite tracking-tight group-hover:text-brand-purple transition-colors duration-500">
+                      For Fleet Operations
+                    </h4>
+                    <p className="text-base text-brand-gray leading-relaxed font-medium">
+                      Maximize ROI & Minimize Liability. Real-time predictive maintenance and driver scoring for fleets of 10 to 500+ vehicles.
+                    </p>
+                  </div>
+
+                  <div className="pt-8 border-t border-slate-100">
+                    <button 
+                      onClick={() => setIsWaitlistOpen(true)}
+                      className="group/btn flex items-center gap-4 text-xs font-black text-brand-offwhite group-hover:text-brand-purple uppercase tracking-[0.3em] transition-colors duration-500"
+                    >
+                      <span className="relative">
+                        Request ROI Analysis Case Study
+                        <div className="absolute -bottom-1.5 left-0 w-0 h-1 bg-brand-purple group-hover/btn:w-full transition-all duration-500 rounded-full" />
+                      </span>
+                      <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center group-hover/btn:bg-brand-purple group-hover/btn:text-white group-hover/btn:shadow-lg group-hover/btn:shadow-brand-purple/30 transition-all duration-500">
+                        <ChevronRight size={20} />
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* AI System Disclaimer & Trust Badges */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center">
+              <div className="lg:col-span-1 flex items-center gap-8 p-6 bg-slate-50/50 rounded-[2.5rem] border border-slate-100 shadow-inner">
+                <div title="Transport Canada Compliant" className="flex flex-col items-center gap-2 group/badge cursor-help flex-1">
+                  <ShieldCheck size={24} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors" />
+                  <span className="text-[9px] font-black text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-widest transition-colors">TC Compliant</span>
+                </div>
+                <div className="w-[1px] h-10 bg-slate-200" />
+                <div title="ISO 9001 Certified" className="flex flex-col items-center gap-2 group/badge cursor-help flex-1">
+                  <Scale size={24} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors" />
+                  <span className="text-[9px] font-black text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-widest transition-colors">ISO 9001</span>
+                </div>
               </div>
-              <h4 className="text-xl font-display font-bold mb-3 text-brand-offwhite">For Fleet Operations</h4>
-              <p className="text-sm text-brand-gray leading-relaxed mb-6">
-                Reduce liability and optimize performance. Real-time telemetry and predictive maintenance for fleets of any size across North America.
-              </p>
-              <button className="text-xs font-bold text-brand-purple uppercase tracking-widest hover:underline flex items-center gap-2 group/btn">
-                FleetGuard Pro Solutions <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-            </motion.div>
-          </div>
-          
-          {/* AI System Disclaimer */}
-          <div className="w-full max-w-4xl mx-auto px-8 py-6 bg-brand-purple/5 border border-brand-purple/10 rounded-3xl flex flex-col md:flex-row items-center gap-6 text-center md:text-left relative overflow-hidden shadow-inner">
-            <div className="absolute top-0 left-0 w-1 h-full bg-brand-purple" />
-            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-purple/5 rounded-full blur-3xl -mr-16 -mt-16" />
-            <AlertTriangle className="text-brand-purple shrink-0" size={32} />
-            <div className="space-y-1">
-              <h5 className="text-sm font-bold text-brand-offwhite uppercase tracking-widest">Critical Safety Notice</h5>
-              <p className="text-sm text-brand-gray leading-relaxed">
-                Astrateq Gadgets are advanced driver assistance systems (ADAS) and do not replace human judgment. Driver must remain alert and maintain full control of the vehicle at all times.
-              </p>
+
+              <div className="lg:col-span-2 relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-brand-purple/10 via-brand-yellow/5 to-brand-purple/10 rounded-3xl blur-lg opacity-50 group-hover:opacity-100 transition duration-1000" />
+                <div className="relative px-8 py-6 bg-white border border-slate-200 rounded-3xl flex items-center gap-6 shadow-sm overflow-hidden">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-brand-purple" />
+                  <ShieldAlert className="text-brand-purple shrink-0 animate-pulse" size={28} />
+                  <p className="text-[11px] text-brand-gray leading-relaxed font-medium">
+                    <span className="text-brand-offwhite font-black uppercase tracking-widest mr-2">Safety Protocol:</span>
+                    Astrateq Gadgets are Advanced Driver Assistance Systems (ADAS). They augment, not replace, human judgment. Maintain 100% situational awareness at all times.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
