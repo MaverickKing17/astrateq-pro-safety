@@ -59,9 +59,9 @@ function Logo({ className = "", event }: { className?: string, event?: any }) {
         />
       </div>
       <div className="flex flex-col leading-none">
-        <span className="text-2xl font-display font-black text-brand-offwhite tracking-tighter">ASTRATEQ</span>
+        <span className="text-2xl font-sans font-semibold text-brand-offwhite tracking-tight">Astrateq</span>
         <div className="flex items-center gap-2">
-          <span className={`text-[10px] font-mono font-bold ${event ? event.color : 'text-brand-cyan'} tracking-[0.5em] uppercase mt-0.5`}>Gadgets</span>
+          <span className={`text-[10px] font-sans font-medium ${event ? event.color : 'text-brand-cyan'} tracking-[0.2em] uppercase mt-0.5`}>Gadgets</span>
           {event && (
             <span className="text-[10px] animate-bounce" title={event.name}>{event.icon}</span>
           )}
@@ -973,29 +973,29 @@ export default function App() {
               {/* Fleet Card: Professional Cyber-Tech */}
               <motion.div 
                 whileHover={{ y: -8, scale: 1.01 }}
-                className="group relative p-10 rounded-[3rem] overflow-hidden border border-slate-200 bg-white shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-700 hover:shadow-[0_40px_80px_-20px_rgba(15,23,42,0.1)] hover:border-brand-purple/20"
+                className="group relative p-10 rounded-[3rem] overflow-hidden border border-white/5 bg-brand-secondary/30 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-700 hover:shadow-[0_40px_80px_-20px_rgba(0,229,255,0.1)] hover:border-brand-cyan/20"
               >
                 {/* Subtle Gradient & Pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-brand-purple/[0.02] opacity-100" />
-                <div className="absolute -right-20 -top-20 w-80 h-80 bg-brand-purple/5 rounded-full blur-[100px] group-hover:bg-brand-purple/10 transition-colors duration-1000" />
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/[0.02] via-transparent to-brand-cyan/[0.05] opacity-100" />
+                <div className="absolute -right-20 -top-20 w-80 h-80 bg-brand-cyan/5 rounded-full blur-[100px] group-hover:bg-brand-cyan/10 transition-colors duration-1000" />
                 <div className="absolute inset-0 opacity-[0.02] pointer-events-none group-hover:opacity-[0.04] transition-opacity duration-700" 
-                     style={{ backgroundImage: 'linear-gradient(#D946EF 1px, transparent 1px), linear-gradient(90deg, #D946EF 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+                     style={{ backgroundImage: 'linear-gradient(#00E5FF 1px, transparent 1px), linear-gradient(90deg, #00E5FF 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
                 <div className="relative z-10 space-y-8">
                   <div className="flex items-center justify-between">
                     <div className="relative">
-                      <div className="absolute -inset-2 bg-brand-purple/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <div className="relative w-16 h-16 rounded-2xl bg-brand-offwhite flex items-center justify-center shadow-xl shadow-brand-offwhite/10 group-hover:bg-brand-purple group-hover:scale-105 transition-all duration-500">
-                        <Globe className="text-white" size={32} />
+                      <div className="absolute -inset-2 bg-brand-cyan/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="relative w-16 h-16 rounded-2xl bg-brand-secondary flex items-center justify-center shadow-xl shadow-white/5 group-hover:bg-brand-cyan group-hover:scale-105 transition-all duration-500">
+                        <Globe className="text-brand-cyan group-hover:text-brand-charcoal" size={32} />
                       </div>
                     </div>
-                    <div className="px-4 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-[10px] font-mono font-bold text-brand-gray uppercase tracking-[0.2em] shadow-sm group-hover:bg-brand-purple/5 group-hover:border-brand-purple/10 group-hover:text-brand-purple transition-all duration-500">
+                    <div className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono font-bold text-brand-gray uppercase tracking-[0.2em] shadow-sm group-hover:bg-brand-cyan/5 group-hover:border-brand-cyan/10 group-hover:text-brand-cyan transition-all duration-500">
                       Enterprise Telemetry
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <h4 className="text-3xl font-display font-black text-brand-offwhite tracking-tight group-hover:text-brand-purple transition-colors duration-500">
+                    <h4 className="text-3xl font-display font-black text-brand-offwhite tracking-tight group-hover:text-brand-cyan transition-colors duration-500">
                       For Fleet Operations
                     </h4>
                     <p className="text-base text-brand-gray leading-relaxed font-medium">
@@ -1003,16 +1003,16 @@ export default function App() {
                     </p>
                   </div>
 
-                  <div className="pt-8 border-t border-slate-100">
+                  <div className="pt-8 border-t border-white/10">
                     <button 
                       onClick={() => setIsWaitlistOpen(true)}
-                      className="group/btn flex items-center gap-4 text-xs font-black text-brand-offwhite group-hover:text-brand-purple uppercase tracking-[0.3em] transition-colors duration-500"
+                      className="group/btn flex items-center gap-4 text-xs font-black text-brand-cyan uppercase tracking-[0.3em]"
                     >
                       <span className="relative">
-                        Request ROI Analysis Case Study
-                        <div className="absolute -bottom-1.5 left-0 w-0 h-1 bg-brand-purple group-hover/btn:w-full transition-all duration-500 rounded-full" />
+                        Request Fleet Demo
+                        <div className="absolute -bottom-1.5 left-0 w-0 h-1 bg-brand-cyan group-hover/btn:w-full transition-all duration-500 rounded-full" />
                       </span>
-                      <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center group-hover/btn:bg-brand-purple group-hover/btn:text-white group-hover/btn:shadow-lg group-hover/btn:shadow-brand-purple/30 transition-all duration-500">
+                      <div className="w-10 h-10 rounded-full bg-brand-cyan/5 flex items-center justify-center group-hover/btn:bg-brand-cyan group-hover/btn:text-brand-charcoal group-hover/btn:shadow-lg group-hover/btn:shadow-brand-cyan/30 transition-all duration-500">
                         <ChevronRight size={20} />
                       </div>
                     </button>
@@ -1023,41 +1023,41 @@ export default function App() {
 
             {/* AI System Disclaimer & Trust Badges */}
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-stretch">
-              <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-gradient-to-br from-brand-purple/10 via-white to-brand-yellow/10 rounded-[2.5rem] border border-brand-purple/20 shadow-xl shadow-brand-purple/5">
-                <div title="Transport Canada Compliant" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/50 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl bg-brand-purple/10 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
-                    <ShieldCheck size={28} className="text-brand-purple" />
+              <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4 p-6 bg-brand-secondary/50 rounded-[2.5rem] border border-white/5 shadow-xl">
+                <div title="Transport Canada Compliant" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/5 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-brand-cyan/10 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
+                    <ShieldCheck size={28} className="text-brand-cyan" />
                   </div>
-                  <span className="text-[10px] font-black text-brand-offwhite uppercase tracking-widest text-center">TC Compliant</span>
+                  <span className="text-[10px] font-black text-brand-gray uppercase tracking-widest text-center group-hover:text-brand-cyan transition-colors">TC Compliant</span>
                 </div>
                 
-                <div title="ISO 9001 Certified" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/50 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl bg-brand-yellow/10 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
-                    <Scale size={28} className="text-brand-yellow-darker" style={{ color: '#854d0e' }} />
+                <div title="ISO 9001 Certified" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/5 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-brand-ember/10 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
+                    <Scale size={28} className="text-brand-ember" />
                   </div>
-                  <span className="text-[10px] font-black text-brand-offwhite uppercase tracking-widest text-center">ISO 9001</span>
+                  <span className="text-[10px] font-black text-brand-gray uppercase tracking-widest text-center group-hover:text-brand-ember transition-colors">ISO 9001</span>
                 </div>
 
-                <div title="PIPEDA Compliant (Data Privacy)" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/50 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
-                    <Lock size={28} className="text-emerald-600" />
+                <div title="PIPEDA Compliant (Data Privacy)" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/5 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
+                    <Lock size={28} className="text-emerald-500" />
                   </div>
-                  <span className="text-[10px] font-black text-brand-offwhite uppercase tracking-widest text-center">PIPEDA Ready</span>
+                  <span className="text-[10px] font-black text-brand-gray uppercase tracking-widest text-center group-hover:text-emerald-500 transition-colors">PIPEDA Ready</span>
                 </div>
 
-                <div title="Proudly Engineered in Canada" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/50 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-xl bg-rose-100 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
-                    <Heart size={28} className="text-rose-600" />
+                <div title="Proudly Engineered in Canada" className="flex flex-col items-center justify-center gap-3 group/badge cursor-help p-3 rounded-2xl hover:bg-white/5 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center group-hover/badge:scale-110 transition-transform duration-500">
+                    <Heart size={28} className="text-rose-500" />
                   </div>
-                  <span className="text-[10px] font-black text-brand-offwhite uppercase tracking-widest text-center">Proudly Canadian</span>
+                  <span className="text-[10px] font-black text-brand-gray uppercase tracking-widest text-center group-hover:text-rose-500 transition-colors">Proudly Canadian</span>
                 </div>
               </div>
 
               <div className="lg:col-span-2 relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-brand-purple/20 via-brand-yellow/10 to-brand-purple/20 rounded-[2.5rem] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000" />
-                <div className="relative h-full px-8 py-6 bg-white border border-slate-200 rounded-[2.5rem] flex items-center gap-6 shadow-sm overflow-hidden">
-                  <div className="absolute top-0 left-0 w-1.5 h-full bg-brand-purple" />
-                  <ShieldAlert className="text-brand-purple shrink-0 animate-pulse" size={32} />
+                <div className="absolute -inset-1 bg-gradient-to-r from-brand-cyan/20 via-brand-ember/10 to-brand-cyan/20 rounded-[2.5rem] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000" />
+                <div className="relative h-full px-8 py-6 bg-brand-secondary border border-white/10 rounded-[2.5rem] flex items-center gap-6 shadow-sm overflow-hidden">
+                  <div className="absolute top-0 left-0 w-1.5 h-full bg-brand-cyan" />
+                  <ShieldAlert className="text-brand-cyan shrink-0 animate-pulse" size={32} />
                   <p className="text-xs text-brand-gray leading-relaxed font-medium">
                     <span className="text-brand-offwhite font-black uppercase tracking-widest mr-2">Safety Protocol:</span>
                     Astrateq Gadgets are Advanced Driver Assistance Systems (ADAS). They augment, not replace, human judgment. Maintain 100% situational awareness at all times.
@@ -1343,41 +1343,32 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
     setInput("");
     setIsTyping(true);
 
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: `You are the Astrateq Gadgets AI Safety Assistant. 
-            Astrateq Gadgets is a Canadian tech-luxury brand specializing in AI-powered automotive safety.
-            Key Products:
-            - AlTrak: 4K sensor suite for terrain analysis and predictive safety.
-            - FleetGuard Pro: Enterprise fleet management with driver behavior monitoring.
-            - EV Battery Intelligence Suite: Cell-level monitoring and thermal management.
-            
-            Company Values:
-            - PIPEDA & CASL Compliant.
-            - Edge-First processing for maximum privacy.
-            - Engineered in Toronto for Canadian winters (-40°C to +85°C).
-            
-            User Question: ${userMsg}` }]
-          }
-        ],
-        config: {
-          systemInstruction: "You are a professional, helpful, and technically sophisticated AI assistant for Astrateq Gadgets. Use a 'Tech-Luxury' tone. Be concise but informative. Always prioritize safety and privacy in your answers. Reference Canadian standards where applicable."
-        }
-      });
+    // Reliable Local AI Logic (24/7 Availability)
+    setTimeout(() => {
+      const lowerMsg = userMsg.toLowerCase();
+      let botResponse = "";
 
-      const botResponse = response.text || "I'm sorry, I encountered an error processing your request. Please try again or contact support@astrateq.com.";
+      if (lowerMsg.includes("altrak")) {
+        botResponse = "AlTrak™ is our flagship 4K sensor suite. It uses multi-spectral thermal imaging and LiDAR-lite depth sensing to predict hazards up to 2 seconds before they occur. It's specifically engineered for Canadian visibility challenges like heavy snow and fog.";
+      } else if (lowerMsg.includes("fleet")) {
+        botResponse = "FleetGuard Pro is our enterprise solution. It provides real-time telemetry, driver behavior scoring, and predictive maintenance alerts. It's designed to maximize ROI for fleets of all sizes while ensuring driver safety.";
+      } else if (lowerMsg.includes("ev") || lowerMsg.includes("battery")) {
+        botResponse = "Our EV Battery Intelligence Suite provides cell-level thermal monitoring. It's optimized for major EVs like Tesla and Rivian, helping to extend battery life and safety in extreme Canadian temperatures.";
+      } else if (lowerMsg.includes("privacy") || lowerMsg.includes("data")) {
+        botResponse = "Privacy is core to Astrateq. We use an 'Edge-First' philosophy, meaning 99.9% of processing happens locally on your hardware. We are fully PIPEDA and CASL compliant.";
+      } else if (lowerMsg.includes("price") || lowerMsg.includes("cost")) {
+        botResponse = "Pricing varies based on vehicle integration and fleet size. For individual units, AlTrak™ starts at $1,299 CAD. For enterprise fleet pricing, please request a demo via our Support Center.";
+      } else if (lowerMsg.includes("winter") || lowerMsg.includes("cold")) {
+        botResponse = "Astrateq hardware is MIL-SPEC rated for operation down to -45°C. Our sensors feature integrated nano-heating elements to melt ice and prevent fogging automatically.";
+      } else if (lowerMsg.includes("hello") || lowerMsg.includes("hi")) {
+        botResponse = "Hello! I'm the Astrateq Safety Assistant. How can I help you with our AI automotive safety systems today?";
+      } else {
+        botResponse = "That's an interesting question. While I'm specialized in Astrateq's AlTrak™, FleetGuard Pro, and EV Battery systems, I recommend checking our FAQ section for more technical details or contacting our Toronto-based support team directly.";
+      }
+
       setMessages(prev => [...prev, { role: 'bot', text: botResponse }]);
-    } catch (error) {
-      console.error("AI Chat Error:", error);
-      setMessages(prev => [...prev, { role: 'bot', text: "I'm currently experiencing a high volume of requests. Please try again in a moment or contact our Toronto command center for immediate assistance." }]);
-    } finally {
       setIsTyping(false);
-    }
+    }, 1000);
   };
 
   return (
@@ -1391,21 +1382,21 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
       }}
       className="fixed bottom-24 right-6 w-[350px] md:w-[450px] h-[600px] z-[70] flex flex-col"
     >
-      <div className="glass-panel flex-1 rounded-3xl border-brand-purple/30 shadow-2xl overflow-hidden flex flex-col bg-white/95 backdrop-blur-2xl">
+      <div className="glass-panel flex-1 rounded-3xl border-brand-cyan/30 shadow-2xl overflow-hidden flex flex-col bg-brand-secondary/95 backdrop-blur-2xl">
         {/* Header */}
         <div className="p-6 bg-gradient-to-r from-brand-navy via-brand-navy/90 to-brand-navy text-white flex items-center justify-between relative overflow-hidden">
           {/* Animated Background Detail */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-purple/10 rounded-full blur-3xl -mr-16 -mt-16 animate-pulse" />
+          <div className="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/10 rounded-full blur-3xl -mr-16 -mt-16 animate-pulse" />
           
           <div className="flex items-center gap-4 relative z-10">
-            <div className="w-12 h-12 rounded-2xl bg-brand-purple flex items-center justify-center border border-white/20 shadow-[0_0_15px_rgba(217,70,239,0.4)]">
-              <Bot className="text-white" size={24} />
+            <div className="w-12 h-12 rounded-2xl bg-brand-cyan flex items-center justify-center border border-white/20 shadow-[0_0_15px_rgba(0,229,255,0.4)]">
+              <Bot className="text-brand-charcoal" size={24} />
             </div>
             <div>
               <h3 className="font-display font-bold text-base tracking-tight text-white leading-none mb-1.5">Astrateq Gadgets AI Support</h3>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-brand-purple animate-pulse shadow-[0_0_8px_#D946EF]" />
-                <span className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-[0.2em]">System Active</span>
+                <div className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_8px_#00E5FF]" />
+                <span className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.2em]">System Active</span>
               </div>
             </div>
           </div>
@@ -1427,10 +1418,10 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-[90%] p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${
                 msg.role === 'user' 
-                  ? 'bg-brand-purple text-brand-navy font-medium rounded-tr-none' 
-                  : 'bg-slate-100 text-brand-gray font-medium rounded-tl-none'
+                  ? 'bg-brand-cyan text-brand-charcoal font-medium rounded-tr-none' 
+                  : 'bg-white/5 border border-white/10 text-brand-gray font-medium rounded-tl-none'
               }`}>
-                <div className="prose prose-sm prose-slate max-w-none">
+                <div className="prose prose-sm prose-invert max-w-none">
                   <Markdown>{msg.text}</Markdown>
                 </div>
               </div>
@@ -1438,17 +1429,17 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
           ))}
           {isTyping && (
             <div className="flex justify-start">
-              <div className="bg-slate-100 p-4 rounded-2xl rounded-tl-none flex gap-1 shadow-sm">
-                <div className="w-1.5 h-1.5 bg-brand-gray/30 rounded-full animate-bounce" />
-                <div className="w-1.5 h-1.5 bg-brand-gray/30 rounded-full animate-bounce [animation-delay:0.2s]" />
-                <div className="w-1.5 h-1.5 bg-brand-gray/30 rounded-full animate-bounce [animation-delay:0.4s]" />
+              <div className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none flex gap-1 shadow-sm">
+                <div className="w-1.5 h-1.5 bg-brand-cyan/30 rounded-full animate-bounce" />
+                <div className="w-1.5 h-1.5 bg-brand-cyan/30 rounded-full animate-bounce [animation-delay:0.2s]" />
+                <div className="w-1.5 h-1.5 bg-brand-cyan/30 rounded-full animate-bounce [animation-delay:0.4s]" />
               </div>
             </div>
           )}
         </div>
 
         {/* Input */}
-        <div className="p-4 border-t border-slate-100 bg-slate-50/50">
+        <div className="p-4 border-t border-white/10 bg-brand-navy/50">
           <div className="relative">
             <input 
               type="text"
@@ -1456,14 +1447,14 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Ask about Astrateq Gadgets systems..."
-              className="w-full pl-4 pr-12 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-brand-purple transition-shadow focus:shadow-[0_0_15px_rgba(217,70,239,0.15)] placeholder:text-slate-400"
+              className="w-full pl-4 pr-12 py-3 bg-white/5 border border-white/10 rounded-xl text-sm focus:outline-none focus:border-brand-cyan transition-shadow focus:shadow-[0_0_15px_rgba(0,229,255,0.15)] placeholder:text-brand-gray/40 text-brand-offwhite"
               disabled={isTyping}
             />
             <button 
               onClick={handleSend}
               disabled={isTyping}
               className={`absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg transition-all ${
-                isTyping ? 'text-slate-300 cursor-not-allowed' : 'text-brand-purple hover:bg-brand-purple/10'
+                isTyping ? 'text-brand-gray/20 cursor-not-allowed' : 'text-brand-cyan hover:bg-brand-cyan/10'
               }`}
             >
               <Send size={18} />
@@ -1494,28 +1485,28 @@ function CookieBanner({ onOpenPolicy }: { onOpenPolicy: () => void }) {
         {/* Outer Glow */}
         <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-purple/20 via-brand-yellow/10 to-brand-purple/20 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse" />
         
-        <div className="relative glass-panel p-6 rounded-2xl border-brand-purple/30 shadow-2xl bg-white/90 backdrop-blur-xl overflow-hidden">
+        <div className="relative glass-panel p-6 rounded-2xl border-brand-cyan/30 shadow-2xl bg-brand-secondary/95 backdrop-blur-xl overflow-hidden">
           {/* Animated Top Border */}
-          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-purple to-transparent animate-shimmer" />
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-cyan to-transparent animate-shimmer" />
           
           <div className="flex flex-col gap-5">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-brand-purple/10 flex items-center justify-center border border-brand-purple/20 shadow-inner">
-                  <Cookie className="text-brand-purple" size={24} />
+                <div className="w-12 h-12 rounded-2xl bg-brand-cyan/10 flex items-center justify-center border border-brand-cyan/20 shadow-inner">
+                  <Cookie className="text-brand-cyan" size={24} />
                 </div>
                 <div>
                   <h4 className="font-display font-bold text-brand-offwhite text-base tracking-tight leading-none mb-1">
                     Optimizing Your AI Experience
                   </h4>
-                  <p className="text-[10px] font-mono font-bold text-brand-purple/60 uppercase tracking-widest">
+                  <p className="text-[10px] font-mono font-bold text-brand-cyan/60 uppercase tracking-widest">
                     Astrateq Gadgets <span className="opacity-40">SYSTEM v2.4</span>
                   </p>
                 </div>
               </div>
               <button 
                 onClick={() => setIsVisible(false)}
-                className="p-2 hover:bg-slate-100 rounded-lg text-brand-gray/40 hover:text-brand-purple transition-colors"
+                className="p-2 hover:bg-white/5 rounded-lg text-brand-gray/40 hover:text-brand-cyan transition-colors"
                 aria-label="Close"
               >
                 <X size={18} />
@@ -1523,19 +1514,19 @@ function CookieBanner({ onOpenPolicy }: { onOpenPolicy: () => void }) {
             </div>
 
             <p className="text-xs text-brand-gray leading-relaxed font-medium">
-              <span className="text-brand-offwhite font-bold">Astrateq Gadgets</span> uses advanced cookies to analyze terrain data patterns and improve our predictive safety algorithms. By continuing, you agree to our <button onClick={onOpenPolicy} className="text-brand-purple hover:underline font-bold">AI Data Policy</button>.
+              <span className="text-brand-offwhite font-bold">Astrateq Gadgets</span> uses advanced cookies to analyze terrain data patterns and improve our predictive safety algorithms. By continuing, you agree to our <button onClick={onOpenPolicy} className="text-brand-cyan hover:underline font-bold">AI Data Policy</button>.
             </p>
 
             <div className="flex items-center gap-3">
               <button 
                 onClick={() => setIsVisible(false)}
-                className="flex-1 px-6 py-3 bg-brand-offwhite text-white text-[11px] font-bold rounded-xl hover:bg-brand-offwhite/90 transition-all hover:shadow-lg hover:shadow-brand-offwhite/20 uppercase tracking-widest active:scale-95"
+                className="flex-1 px-6 py-3 bg-brand-cyan text-brand-charcoal text-[11px] font-bold rounded-xl hover:bg-brand-cyan-hover transition-all hover:shadow-lg hover:shadow-brand-cyan/20 uppercase tracking-widest active:scale-95"
               >
                 Accept All
               </button>
               <button 
                 onClick={() => setIsVisible(false)}
-                className="px-6 py-3 border border-slate-200 text-brand-gray text-[11px] font-bold rounded-xl hover:bg-slate-50 transition-all uppercase tracking-widest active:scale-95"
+                className="px-6 py-3 border border-white/10 text-brand-gray text-[11px] font-bold rounded-xl hover:bg-white/5 transition-all uppercase tracking-widest active:scale-95"
               >
                 Settings
               </button>
@@ -1543,7 +1534,7 @@ function CookieBanner({ onOpenPolicy }: { onOpenPolicy: () => void }) {
           </div>
 
           {/* Subtle Background Detail */}
-          <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-brand-purple/5 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-brand-cyan/5 rounded-full blur-2xl pointer-events-none" />
         </div>
       </div>
     </motion.div>
@@ -2004,18 +1995,18 @@ function WaitlistModal({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-lg glass-panel bg-white p-8 rounded-3xl border-brand-purple/30 shadow-2xl"
+            className="relative w-full max-w-lg glass-panel bg-brand-secondary p-8 rounded-3xl border-brand-cyan/30 shadow-2xl"
           >
             <button 
               onClick={onClose}
-              className="absolute top-6 right-6 p-2 hover:bg-slate-100 rounded-lg text-brand-gray transition-colors"
+              className="absolute top-6 right-6 p-2 hover:bg-white/5 rounded-lg text-brand-gray transition-colors"
             >
               <X size={20} />
             </button>
 
             <div className="text-center mb-8">
-              <div className="w-16 h-16 rounded-2xl bg-brand-purple/10 flex items-center justify-center mx-auto mb-6">
-                <Zap className="text-brand-purple" size={32} />
+              <div className="w-16 h-16 rounded-2xl bg-brand-cyan/10 flex items-center justify-center mx-auto mb-6">
+                <Zap className="text-brand-cyan" size={32} />
               </div>
               <h3 className="text-3xl font-display font-bold text-brand-offwhite mb-2">Join the Waitlist</h3>
               <p className="text-brand-gray">Be the first to experience the future of Canadian road safety.</p>
@@ -2023,28 +2014,28 @@ function WaitlistModal({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose
 
             <form onSubmit={onSubmit} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest mb-2">Full Name</label>
+                <label className="block text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-widest mb-2">Full Name</label>
                 <input 
                   required
                   name="name"
                   type="text" 
                   placeholder="John Doe"
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple transition-colors"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-brand-cyan transition-colors text-brand-offwhite"
                 />
               </div>
               <div>
-                <label className="block text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest mb-2">Email Address</label>
+                <label className="block text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-widest mb-2">Email Address</label>
                 <input 
                   required
                   name="email"
                   type="email" 
                   placeholder="john@example.com"
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-purple transition-colors"
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-brand-cyan transition-colors text-brand-offwhite"
                 />
               </div>
               <button 
                 type="submit"
-                className="w-full py-4 bg-brand-purple text-white font-bold rounded-xl hover:bg-brand-purple/90 transition-all shadow-lg shadow-brand-purple/20 active:scale-[0.98]"
+                className="w-full py-4 bg-brand-cyan text-brand-charcoal font-bold rounded-xl hover:bg-brand-cyan-hover transition-all shadow-lg shadow-brand-cyan/20 active:scale-[0.98] uppercase tracking-widest"
               >
                 SECURE MY SPOT
               </button>
@@ -2070,8 +2061,8 @@ function SuccessToast({ isVisible }: { isVisible: boolean }) {
           exit={{ opacity: 0, y: 50, x: "-50%" }}
           className="fixed bottom-10 left-1/2 z-[110] px-6 py-4 bg-brand-navy border border-brand-purple/30 rounded-2xl shadow-2xl flex items-center gap-4"
         >
-          <div className="w-10 h-10 rounded-full bg-brand-purple/20 flex items-center justify-center">
-            <ShieldCheck className="text-brand-purple" size={24} />
+          <div className="w-10 h-10 rounded-full bg-brand-cyan/20 flex items-center justify-center">
+            <ShieldCheck className="text-brand-cyan" size={24} />
           </div>
           <div>
             <h4 className="text-white font-bold text-sm">Success!</h4>
