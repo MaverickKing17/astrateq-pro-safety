@@ -60,9 +60,9 @@ function Logo({ className = "", event }: { className?: string, event?: any }) {
         />
       </div>
       <div className="flex flex-col leading-none">
-        <span className="text-2xl font-sans font-semibold text-brand-offwhite tracking-tight">Astrateq</span>
+        <span className="text-2xl font-sans font-medium text-brand-offwhite tracking-tight">Astrateq</span>
         <div className="flex items-center gap-2">
-          <span className={`text-[10px] font-sans font-medium ${event ? event.color : 'text-brand-cyan'} tracking-[0.2em] uppercase mt-0.5`}>Gadgets</span>
+          <span className={`text-[11px] font-sans font-medium ${event ? event.color : 'text-brand-cyan'} tracking-tight mt-0.5`}>Gadgets</span>
           {event && (
             <span className="text-[10px] animate-bounce" title={event.name}>{event.icon}</span>
           )}
@@ -1160,16 +1160,16 @@ export default function App() {
               </p>
             </div>
             
-            <div className="pt-8 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
               <p className="text-xs text-brand-gray font-semibold uppercase tracking-widest">
                 © 2026 Astrateq Gadgets. Engineered in Toronto.
               </p>
               <div className="flex items-center gap-8">
-                <span className="text-[10px] font-mono text-brand-purple font-bold uppercase tracking-widest">v2.4.0-STABLE</span>
+                <span className="text-[10px] font-mono text-brand-cyan font-bold uppercase tracking-widest">v2.4.0-STABLE</span>
                 <div className="flex items-center gap-2 text-xs text-brand-gray font-bold uppercase tracking-widest">
-                  <MapPin size={14} className={currentEvent ? currentEvent.color : "text-brand-purple"} />
+                  <MapPin size={14} className={currentEvent ? currentEvent.color : "text-brand-cyan"} />
                   Canada
-                  <span className={currentEvent ? currentEvent.color + " ml-1" : "text-brand-purple ml-1"} role="img" aria-label={currentEvent ? currentEvent.name : "Canada"}>
+                  <span className={currentEvent ? currentEvent.color + " ml-1" : "text-brand-cyan ml-1"} role="img" aria-label={currentEvent ? currentEvent.name : "Canada"}>
                     {currentEvent ? currentEvent.icon : "🍁"}
                   </span>
                 </div>
@@ -1187,10 +1187,10 @@ export default function App() {
               initial={{ opacity: 0, x: 20, scale: 0.8 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 20, scale: 0.8 }}
-              className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl border border-brand-purple/30 shadow-xl mb-2 hidden md:block"
+              className="bg-brand-secondary/90 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-brand-cyan/30 shadow-[0_0_20px_rgba(0,229,255,0.1)] mb-2 hidden md:block"
             >
-              <p className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-brand-purple rounded-full animate-pulse" />
+              <p className="text-[11px] font-mono font-bold text-brand-cyan uppercase tracking-[0.2em] flex items-center gap-2.5">
+                <span className="w-2 h-2 bg-brand-cyan rounded-full animate-pulse shadow-[0_0_8px_#00E5FF]" />
                 AI Safety Assistant Online
               </p>
             </motion.div>
@@ -1203,26 +1203,26 @@ export default function App() {
           animate={{ scale: 1, opacity: 1 }}
           whileHover={{ scale: 1.05, y: -4 }}
           whileTap={{ scale: 0.95 }}
-          className="relative w-20 h-20 bg-orange-500 text-white rounded-[2.5rem] flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(59,130,246,0.4)] hover:shadow-[0_25px_50px_-12px_rgba(59,130,246,0.6)] transition-all group overflow-hidden border border-white/20"
+          className="relative w-20 h-20 bg-brand-secondary text-brand-cyan rounded-[2.5rem] flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(0,229,255,0.2)] hover:shadow-[0_25px_50px_-12px_rgba(0,229,255,0.4)] transition-all group overflow-hidden border border-brand-cyan/30"
           aria-label="Open AI Live Chat"
         >
           {/* Dynamic Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 via-brand-cyan/10 to-brand-cyan/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
           {/* Animated Rings */}
-          <div className="absolute inset-0 border-2 border-blue-400/20 rounded-[2.5rem] animate-ping opacity-20" />
-          <div className="absolute inset-0 border border-blue-400/40 rounded-[2.5rem] animate-spin-slow opacity-30" />
+          <div className="absolute inset-0 border-2 border-brand-cyan/20 rounded-[2.5rem] animate-ping opacity-20" />
+          <div className="absolute inset-0 border border-brand-cyan/40 rounded-[2.5rem] animate-spin-slow opacity-30" />
           
           {/* Notification Dot */}
-          <div className="absolute top-4 right-4 w-3 h-3 bg-blue-500 rounded-full border-2 border-orange-500 z-20 shadow-[0_0_10px_#3b82f6]" />
+          <div className="absolute top-4 right-4 w-3 h-3 bg-brand-cyan rounded-full border-2 border-brand-secondary z-20 shadow-[0_0_10px_#00E5FF]" />
           
           <div className="relative z-10 flex flex-col items-center gap-1">
-            <Globe size={28} className="group-hover:rotate-12 transition-transform duration-500" />
+            <MessageSquare size={28} className="group-hover:rotate-12 transition-transform duration-500" />
             <span className="text-[8px] font-mono font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Chat</span>
           </div>
 
           {/* Inner Glow Overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.3)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.1)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity" />
         </motion.button>
       </div>
 
@@ -1320,35 +1320,35 @@ function LegalModal({ isOpen, content, onClose }: { isOpen: boolean, content: st
             initial={{ scale: 0.9, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}
-            className="w-full max-w-4xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-slate-200"
+            className="w-full max-w-4xl max-h-[90vh] bg-brand-secondary rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-white/10"
           >
-            <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div className="p-6 border-b border-white/5 flex items-center justify-between bg-brand-secondary/50">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-brand-purple/10 flex items-center justify-center">
-                  <ShieldAlert className="text-brand-purple" size={20} />
+                <div className="w-10 h-10 rounded-xl bg-brand-cyan/10 flex items-center justify-center">
+                  <ShieldAlert className="text-brand-cyan" size={20} />
                 </div>
                 <h3 className="text-lg font-display font-bold text-brand-offwhite tracking-tight">Legal Documentation</h3>
               </div>
               <button 
                 onClick={onClose}
-                className="p-2 hover:bg-slate-200 rounded-lg transition-colors text-brand-gray"
+                className="p-2 hover:bg-white/5 rounded-lg transition-colors text-brand-gray"
               >
                 <X size={20} />
               </button>
             </div>
             
             <div className="flex-1 overflow-y-auto p-8 md:p-12 scrollbar-hide">
-              <div className="prose prose-slate max-w-none prose-headings:font-display prose-headings:text-brand-offwhite prose-p:text-brand-gray prose-strong:text-brand-offwhite prose-a:text-brand-purple">
+              <div className="prose prose-slate max-w-none prose-headings:font-display prose-headings:text-brand-offwhite prose-p:text-brand-gray prose-strong:text-brand-offwhite prose-a:text-brand-cyan">
                 <div className="markdown-body">
                   <Markdown>{content}</Markdown>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+            <div className="p-6 border-t border-white/5 bg-brand-secondary/50 flex justify-end">
               <button 
                 onClick={onClose}
-                className="px-6 py-2.5 bg-brand-navy text-white text-sm font-bold rounded-xl hover:bg-brand-navy/90 transition-colors uppercase tracking-widest"
+                className="px-6 py-2.5 bg-brand-cyan text-brand-charcoal text-sm font-bold rounded-xl hover:bg-brand-cyan-hover transition-colors uppercase tracking-widest"
               >
                 Close Document
               </button>
@@ -1522,7 +1522,7 @@ function CookieBanner({ onOpenPolicy }: { onOpenPolicy: () => void }) {
     >
       <div className="relative group">
         {/* Outer Glow */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-purple/20 via-brand-yellow/10 to-brand-purple/20 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse" />
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-brand-cyan/20 via-blue-400/10 to-brand-cyan/20 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse" />
         
         <div className="relative glass-panel p-6 rounded-2xl border-brand-cyan/30 shadow-2xl bg-brand-secondary/95 backdrop-blur-xl overflow-hidden">
           {/* Animated Top Border */}
@@ -1595,7 +1595,7 @@ function FooterAccordion({ title, description, onLinkClick, links }: {
         className="flex items-center justify-between w-full md:cursor-default md:pointer-events-none py-2 md:py-0 mb-0 md:mb-6 group"
       >
         <div className="text-left">
-          <h5 className="text-xs font-mono font-bold text-brand-purple uppercase tracking-[0.25em] group-hover:text-brand-purple-glow transition-colors mb-2">
+          <h5 className="text-xs font-mono font-bold text-brand-cyan uppercase tracking-[0.25em] transition-colors mb-2">
             {title}
           </h5>
           <p className="hidden md:block text-[11px] text-brand-gray/60 font-medium uppercase tracking-wider max-w-[200px] leading-relaxed">
@@ -1623,11 +1623,11 @@ function FooterAccordion({ title, description, onLinkClick, links }: {
             <li key={i}>
               <button 
                 onClick={() => onLinkClick(link.label)}
-                className="hover:text-brand-purple transition-all block py-1.5 md:py-0 border-l-2 border-transparent hover:border-brand-purple hover:pl-3 md:hover:pl-4 relative group/link text-left w-full"
+                className="hover:text-brand-cyan transition-all block py-1.5 md:py-0 border-l-2 border-transparent hover:border-brand-cyan hover:pl-3 md:hover:pl-4 relative group/link text-left w-full"
               >
                 <span className="relative z-10">{link.label}</span>
                 <motion.div 
-                  className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-brand-purple rounded-full opacity-0 group-hover/link:opacity-100 transition-opacity hidden md:block"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1 bg-brand-cyan rounded-full opacity-0 group-hover/link:opacity-100 transition-opacity hidden md:block"
                   initial={{ scale: 0 }}
                   whileHover={{ scale: 1 }}
                 />
@@ -1666,21 +1666,21 @@ function SolutionCard({ icon, title, subtitle, description, features, index, ima
   image?: string
 }) {
   const gradients = [
-    "from-brand-purple/20 via-brand-purple/5 to-transparent",
-    "from-blue-500/20 via-blue-500/5 to-transparent",
-    "from-emerald-500/20 via-emerald-500/5 to-transparent"
+    "from-brand-cyan/20 via-brand-cyan/5 to-transparent",
+    "from-blue-400/20 via-blue-400/5 to-transparent",
+    "from-brand-cyan/20 via-brand-cyan/5 to-transparent"
   ];
 
   const iconBgs = [
-    "bg-brand-purple/10 border-brand-purple/20",
-    "bg-blue-500/10 border-blue-500/20",
-    "bg-emerald-500/10 border-emerald-500/20"
+    "bg-brand-cyan/10 border-brand-cyan/20",
+    "bg-blue-400/10 border-blue-400/20",
+    "bg-brand-cyan/10 border-brand-cyan/20"
   ];
 
   const iconColors = [
-    "text-brand-purple",
-    "text-blue-500",
-    "text-emerald-500"
+    "text-brand-cyan",
+    "text-blue-400",
+    "text-brand-cyan"
   ];
 
   return (
@@ -1690,13 +1690,13 @@ function SolutionCard({ icon, title, subtitle, description, features, index, ima
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ y: -10 }}
-      className="glass-panel hover-glow p-10 rounded-[2.5rem] border-slate-200 group relative overflow-hidden bg-white"
+      className="glass-panel hover-glow p-10 rounded-[2.5rem] border-white/5 group relative overflow-hidden bg-brand-secondary/40"
     >
       {/* Dynamic Background Gradient */}
       <div className={`absolute inset-0 bg-gradient-to-br ${gradients[index % gradients.length]} opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
       
       {/* Technical Background Accent */}
-      <div className="absolute top-0 right-0 w-40 h-40 bg-brand-purple/5 rounded-bl-full -mr-16 -mt-16 group-hover:bg-brand-purple/10 transition-all duration-500 rotate-12" />
+      <div className="absolute top-0 right-0 w-40 h-40 bg-brand-cyan/5 rounded-bl-full -mr-16 -mt-16 group-hover:bg-brand-cyan/10 transition-all duration-500 rotate-12" />
       
       {image && (
         <div className="mb-8 -mx-10 -mt-10 overflow-hidden h-48 relative">
@@ -1706,7 +1706,7 @@ function SolutionCard({ icon, title, subtitle, description, features, index, ima
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal via-transparent to-transparent" />
         </div>
       )}
 
@@ -1735,7 +1735,7 @@ function SolutionCard({ icon, title, subtitle, description, features, index, ima
         <div className="pt-8 grid gap-4">
           {features.map((feature, i) => (
             <div key={i} className="flex items-center gap-4 text-xs font-mono text-brand-gray font-bold group-hover:text-brand-offwhite transition-colors">
-              <div className={`w-2 h-2 rounded-full ${index === 0 ? 'bg-brand-purple' : index === 1 ? 'bg-blue-500' : 'bg-emerald-500'} shadow-[0_0_8px_rgba(0,0,0,0.1)]`} />
+              <div className={`w-2 h-2 rounded-full ${index === 0 ? 'bg-brand-cyan' : index === 1 ? 'bg-blue-400' : 'bg-brand-cyan'} shadow-[0_0_8px_rgba(0,0,0,0.1)]`} />
               <span className="tracking-widest uppercase">{feature}</span>
             </div>
           ))}
@@ -1743,7 +1743,7 @@ function SolutionCard({ icon, title, subtitle, description, features, index, ima
       </div>
 
       {/* Bottom Accent Line */}
-      <div className={`absolute bottom-0 left-0 h-1.5 bg-gradient-to-r ${index === 0 ? 'from-brand-purple' : index === 1 ? 'from-blue-500' : 'from-emerald-500'} to-transparent w-0 group-hover:w-full transition-all duration-700`} />
+      <div className={`absolute bottom-0 left-0 h-1.5 bg-gradient-to-r ${index === 0 ? 'from-brand-cyan' : index === 1 ? 'from-blue-400' : 'from-brand-cyan'} to-transparent w-0 group-hover:w-full transition-all duration-700`} />
     </motion.div>
   );
 }
@@ -1752,16 +1752,16 @@ function FAQItem({ question, answer, index }: { question: string, answer: string
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="group border-b border-slate-100 last:border-none">
+    <div className="group border-b border-white/5 last:border-none">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full py-6 flex items-start gap-4 text-left transition-all"
       >
-        <span className="text-[10px] font-mono font-bold text-brand-purple/40 mt-1.5">
+        <span className="text-[10px] font-mono font-bold text-brand-cyan/40 mt-1.5">
           {String(index + 1).padStart(2, '0')}
         </span>
         <div className="flex-1">
-          <span className="text-lg font-display font-bold text-brand-offwhite group-hover:text-brand-purple transition-colors block mb-1">
+          <span className="text-lg font-display font-bold text-brand-offwhite group-hover:text-brand-cyan transition-colors block mb-1">
             {question}
           </span>
           <AnimatePresence>
@@ -1774,7 +1774,7 @@ function FAQItem({ question, answer, index }: { question: string, answer: string
                 className="overflow-hidden"
               >
                 <div className="pt-2 pb-6">
-                  <div className="pl-4 border-l-2 border-brand-purple/20">
+                  <div className="pl-4 border-l-2 border-brand-cyan/20">
                     <p className="text-brand-gray text-sm leading-relaxed">
                       {answer}
                     </p>
@@ -1786,7 +1786,7 @@ function FAQItem({ question, answer, index }: { question: string, answer: string
         </div>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0, scale: isOpen ? 1.1 : 1 }}
-          className={`mt-1 transition-colors ${isOpen ? 'text-brand-purple' : 'text-brand-gray/30'}`}
+          className={`mt-1 transition-colors ${isOpen ? 'text-brand-cyan' : 'text-brand-gray/30'}`}
         >
           <ChevronDown size={20} />
         </motion.div>
