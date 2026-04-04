@@ -45,12 +45,12 @@ import {
   Star
 } from "lucide-react";
 
-function Logo({ className = "", event }: { className?: string, event?: any }) {
+function Logo({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       <div className="relative w-12 h-12 flex items-center justify-center">
         {/* Animated Glow Background */}
-        <div className={`absolute inset-0 ${event ? event.accent + '/20' : 'bg-brand-cyan/20'} rounded-2xl blur-xl animate-pulse`} />
+        <div className="absolute inset-0 bg-brand-cyan/20 rounded-2xl blur-xl animate-pulse" />
         
         {/* Official Astrateq Logo */}
         <img 
@@ -62,10 +62,7 @@ function Logo({ className = "", event }: { className?: string, event?: any }) {
       </div>
       <div className="flex items-baseline gap-2 leading-none">
         <span className="text-2xl font-sans font-semibold text-brand-offwhite tracking-tight">Astrateq</span>
-        <span className={`text-2xl font-sans font-semibold ${event ? event.color : 'text-brand-cyan'} tracking-tight`}>Gadgets</span>
-        {event && (
-          <span className="text-lg animate-bounce ml-1" title={event.name}>{event.icon}</span>
-        )}
+        <span className="text-2xl font-sans font-semibold text-brand-offwhite tracking-tight">Gadgets</span>
       </div>
     </div>
   );
@@ -268,7 +265,7 @@ export default function App() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-brand-charcoal/80 backdrop-blur-md border-b border-white/10" role="banner">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Logo event={currentEvent} />
+          <Logo />
           <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-brand-gray" aria-label="Main navigation">
             <button onClick={() => scrollToSection('vision')} className="hover:text-brand-cyan transition-colors">Vision</button>
             <button onClick={() => scrollToSection('solutions')} className="hover:text-brand-cyan transition-colors">Solutions</button>
@@ -812,7 +809,7 @@ export default function App() {
           <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-12 pb-12 border-b border-white/10 items-start">
             {/* Column 1: Brand */}
             <div className="flex flex-col items-center lg:items-start gap-4">
-              <Logo event={currentEvent} />
+              <Logo />
               <p className="text-sm text-brand-gray font-medium max-w-[280px] text-center lg:text-left leading-relaxed">
                 Empowering Canadian drivers with the world's most advanced AI safety systems. Engineered for the Great North.
               </p>
