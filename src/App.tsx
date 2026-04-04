@@ -161,14 +161,14 @@ export default function App() {
 
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const prompt = `4K cinematic, hyper-realistic hero video loop for Astrateq Gadgets. High-angle POV inside a luxury EV driving through a vibrant Toronto cityscape at twilight. The windshield shows a rain-slicked road with colorful neon reflections. A sleek AlTrak™ unit is mounted on the dash, projecting a sharp, mathematical Glacial Cyan (#00E5FF) wireframe grid onto the road. Translucent HUD elements float in the air, displaying "94% Hazard Accuracy" and "Active 360° Shield." The lighting is premium and moody, using Chiaroscuro to highlight leather textures. The video transitions into a smooth pan showing the Guardian Mode pulse in Safety Ember (#FFB800). No people visible, focus is on the technology and the environment. Smooth, slow-motion 60fps.`;
+      const prompt = `4K cinematic, hyper-realistic hero video loop for Astrateq Gadgets. A luxury EV driving through a vibrant Toronto cityscape at twilight. The windshield shows a projected mathematical Glacial Cyan wireframe grid onto the road. Translucent HUD elements float in the air, displaying "94% Hazard Accuracy" and "Active 360° Shield." The visual style is premium and moody, transitioning to a smooth pan showing the 'Guardian Mode' pulse in Safety Ember gold (#FFB800). No people visible, focus is on the technology and the environment. Smooth, slow-motion 60fps playback.`;
 
       const statusMessages = [
+        "Initializing 4K Cinematic Engine...",
         "Calibrating Glacial Cyan wireframe...",
         "Rendering Toronto twilight reflections...",
-        "Simulating rain-slicked road physics...",
-        "Optimizing 4K Chiaroscuro lighting...",
-        "Finalizing 60fps cinematic loop..."
+        "Simulating 'Guardian Mode' pulse...",
+        "Optimizing 60fps cinematic loop..."
       ];
 
       let msgIndex = 0;
@@ -183,7 +183,7 @@ export default function App() {
         prompt: prompt,
         config: {
           numberOfVideos: 1,
-          resolution: '1080p',
+          resolution: '4k',
           aspectRatio: '16:9'
         }
       });
