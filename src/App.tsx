@@ -19,6 +19,7 @@ import {
   AlertTriangle,
   Activity,
   Globe,
+  Clock,
   Linkedin,
   Twitter,
   Cookie,
@@ -112,7 +113,13 @@ export default function App() {
   const [videoGenStatus, setVideoGenStatus] = useState("");
   const [spotsRemaining, setSpotsRemaining] = useState(73);
   const [timeLeft, setTimeLeft] = useState({ days: 30, hours: 0, minutes: 0, seconds: 0 });
+  const [currentTime, setCurrentTime] = useState(new Date());
   const currentEvent = getCanadianEvent();
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const storedSpots = localStorage.getItem('astrateq_spots');
@@ -335,18 +342,6 @@ export default function App() {
               </div>
             </motion.div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.8 }}
-              className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-full max-w-md px-4"
-            >
-              <div className="flex justify-between items-end mb-2">
-                <div className="text-[10px] font-mono text-brand-cyan/40 uppercase">System Status: Active</div>
-                <div className="text-[10px] font-mono text-brand-cyan/40 uppercase">Toronto, ON</div>
-              </div>
-              <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent" />
-            </motion.div>
           </div>
         </div>
 
@@ -418,15 +413,54 @@ export default function App() {
 
             <TestimonialRow />
 
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex items-center gap-2 px-4 py-2 bg-brand-cyan/5 border border-brand-cyan/10 rounded-full text-brand-cyan text-xs font-medium"
-            >
-              <AlertTriangle size={14} />
-              <span>Astrateq Gadgets are driver assistance tools only.</span>
-            </motion.div>
+            <div className="flex flex-col items-center gap-6 w-full max-w-2xl">
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                className="relative group"
+              >
+                <div className="absolute -inset-1 bg-brand-cyan/30 rounded-full blur-md opacity-0 group-hover:opacity-100 transition duration-500" />
+                <div className="relative flex items-center gap-3 px-8 py-3 bg-brand-secondary/90 backdrop-blur-xl border border-brand-cyan/40 rounded-full text-brand-cyan text-xs font-bold tracking-[0.15em] shadow-2xl shadow-brand-cyan/20">
+                  <AlertTriangle size={16} className="animate-pulse text-brand-cyan" />
+                  <span className="uppercase">Astrateq Gadgets are driver assistance tools only.</span>
+                </div>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="w-full flex items-center justify-between px-10 py-4 border-y border-brand-cyan/10 relative bg-brand-cyan/[0.02] backdrop-blur-sm"
+              >
+                {/* HUD Brackets - More Prominent */}
+                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-brand-cyan/50" />
+                <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-brand-cyan/50" />
+                <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-brand-cyan/50" />
+                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-brand-cyan/50" />
+
+                <div className="flex items-center gap-4">
+                  <span className="text-[10px] font-mono font-bold text-brand-gray/80 uppercase tracking-[0.25em]">System Status:</span>
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_12px_#00E5FF]" />
+                    <span className="text-[11px] font-mono font-bold text-brand-cyan uppercase tracking-[0.25em] holographic-glow">Active</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-8">
+                  <div className="flex items-center gap-2.5">
+                    <Globe size={12} className="text-brand-cyan/60" />
+                    <span className="text-[10px] font-mono font-bold text-brand-offwhite uppercase tracking-[0.25em]">Toronto, ON</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Clock size={12} className="text-brand-cyan/60" />
+                    <span className="text-[10px] font-mono font-bold text-brand-offwhite uppercase tracking-[0.25em]">
+                      {currentTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })} UTC
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
 
             {!heroVideoUrl && (
               <motion.button
@@ -435,17 +469,20 @@ export default function App() {
                 transition={{ delay: 1.5 }}
                 onClick={generateHeroVideo}
                 disabled={isGeneratingVideo}
-                className="mt-4 flex items-center gap-2 text-xs font-mono text-brand-cyan/60 hover:text-brand-cyan transition-colors disabled:opacity-50"
+                className="relative mt-4 group overflow-hidden px-8 py-3 rounded-xl border border-brand-cyan/20 bg-brand-cyan/5 transition-all hover:bg-brand-cyan/10 disabled:opacity-50"
               >
+                {/* Scanning Line Effect */}
+                <div className="absolute inset-0 w-full h-[1px] bg-brand-cyan/20 -translate-y-full group-hover:animate-scan pointer-events-none" />
+                
                 {isGeneratingVideo ? (
                   <div className="flex items-center gap-3">
-                    <RefreshCw size={14} className="animate-spin" />
-                    <span>{videoGenStatus}</span>
+                    <RefreshCw size={14} className="animate-spin text-brand-cyan" />
+                    <span className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.3em]">{videoGenStatus}</span>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-2 group">
-                    <Play size={14} className="group-hover:scale-125 transition-transform" />
-                    <span>GENERATE CINEMATIC HERO (4K VEO)</span>
+                  <div className="flex items-center gap-3">
+                    <Play size={14} className="text-brand-cyan group-hover:scale-125 transition-transform" />
+                    <span className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.3em]">GENERATE CINEMATIC HERO (4K VEO)</span>
                   </div>
                 )}
               </motion.button>
@@ -1212,8 +1249,8 @@ export default function App() {
 
 function WaitlistForm({ spotsRemaining, onSubmit }: { spotsRemaining: number, onSubmit: (e: React.FormEvent<HTMLFormElement>) => void }) {
   return (
-    <div className="w-full max-w-md p-1 bg-white/5 border border-white/10 rounded-2xl shadow-2xl backdrop-blur-md group/form relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-brand-cyan/5 to-transparent opacity-0 group-hover/form:opacity-100 transition-opacity duration-700" />
+    <div className="w-full max-w-md p-1.5 bg-brand-cyan/5 border border-brand-cyan/20 rounded-2xl shadow-2xl backdrop-blur-xl group/form relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-brand-cyan/10 to-transparent opacity-0 group-hover/form:opacity-100 transition-opacity duration-700" />
       <form 
         className="flex gap-2 relative z-10"
         onSubmit={onSubmit}
@@ -1222,12 +1259,12 @@ function WaitlistForm({ spotsRemaining, onSubmit }: { spotsRemaining: number, on
           type="email" 
           name="email"
           placeholder="Enter your email for early access" 
-          className="flex-1 px-6 py-4 bg-transparent text-sm focus:outline-none placeholder:text-brand-gray/40 text-brand-offwhite font-medium"
+          className="flex-1 px-6 py-4 bg-transparent text-sm focus:outline-none placeholder:text-brand-gray/60 text-brand-offwhite font-medium"
           required
         />
         <button 
           type="submit"
-          className="px-8 py-4 bg-brand-cyan text-brand-charcoal text-xs font-bold rounded-xl hover:bg-brand-cyan-hover transition-all shadow-lg hover:shadow-brand-cyan/30 uppercase tracking-[0.2em] active:scale-95"
+          className="px-8 py-4 bg-brand-cyan text-brand-charcoal text-xs font-bold rounded-xl hover:bg-brand-cyan-hover transition-all shadow-lg hover:shadow-brand-cyan/40 uppercase tracking-[0.2em] active:scale-95 holographic-glow"
         >
           Join Waitlist
         </button>
@@ -1251,16 +1288,18 @@ function TestimonialRow() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 + i * 0.1 }}
-          className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full"
+          className="flex items-center gap-4 px-6 py-3 bg-brand-secondary/60 backdrop-blur-md border border-brand-cyan/10 rounded-full hover:border-brand-cyan/30 transition-all group"
         >
           <div className="flex -space-x-1">
             {[1, 2, 3, 4, 5].map(s => (
-              <Star key={s} size={10} className="text-brand-cyan fill-brand-cyan" />
+              <Star key={s} size={12} className="text-brand-cyan fill-brand-cyan drop-shadow-[0_0_4px_rgba(0,229,255,0.5)]" />
             ))}
           </div>
-          <span className="text-[10px] font-bold text-brand-gray uppercase tracking-widest">{t.name}</span>
-          <div className="w-1 h-1 rounded-full bg-brand-cyan/30" />
-          <span className="text-[10px] font-medium text-brand-gray/60 italic">"{t.text}"</span>
+          <div className="flex flex-col">
+            <span className="text-[11px] font-bold text-brand-offwhite uppercase tracking-widest">{t.name}</span>
+          </div>
+          <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan/40" />
+          <span className="text-[11px] font-medium text-brand-gray group-hover:text-brand-offwhite transition-colors italic">"{t.text}"</span>
         </motion.div>
       ))}
     </div>
@@ -1607,10 +1646,12 @@ function HeroBadge({ icon, text, delay }: { icon: ReactNode, text: string, delay
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-full text-xs font-semibold text-brand-gray shadow-sm hover:border-brand-purple/30 transition-colors"
+      className="flex items-center gap-3 px-5 py-2.5 bg-brand-secondary/80 backdrop-blur-md border border-brand-cyan/20 rounded-full text-xs font-bold text-brand-offwhite shadow-lg shadow-brand-cyan/5 hover:border-brand-cyan/40 hover:bg-brand-secondary transition-all group"
     >
-      {icon}
-      <span>{text}</span>
+      <div className="group-hover:scale-110 transition-transform duration-300">
+        {icon}
+      </div>
+      <span className="tracking-wide">{text}</span>
     </motion.div>
   );
 }
@@ -2020,7 +2061,7 @@ function WaitlistModal({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose
                   name="name"
                   type="text" 
                   placeholder="John Doe"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-brand-cyan transition-colors text-brand-offwhite"
+                  className="w-full px-4 py-3 bg-brand-navy/50 border border-brand-cyan/20 rounded-xl focus:outline-none focus:border-brand-cyan transition-colors text-brand-offwhite placeholder:text-brand-gray/30"
                 />
               </div>
               <div>
@@ -2030,12 +2071,12 @@ function WaitlistModal({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose
                   name="email"
                   type="email" 
                   placeholder="john@example.com"
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-brand-cyan transition-colors text-brand-offwhite"
+                  className="w-full px-4 py-3 bg-brand-navy/50 border border-brand-cyan/20 rounded-xl focus:outline-none focus:border-brand-cyan transition-colors text-brand-offwhite placeholder:text-brand-gray/30"
                 />
               </div>
               <button 
                 type="submit"
-                className="w-full py-4 bg-brand-cyan text-brand-charcoal font-bold rounded-xl hover:bg-brand-cyan-hover transition-all shadow-lg shadow-brand-cyan/20 active:scale-[0.98] uppercase tracking-widest"
+                className="w-full py-4 bg-brand-cyan text-brand-charcoal font-bold rounded-xl hover:bg-brand-cyan-hover transition-all shadow-lg shadow-brand-cyan/30 active:scale-[0.98] uppercase tracking-widest holographic-glow"
               >
                 SECURE MY SPOT
               </button>
@@ -2059,13 +2100,13 @@ function SuccessToast({ isVisible }: { isVisible: boolean }) {
           initial={{ opacity: 0, y: 50, x: "-50%" }}
           animate={{ opacity: 1, y: 0, x: "-50%" }}
           exit={{ opacity: 0, y: 50, x: "-50%" }}
-          className="fixed bottom-10 left-1/2 z-[110] px-6 py-4 bg-brand-navy border border-brand-purple/30 rounded-2xl shadow-2xl flex items-center gap-4"
+          className="fixed bottom-10 left-1/2 z-[110] px-6 py-4 bg-brand-secondary border border-brand-cyan/30 rounded-2xl shadow-2xl flex items-center gap-4"
         >
           <div className="w-10 h-10 rounded-full bg-brand-cyan/20 flex items-center justify-center">
             <ShieldCheck className="text-brand-cyan" size={24} />
           </div>
           <div>
-            <h4 className="text-white font-bold text-sm">Success!</h4>
+            <h4 className="text-brand-offwhite font-bold text-sm">Success!</h4>
             <p className="text-brand-gray text-xs">You've been added to the founding beta waitlist.</p>
           </div>
         </motion.div>
