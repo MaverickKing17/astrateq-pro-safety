@@ -1187,10 +1187,10 @@ export default function App() {
               initial={{ opacity: 0, x: 20, scale: 0.8 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 20, scale: 0.8 }}
-              className="bg-brand-secondary/90 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-brand-cyan/30 shadow-[0_0_20px_rgba(0,229,255,0.1)] mb-2 hidden md:block"
+              className="bg-brand-secondary/90 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-amber-400/30 shadow-[0_0_20px_rgba(251,191,36,0.1)] mb-2 hidden md:block"
             >
-              <p className="text-[11px] font-mono font-bold text-brand-cyan uppercase tracking-[0.2em] flex items-center gap-2.5">
-                <span className="w-2 h-2 bg-brand-cyan rounded-full animate-pulse shadow-[0_0_8px_#00E5FF]" />
+              <p className="text-[11px] font-mono font-bold text-amber-400 uppercase tracking-[0.2em] flex items-center gap-2.5">
+                <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse shadow-[0_0_8px_#FBBF24]" />
                 AI Safety Assistant Online
               </p>
             </motion.div>
@@ -1203,18 +1203,18 @@ export default function App() {
           animate={{ scale: 1, opacity: 1 }}
           whileHover={{ scale: 1.05, y: -4 }}
           whileTap={{ scale: 0.95 }}
-          className="relative w-20 h-20 bg-brand-secondary text-brand-cyan rounded-[2.5rem] flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(0,229,255,0.2)] hover:shadow-[0_25px_50px_-12px_rgba(0,229,255,0.4)] transition-all group overflow-hidden border border-brand-cyan/30"
+          className="relative w-20 h-20 bg-amber-400 text-brand-charcoal rounded-[2.5rem] flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(251,191,36,0.4)] hover:shadow-[0_25px_50px_-12px_rgba(251,191,36,0.6)] transition-all group overflow-hidden border border-white/20"
           aria-label="Open AI Live Chat"
         >
           {/* Dynamic Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 via-brand-cyan/10 to-brand-cyan/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
           {/* Animated Rings */}
-          <div className="absolute inset-0 border-2 border-brand-cyan/20 rounded-[2.5rem] animate-ping opacity-20" />
-          <div className="absolute inset-0 border border-brand-cyan/40 rounded-[2.5rem] animate-spin-slow opacity-30" />
+          <div className="absolute inset-0 border-2 border-amber-400/20 rounded-[2.5rem] animate-ping opacity-20" />
+          <div className="absolute inset-0 border border-amber-400/40 rounded-[2.5rem] animate-spin-slow opacity-30" />
           
           {/* Notification Dot */}
-          <div className="absolute top-4 right-4 w-3 h-3 bg-brand-cyan rounded-full border-2 border-brand-secondary z-20 shadow-[0_0_10px_#00E5FF]" />
+          <div className="absolute top-4 right-4 w-3 h-3 bg-brand-cyan rounded-full border-2 border-amber-400 z-20 shadow-[0_0_10px_#00E5FF]" />
           
           <div className="relative z-10 flex flex-col items-center gap-1">
             <MessageSquare size={28} className="group-hover:rotate-12 transition-transform duration-500" />
@@ -1222,7 +1222,7 @@ export default function App() {
           </div>
 
           {/* Inner Glow Overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,229,255,0.1)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.3)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity" />
         </motion.button>
       </div>
 
@@ -1428,14 +1428,14 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
           <div className="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/10 rounded-full blur-3xl -mr-16 -mt-16 animate-pulse" />
           
           <div className="flex items-center gap-4 relative z-10">
-            <div className="w-12 h-12 rounded-2xl bg-brand-cyan flex items-center justify-center border border-white/20 shadow-[0_0_15px_rgba(0,229,255,0.4)]">
+            <div className="w-12 h-12 rounded-2xl bg-amber-400 flex items-center justify-center border border-white/20 shadow-[0_0_15px_rgba(251,191,36,0.4)]">
               <Bot className="text-brand-charcoal" size={24} />
             </div>
             <div>
               <h3 className="font-display font-bold text-base tracking-tight text-white leading-none mb-1.5">Astrateq Gadgets AI Support</h3>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_8px_#00E5FF]" />
-                <span className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.2em]">System Active</span>
+                <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_8px_#FBBF24]" />
+                <span className="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-[0.2em]">System Active</span>
               </div>
             </div>
           </div>
@@ -1457,7 +1457,7 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-[90%] p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${
                 msg.role === 'user' 
-                  ? 'bg-brand-cyan text-brand-charcoal font-medium rounded-tr-none' 
+                  ? 'bg-amber-400 text-brand-charcoal font-medium rounded-tr-none' 
                   : 'bg-white/5 border border-white/10 text-brand-gray font-medium rounded-tl-none'
               }`}>
                 <div className="prose prose-sm prose-invert max-w-none">
@@ -1486,14 +1486,14 @@ function ChatWidget({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Ask about Astrateq Gadgets systems..."
-              className="w-full pl-4 pr-12 py-3 bg-white/5 border border-white/10 rounded-xl text-sm focus:outline-none focus:border-brand-cyan transition-shadow focus:shadow-[0_0_15px_rgba(0,229,255,0.15)] placeholder:text-brand-gray/40 text-brand-offwhite"
+              className="w-full pl-4 pr-12 py-3 bg-white/5 border border-white/10 rounded-xl text-sm focus:outline-none focus:border-amber-400 transition-shadow focus:shadow-[0_0_15px_rgba(251,191,36,0.15)] placeholder:text-brand-gray/40 text-brand-offwhite"
               disabled={isTyping}
             />
             <button 
               onClick={handleSend}
               disabled={isTyping}
               className={`absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg transition-all ${
-                isTyping ? 'text-brand-gray/20 cursor-not-allowed' : 'text-brand-cyan hover:bg-brand-cyan/10'
+                isTyping ? 'text-brand-gray/20 cursor-not-allowed' : 'text-amber-400 hover:bg-amber-400/10'
               }`}
             >
               <Send size={18} />
