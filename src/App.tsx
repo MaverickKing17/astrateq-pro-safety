@@ -20,6 +20,7 @@ import {
   Activity,
   Globe,
   Clock,
+  Mail,
   Linkedin,
   Twitter,
   Cookie,
@@ -59,14 +60,12 @@ function Logo({ className = "", event }: { className?: string, event?: any }) {
           referrerPolicy="no-referrer"
         />
       </div>
-      <div className="flex flex-col leading-none">
-        <span className="text-2xl font-sans font-medium text-brand-offwhite tracking-tight">Astrateq</span>
-        <div className="flex items-center gap-2">
-          <span className={`text-[11px] font-sans font-medium ${event ? event.color : 'text-brand-cyan'} tracking-tight mt-0.5`}>Gadgets</span>
-          {event && (
-            <span className="text-[10px] animate-bounce" title={event.name}>{event.icon}</span>
-          )}
-        </div>
+      <div className="flex items-baseline gap-2 leading-none">
+        <span className="text-2xl font-sans font-semibold text-brand-offwhite tracking-tight">Astrateq</span>
+        <span className={`text-2xl font-sans font-semibold ${event ? event.color : 'text-brand-cyan'} tracking-tight`}>Gadgets</span>
+        {event && (
+          <span className="text-lg animate-bounce ml-1" title={event.name}>{event.icon}</span>
+        )}
       </div>
     </div>
   );
@@ -358,42 +357,70 @@ export default function App() {
             </h1>
             
             {/* Urgency Counter */}
-            <div className="flex flex-col items-center gap-4 mb-8">
-              <div className="flex items-center gap-4">
-                <div className="text-center">
-                  <div className="text-4xl font-display font-black text-brand-cyan tracking-tighter">{spotsRemaining}</div>
-                  <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Spots Remaining</div>
-                </div>
-                <div className="w-48 h-2 bg-brand-secondary rounded-full overflow-hidden border border-white/5">
+            <div className="flex flex-col items-center gap-6 mb-12 relative">
+              {/* Background Glow for Counter */}
+              <div className="absolute inset-0 bg-brand-cyan/5 blur-[100px] rounded-full -z-10" />
+              
+              <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                <div className="text-center relative group">
                   <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${spotsRemaining}%` }}
-                    className="h-full bg-brand-cyan shadow-[0_0_10px_#00E5FF]"
-                  />
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="text-6xl md:text-7xl font-display font-black text-brand-cyan tracking-tighter drop-shadow-[0_0_15px_rgba(0,229,255,0.5)]"
+                  >
+                    {spotsRemaining}
+                  </motion.div>
+                  <div className="text-[10px] font-mono text-brand-cyan/60 uppercase tracking-[0.3em] mt-1">Spots Remaining</div>
+                  
+                  {/* HUD Accent */}
+                  <div className="absolute -top-2 -left-4 w-3 h-3 border-t-2 border-l-2 border-brand-cyan/30" />
+                  <div className="absolute -bottom-2 -right-4 w-3 h-3 border-b-2 border-r-2 border-brand-cyan/30" />
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <div className="w-64 h-3 bg-brand-secondary/50 rounded-full overflow-hidden border border-white/10 relative">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${spotsRemaining}%` }}
+                      transition={{ duration: 1.5, ease: "easeOut" }}
+                      className="h-full bg-gradient-to-r from-brand-cyan/40 via-brand-cyan to-brand-cyan/40 shadow-[0_0_20px_#00E5FF] relative"
+                    >
+                      <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.3)_50%,transparent_100%)] animate-shimmer" />
+                    </motion.div>
+                  </div>
+                  <div className="flex justify-between text-[9px] font-mono text-brand-gray/60 uppercase tracking-widest">
+                    <span>Capacity: 100</span>
+                    <span className="text-brand-cyan">Critical Level</span>
+                  </div>
                 </div>
               </div>
               
-              <div className="flex gap-2">
-                <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 bg-brand-secondary border border-brand-cyan/20 rounded flex items-center justify-center text-brand-cyan font-mono font-bold">{timeLeft.days}</div>
-                  <span className="text-[8px] text-brand-gray uppercase mt-1">Days</span>
+              <div className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-sm">
+                <div className="flex gap-3">
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.days}</div>
+                    <span className="text-[9px] font-mono text-brand-gray/60 uppercase mt-2 tracking-widest">Days</span>
+                  </div>
+                  <div className="text-brand-cyan/40 font-bold self-start mt-3 animate-pulse">:</div>
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.hours}</div>
+                    <span className="text-[9px] font-mono text-brand-gray/60 uppercase mt-2 tracking-widest">Hrs</span>
+                  </div>
+                  <div className="text-brand-cyan/40 font-bold self-start mt-3 animate-pulse">:</div>
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.minutes}</div>
+                    <span className="text-[9px] font-mono text-brand-gray/60 uppercase mt-2 tracking-widest">Min</span>
+                  </div>
+                  <div className="text-brand-cyan/40 font-bold self-start mt-3 animate-pulse">:</div>
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.seconds}</div>
+                    <span className="text-[9px] font-mono text-brand-gray/60 uppercase mt-2 tracking-widest">Sec</span>
+                  </div>
                 </div>
-                <div className="text-brand-cyan font-bold self-start mt-2">:</div>
-                <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 bg-brand-secondary border border-brand-cyan/20 rounded flex items-center justify-center text-brand-cyan font-mono font-bold">{timeLeft.hours}</div>
-                  <span className="text-[8px] text-brand-gray uppercase mt-1">Hrs</span>
+                <div className="h-8 w-[1px] bg-white/10 mx-2" />
+                <div className="text-[10px] font-mono text-brand-cyan uppercase tracking-[0.2em] leading-tight max-w-[80px] text-left">
+                  Until Beta Access Closes
                 </div>
-                <div className="text-brand-cyan font-bold self-start mt-2">:</div>
-                <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 bg-brand-secondary border border-brand-cyan/20 rounded flex items-center justify-center text-brand-cyan font-mono font-bold">{timeLeft.minutes}</div>
-                  <span className="text-[8px] text-brand-gray uppercase mt-1">Min</span>
-                </div>
-                <div className="text-brand-cyan font-bold self-start mt-2">:</div>
-                <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 bg-brand-secondary border border-brand-cyan/20 rounded flex items-center justify-center text-brand-cyan font-mono font-bold">{timeLeft.seconds}</div>
-                  <span className="text-[8px] text-brand-gray uppercase mt-1">Sec</span>
-                </div>
-                <div className="ml-2 self-center text-[10px] font-mono text-brand-gray uppercase tracking-widest">Until Beta Closes</div>
               </div>
             </div>
 
@@ -1249,26 +1276,45 @@ export default function App() {
 
 function WaitlistForm({ spotsRemaining, onSubmit }: { spotsRemaining: number, onSubmit: (e: React.FormEvent<HTMLFormElement>) => void }) {
   return (
-    <div className="w-full max-w-md p-1.5 bg-brand-cyan/5 border border-brand-cyan/20 rounded-2xl shadow-2xl backdrop-blur-xl group/form relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-brand-cyan/10 to-transparent opacity-0 group-hover/form:opacity-100 transition-opacity duration-700" />
-      <form 
-        className="flex gap-2 relative z-10"
-        onSubmit={onSubmit}
-      >
-        <input 
-          type="email" 
-          name="email"
-          placeholder="Enter your email for early access" 
-          className="flex-1 px-6 py-4 bg-transparent text-sm focus:outline-none placeholder:text-brand-gray/60 text-brand-offwhite font-medium"
-          required
-        />
-        <button 
-          type="submit"
-          className="px-8 py-4 bg-brand-cyan text-brand-charcoal text-xs font-bold rounded-xl hover:bg-brand-cyan-hover transition-all shadow-lg hover:shadow-brand-cyan/40 uppercase tracking-[0.2em] active:scale-95 holographic-glow"
+    <div className="w-full max-w-lg p-1 bg-gradient-to-br from-brand-cyan/30 via-brand-cyan/5 to-brand-cyan/30 rounded-2xl shadow-[0_0_50px_-12px_rgba(0,229,255,0.25)] backdrop-blur-2xl group/form relative overflow-hidden transition-all duration-500 hover:shadow-[0_0_60px_-10px_rgba(0,229,255,0.4)]">
+      {/* Animated Scanline */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,229,255,0.05)_50%,transparent_100%)] h-[200%] w-full animate-scanline pointer-events-none" />
+      
+      <div className="relative glass-panel p-1.5 rounded-2xl border-brand-cyan/20 bg-brand-secondary/40">
+        <form 
+          className="flex flex-col md:flex-row gap-3 relative z-10"
+          onSubmit={onSubmit}
         >
-          Join Waitlist
-        </button>
-      </form>
+          <div className="flex-1 relative group/input">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-cyan/40 group-focus-within/input:text-brand-cyan transition-colors">
+              <Mail size={18} />
+            </div>
+            <input 
+              type="email" 
+              name="email"
+              placeholder="Enter your email for early access" 
+              className="w-full pl-12 pr-6 py-4 bg-white/5 border border-white/10 rounded-xl text-sm focus:outline-none focus:border-brand-cyan/50 focus:bg-white/10 placeholder:text-brand-gray/40 text-brand-offwhite font-medium transition-all"
+              required
+            />
+          </div>
+          <button 
+            type="submit"
+            className="group/btn relative px-10 py-4 bg-brand-cyan text-brand-charcoal text-sm font-black rounded-xl overflow-hidden transition-all active:scale-95 shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:shadow-[0_0_30px_rgba(0,229,255,0.5)]"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 ease-in-out" />
+            <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-[0.25em]">
+              Join Waitlist
+              <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </span>
+          </button>
+        </form>
+      </div>
+      
+      {/* Corner Accents */}
+      <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-brand-cyan/60" />
+      <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-brand-cyan/60" />
+      <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-brand-cyan/60" />
+      <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-brand-cyan/60" />
     </div>
   );
 }
@@ -1281,25 +1327,28 @@ function TestimonialRow() {
   ];
 
   return (
-    <div className="flex flex-wrap justify-center gap-6 mt-4">
+    <div className="flex flex-wrap justify-center gap-4 mt-6">
       {testimonials.map((t, i) => (
         <motion.div 
           key={i}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 + i * 0.1 }}
-          className="flex items-center gap-4 px-6 py-3 bg-brand-secondary/60 backdrop-blur-md border border-brand-cyan/10 rounded-full hover:border-brand-cyan/30 transition-all group"
+          className="flex items-center gap-4 px-6 py-3 bg-brand-secondary/40 backdrop-blur-xl border border-white/5 rounded-2xl hover:border-brand-cyan/30 transition-all group relative overflow-hidden"
         >
-          <div className="flex -space-x-1">
-            {[1, 2, 3, 4, 5].map(s => (
-              <Star key={s} size={12} className="text-brand-cyan fill-brand-cyan drop-shadow-[0_0_4px_rgba(0,229,255,0.5)]" />
-            ))}
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          
+          <div className="flex items-center gap-3 relative z-10">
+            <div className="flex -space-x-1">
+              {[1, 2, 3, 4, 5].map(s => (
+                <Star key={s} size={10} className="text-brand-cyan fill-brand-cyan drop-shadow-[0_0_4px_rgba(0,229,255,0.6)]" />
+              ))}
+            </div>
+            <div className="h-4 w-[1px] bg-white/10" />
+            <span className="text-[10px] font-black text-brand-offwhite uppercase tracking-[0.2em]">{t.name}</span>
+            <div className="w-1 h-1 rounded-full bg-brand-cyan animate-pulse" />
+            <span className="text-[11px] font-medium text-brand-gray/80 group-hover:text-brand-offwhite transition-colors italic">"{t.text}"</span>
           </div>
-          <div className="flex flex-col">
-            <span className="text-[11px] font-bold text-brand-offwhite uppercase tracking-widest">{t.name}</span>
-          </div>
-          <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan/40" />
-          <span className="text-[11px] font-medium text-brand-gray group-hover:text-brand-offwhite transition-colors italic">"{t.text}"</span>
         </motion.div>
       ))}
     </div>
@@ -1775,7 +1824,7 @@ function FAQItem({ question, answer, index }: { question: string, answer: string
               >
                 <div className="pt-2 pb-6">
                   <div className="pl-4 border-l-2 border-brand-cyan/20">
-                    <p className="text-brand-gray text-sm leading-relaxed">
+                    <p className="text-brand-offwhite text-sm leading-relaxed">
                       {answer}
                     </p>
                   </div>
