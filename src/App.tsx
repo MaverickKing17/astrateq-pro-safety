@@ -36,8 +36,11 @@ import {
   Lock,
   Heart,
   ArrowUpRight,
+  ArrowRight,
+  Thermometer,
   Play,
-  RefreshCw
+  RefreshCw,
+  Star
 } from "lucide-react";
 
 function Logo({ className = "", event }: { className?: string, event?: any }) {
@@ -45,46 +48,20 @@ function Logo({ className = "", event }: { className?: string, event?: any }) {
     <div className={`flex items-center gap-3 ${className}`}>
       <div className="relative w-12 h-12 flex items-center justify-center">
         {/* Animated Glow Background */}
-        <div className={`absolute inset-0 ${event ? event.accent + '/20' : 'bg-brand-purple/20'} rounded-2xl blur-xl animate-pulse`} />
+        <div className={`absolute inset-0 ${event ? event.accent + '/20' : 'bg-brand-cyan/20'} rounded-2xl blur-xl animate-pulse`} />
         
-        {/* Official Astrateq Icon (Recreated with SVG) */}
-        <div className="relative z-10 w-10 h-10 flex items-center justify-center">
-          <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_8px_rgba(217,70,239,0.5)]">
-            <defs>
-              <linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor={event ? (event.color.includes('red') ? '#ef4444' : event.color.includes('orange') ? '#f97316' : event.color.includes('emerald') ? '#10b981' : '#D946EF') : '#D946EF'} />
-                <stop offset="50%" stopColor={event ? (event.color.includes('red') ? '#dc2626' : event.color.includes('orange') ? '#ea580c' : event.color.includes('emerald') ? '#059669' : '#A21CAF') : '#A21CAF'} />
-                <stop offset="100%" stopColor={event ? (event.color.includes('red') ? '#b91c1c' : event.color.includes('orange') ? '#c2410c' : event.color.includes('emerald') ? '#047857' : '#701A75') : '#701A75'} />
-              </linearGradient>
-            </defs>
-            {/* Stylized Ribbon 'A' */}
-            <path 
-              d="M50 15 L25 85 L35 85 L45 55 Q55 55 65 85 L75 85 L50 15 Z" 
-              fill="url(#ribbonGradient)"
-            />
-            <path 
-              d="M35 65 Q20 65 20 45 Q20 25 40 25 Q60 25 60 45 Q60 65 45 65" 
-              fill="none" 
-              stroke="url(#ribbonGradient)" 
-              strokeWidth="10" 
-              strokeLinecap="round"
-              className="opacity-80"
-            />
-            {/* Fluid accent */}
-            <path 
-              d="M60 40 Q75 30 85 50" 
-              fill="none" 
-              stroke="url(#ribbonGradient)" 
-              strokeWidth="6" 
-              strokeLinecap="round"
-            />
-          </svg>
-        </div>
+        {/* Official Astrateq Logo */}
+        <img 
+          src="https://i.ibb.co/gMk7858w/Astrateq.png" 
+          alt="Astrateq Logo" 
+          className="relative z-10 w-10 h-10 object-contain"
+          referrerPolicy="no-referrer"
+        />
       </div>
       <div className="flex flex-col leading-none">
         <span className="text-2xl font-display font-black text-brand-offwhite tracking-tighter">ASTRATEQ</span>
         <div className="flex items-center gap-2">
-          <span className={`text-[10px] font-mono font-bold ${event ? event.color : 'text-brand-purple'} tracking-[0.5em] uppercase mt-0.5`}>Gadgets</span>
+          <span className={`text-[10px] font-mono font-bold ${event ? event.color : 'text-brand-cyan'} tracking-[0.5em] uppercase mt-0.5`}>Gadgets</span>
           {event && (
             <span className="text-[10px] animate-bounce" title={event.name}>{event.icon}</span>
           )}
@@ -133,7 +110,43 @@ export default function App() {
   const [heroVideoUrl, setHeroVideoUrl] = useState<string | null>(null);
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
   const [videoGenStatus, setVideoGenStatus] = useState("");
+  const [spotsRemaining, setSpotsRemaining] = useState(73);
+  const [timeLeft, setTimeLeft] = useState({ days: 30, hours: 0, minutes: 0, seconds: 0 });
   const currentEvent = getCanadianEvent();
+
+  useEffect(() => {
+    const storedSpots = localStorage.getItem('astrateq_spots');
+    if (storedSpots) {
+      setSpotsRemaining(parseInt(storedSpots));
+    } else {
+      localStorage.setItem('astrateq_spots', '73');
+    }
+
+    const interval = setInterval(() => {
+      setSpotsRemaining(prev => {
+        if (prev > 5) {
+          const next = prev - (Math.random() > 0.8 ? 1 : 0);
+          localStorage.setItem('astrateq_spots', next.toString());
+          return next;
+        }
+        return prev;
+      });
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
+        if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        if (prev.hours > 0) return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        if (prev.days > 0) return { ...prev, days: prev.days - 1, hours: 23, minutes: 59, seconds: 59 };
+        return prev;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const generateHeroVideo = async () => {
     // @ts-ignore
@@ -243,29 +256,31 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col selection:bg-brand-purple/30 selection:text-brand-purple">
+    <div className="min-h-screen flex flex-col selection:bg-brand-cyan/30 selection:text-brand-cyan">
+      <a href="#main-content" className="skip-link">Skip to main content</a>
+      
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-brand-charcoal/80 backdrop-blur-md border-b border-white/10" role="banner">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <Logo event={currentEvent} />
-          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-brand-gray">
-            <button onClick={() => scrollToSection('vision')} className="hover:text-brand-purple transition-colors">Vision</button>
-            <button onClick={() => scrollToSection('solutions')} className="hover:text-brand-purple transition-colors">Solutions</button>
+          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-brand-gray" aria-label="Main navigation">
+            <button onClick={() => scrollToSection('vision')} className="hover:text-brand-cyan transition-colors">Vision</button>
+            <button onClick={() => scrollToSection('solutions')} className="hover:text-brand-cyan transition-colors">Solutions</button>
             <button 
               onClick={() => setIsWaitlistOpen(true)}
-              className="px-4 py-2 bg-brand-ember text-[#1A1A1A] rounded-[6px] hover:bg-brand-ember/90 transition-colors shadow-lg shadow-brand-ember/20"
+              className="px-4 py-2 bg-brand-cyan text-brand-charcoal rounded-[6px] hover:bg-brand-cyan-hover transition-colors shadow-lg shadow-brand-cyan/20"
             >
               Beta Waitlist
             </button>
-          </div>
+          </nav>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-20 pb-32">
+      <section id="main-content" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-20 pb-32" role="region" aria-label="Hero section">
         {/* Background with Arctic Feel */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/60 via-brand-navy/90 to-brand-navy z-10" />
+          <div className="absolute inset-0 bg-brand-charcoal/75 z-10" />
           
           {heroVideoUrl ? (
             <video 
@@ -274,27 +289,27 @@ export default function App() {
               loop 
               muted 
               playsInline 
-              className="w-full h-full object-cover opacity-40"
+              className="w-full h-full object-cover opacity-60"
             />
           ) : (
             <img 
               src="https://images.unsplash.com/photo-1542362567-b055002b91f4?auto=format&fit=crop&q=80&w=2000" 
-              alt="Car Cockpit" 
-              className="w-full h-full object-cover grayscale opacity-20"
+              alt="Astrateq FleetGuard Pro AI automotive safety device mounted in a Canadian vehicle dashboard during winter driving conditions" 
+              className="w-full h-full object-cover grayscale opacity-40"
               referrerPolicy="no-referrer"
             />
           )}
           
-          {/* HUD Overlays (Adjusted for Light Mode) */}
+          {/* HUD Overlays */}
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.5, ease: "easeOut" }}
-              className="absolute top-1/4 left-1/4 w-64 h-64 border border-brand-purple/10 rounded-full flex items-center justify-center"
+              className="absolute top-1/4 left-1/4 w-64 h-64 border border-brand-cyan/10 rounded-full flex items-center justify-center"
             >
-              <div className="w-48 h-48 border-2 border-brand-purple/5 rounded-full border-dashed animate-spin-slow" />
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full text-[10px] font-mono text-brand-purple/40 tracking-widest uppercase py-2">
+              <div className="w-48 h-48 border-2 border-brand-cyan/5 rounded-full border-dashed animate-spin-slow" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full text-[10px] font-mono text-brand-cyan/40 tracking-widest uppercase py-2">
                 Scanning Terrain
               </div>
             </motion.div>
@@ -303,19 +318,19 @@ export default function App() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="absolute top-1/3 right-10 w-48 p-4 glass-panel rounded-lg border-brand-purple/20"
+              className="absolute top-1/3 right-10 w-48 p-4 glass-panel rounded-lg border-brand-cyan/20"
             >
-              <div className="text-[10px] font-mono text-brand-purple mb-1 uppercase tracking-tighter">Hazard Detection</div>
+              <div className="text-[10px] font-mono text-brand-cyan mb-1 uppercase tracking-tighter">Hazard Detection</div>
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-brand-purple rounded-full animate-pulse" />
+                <div className="w-2 h-2 bg-brand-cyan rounded-full animate-pulse" />
                 <span className="text-xl font-display font-bold text-brand-offwhite">94% ACC</span>
               </div>
-              <div className="mt-2 h-1 bg-brand-purple/10 rounded-full overflow-hidden">
+              <div className="mt-2 h-1 bg-brand-cyan/10 rounded-full overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: "94%" }}
                   transition={{ duration: 2, delay: 1 }}
-                  className="h-full bg-brand-purple"
+                  className="h-full bg-brand-cyan"
                 />
               </div>
             </motion.div>
@@ -327,10 +342,10 @@ export default function App() {
               className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-full max-w-md px-4"
             >
               <div className="flex justify-between items-end mb-2">
-                <div className="text-[10px] font-mono text-brand-purple/40 uppercase">System Status: Active</div>
-                <div className="text-[10px] font-mono text-brand-purple/40 uppercase">Toronto, ON</div>
+                <div className="text-[10px] font-mono text-brand-cyan/40 uppercase">System Status: Active</div>
+                <div className="text-[10px] font-mono text-brand-cyan/40 uppercase">Toronto, ON</div>
               </div>
-              <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-brand-purple/20 to-transparent" />
+              <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent" />
             </motion.div>
           </div>
         </div>
@@ -344,8 +359,49 @@ export default function App() {
           >
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight mb-6 leading-[1.1] text-brand-offwhite">
               Predictive AI for the <br />
-              <span className="text-brand-purple holographic-glow">Modern Canadian Driver.</span>
+              <span className="text-brand-cyan holographic-glow">Modern Canadian Driver.</span>
             </h1>
+            
+            {/* Urgency Counter */}
+            <div className="flex flex-col items-center gap-4 mb-8">
+              <div className="flex items-center gap-4">
+                <div className="text-center">
+                  <div className="text-4xl font-display font-black text-brand-cyan tracking-tighter">{spotsRemaining}</div>
+                  <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Spots Remaining</div>
+                </div>
+                <div className="w-48 h-2 bg-brand-secondary rounded-full overflow-hidden border border-white/5">
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: `${spotsRemaining}%` }}
+                    className="h-full bg-brand-cyan shadow-[0_0_10px_#00E5FF]"
+                  />
+                </div>
+              </div>
+              
+              <div className="flex gap-2">
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 bg-brand-secondary border border-brand-cyan/20 rounded flex items-center justify-center text-brand-cyan font-mono font-bold">{timeLeft.days}</div>
+                  <span className="text-[8px] text-brand-gray uppercase mt-1">Days</span>
+                </div>
+                <div className="text-brand-cyan font-bold self-start mt-2">:</div>
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 bg-brand-secondary border border-brand-cyan/20 rounded flex items-center justify-center text-brand-cyan font-mono font-bold">{timeLeft.hours}</div>
+                  <span className="text-[8px] text-brand-gray uppercase mt-1">Hrs</span>
+                </div>
+                <div className="text-brand-cyan font-bold self-start mt-2">:</div>
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 bg-brand-secondary border border-brand-cyan/20 rounded flex items-center justify-center text-brand-cyan font-mono font-bold">{timeLeft.minutes}</div>
+                  <span className="text-[8px] text-brand-gray uppercase mt-1">Min</span>
+                </div>
+                <div className="text-brand-cyan font-bold self-start mt-2">:</div>
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 bg-brand-secondary border border-brand-cyan/20 rounded flex items-center justify-center text-brand-cyan font-mono font-bold">{timeLeft.seconds}</div>
+                  <span className="text-[8px] text-brand-gray uppercase mt-1">Sec</span>
+                </div>
+                <div className="ml-2 self-center text-[10px] font-mono text-brand-gray uppercase tracking-widest">Until Beta Closes</div>
+              </div>
+            </div>
+
             <p className="text-lg md:text-xl text-brand-gray max-w-2xl mx-auto mb-10 leading-relaxed">
               Anticipate road hazards and optimize battery health with 94% accuracy. 
               Engineered in Toronto for the Great North.
@@ -356,27 +412,21 @@ export default function App() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-col items-center gap-6"
+            className="flex flex-col items-center gap-8"
           >
+            <WaitlistForm spotsRemaining={spotsRemaining} onSubmit={handleWaitlistSubmit} />
+
+            <TestimonialRow />
+
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex items-center gap-2 px-4 py-2 bg-brand-purple/5 border border-brand-purple/10 rounded-full text-brand-purple text-xs font-medium"
+              className="flex items-center gap-2 px-4 py-2 bg-brand-cyan/5 border border-brand-cyan/10 rounded-full text-brand-cyan text-xs font-medium"
             >
               <AlertTriangle size={14} />
               <span>Astrateq Gadgets are driver assistance tools only.</span>
             </motion.div>
-
-            <motion.button 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-              onClick={() => setIsWaitlistOpen(true)}
-              className="group relative px-8 py-4 bg-brand-ember text-[#1A1A1A] font-bold rounded-[6px] transition-all hover:scale-105 hover:shadow-[0_10px_30px_rgba(255,184,0,0.2)] active:scale-95"
-            >
-              JOIN THE FOUNDING BETA WAITLIST (100 SPOTS REMAINING)
-            </motion.button>
 
             {!heroVideoUrl && (
               <motion.button
@@ -385,7 +435,7 @@ export default function App() {
                 transition={{ delay: 1.5 }}
                 onClick={generateHeroVideo}
                 disabled={isGeneratingVideo}
-                className="mt-4 flex items-center gap-2 text-xs font-mono text-brand-purple/60 hover:text-brand-purple transition-colors disabled:opacity-50"
+                className="mt-4 flex items-center gap-2 text-xs font-mono text-brand-cyan/60 hover:text-brand-cyan transition-colors disabled:opacity-50"
               >
                 {isGeneratingVideo ? (
                   <div className="flex items-center gap-3">
@@ -407,18 +457,18 @@ export default function App() {
               transition={{ duration: 0.8, delay: 1.2 }}
               className="flex flex-wrap justify-center gap-8 mt-12 text-brand-gray"
             >
-              <HeroBadge icon={<ShieldCheck size={18} className="text-brand-purple" />} text="Transport Canada Compliant" delay={1.3} />
-              <HeroBadge icon={<RotateCcw size={18} className="text-brand-purple" />} text="60-Day Returns" delay={1.4} />
-              <HeroBadge icon={<MapPin size={18} className="text-brand-purple" />} text="Toronto Engineered & Shipped" delay={1.5} />
+              <HeroBadge icon={<ShieldCheck size={18} className="text-brand-cyan" />} text="Transport Canada Compliant" delay={1.3} />
+              <HeroBadge icon={<RotateCcw size={18} className="text-brand-cyan" />} text="60-Day Returns" delay={1.4} />
+              <HeroBadge icon={<MapPin size={18} className="text-brand-cyan" />} text="Toronto Engineered & Shipped" delay={1.5} />
             </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Vision Section */}
-      <section id="vision" className="py-32 px-4 bg-white relative overflow-hidden">
+      <section id="vision" className="py-32 px-4 bg-brand-charcoal relative overflow-hidden">
         {/* Background Grid Accent */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
         
         <div className="max-w-6xl mx-auto relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -429,31 +479,31 @@ export default function App() {
               className="space-y-8"
             >
               <div className="flex items-center gap-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purple/10 border border-brand-purple/20 text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest">
-                  <Eye size={14} className="text-brand-purple" />
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-widest">
+                  <Eye size={14} className="text-brand-cyan" />
                   Vision Intelligence
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
-                  <span className="text-[10px] font-mono font-bold text-brand-gray/60 uppercase tracking-widest">Live Feed</span>
+                  <span className="text-[10px] font-mono font-bold text-brand-gray uppercase tracking-widest">Live Feed</span>
                 </div>
               </div>
               
               <h2 className="text-4xl md:text-5xl font-display font-bold text-brand-offwhite leading-tight">
                 Vision Beyond <br />
-                <span className="text-brand-purple relative inline-block">
+                <span className="text-brand-cyan relative inline-block">
                   the Storm.
                   <motion.div 
                     initial={{ width: 0 }}
                     whileInView={{ width: "100%" }}
                     transition={{ duration: 1, delay: 0.5 }}
-                    className="absolute -bottom-2 left-0 h-1 bg-brand-purple/30 rounded-full"
+                    className="absolute -bottom-2 left-0 h-1 bg-brand-cyan/30 rounded-full"
                   />
                 </span>
               </h2>
               
               <div className="space-y-6 text-brand-gray text-lg leading-relaxed max-w-xl">
-                <p className="border-l-2 border-brand-purple/20 pl-6 italic bg-brand-purple/5 py-4 rounded-r-xl">
+                <p className="border-l-2 border-brand-cyan/20 pl-6 italic bg-brand-cyan/5 py-4 rounded-r-xl">
                   "Standard cameras fail when visibility drops. Our multi-spectral sensor array cuts through whiteouts, heavy rain, and fog by detecting thermal signatures in real-time."
                 </p>
                 <p className="text-base">
@@ -464,35 +514,35 @@ export default function App() {
               <div className="grid grid-cols-2 gap-6 pt-4">
                 <motion.div 
                   whileHover={{ y: -5, scale: 1.02 }}
-                  className="p-6 rounded-3xl bg-gradient-to-br from-brand-purple to-brand-purple-glow shadow-xl shadow-brand-purple/20 border border-white/20 relative overflow-hidden group/stat"
+                  className="p-6 rounded-3xl bg-gradient-to-br from-brand-cyan to-brand-cyan-hover shadow-xl shadow-brand-cyan/20 border border-white/20 relative overflow-hidden group/stat"
                 >
                   <div className="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-2xl group-hover/stat:bg-white/20 transition-colors" />
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
-                      <Zap className="text-white" size={20} />
+                      <Zap className="text-brand-charcoal" size={20} />
                     </div>
-                    <div className="text-3xl font-display font-black text-white tracking-tighter">500ms</div>
+                    <div className="text-3xl font-display font-black text-brand-charcoal tracking-tighter">500ms</div>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] text-white uppercase tracking-widest font-bold">Predictive Window</span>
-                    <span className="text-[9px] text-white/70 font-mono mt-1 font-bold">LATENCY: ULTRA-LOW</span>
+                    <span className="text-[10px] text-brand-charcoal uppercase tracking-widest font-bold">Predictive Window</span>
+                    <span className="text-[9px] text-brand-charcoal/70 font-mono mt-1 font-bold">LATENCY: ULTRA-LOW</span>
                   </div>
                 </motion.div>
 
                 <motion.div 
                   whileHover={{ y: -5, scale: 1.02 }}
-                  className="p-6 rounded-3xl bg-brand-offwhite shadow-xl shadow-brand-offwhite/20 border border-white/10 relative overflow-hidden group/stat"
+                  className="p-6 rounded-3xl bg-brand-secondary shadow-xl shadow-brand-secondary/20 border border-white/10 relative overflow-hidden group/stat"
                 >
-                  <div className="absolute -right-4 -top-4 w-20 h-20 bg-brand-purple/10 rounded-full blur-2xl group-hover/stat:bg-brand-purple/20 transition-colors" />
+                  <div className="absolute -right-4 -top-4 w-20 h-20 bg-brand-cyan/10 rounded-full blur-2xl group-hover/stat:bg-brand-cyan/20 transition-colors" />
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-brand-purple/10 backdrop-blur-md flex items-center justify-center border border-brand-purple/20">
-                      <Eye className="text-brand-purple" size={20} />
+                    <div className="w-10 h-10 rounded-xl bg-brand-cyan/10 backdrop-blur-md flex items-center justify-center border border-brand-cyan/20">
+                      <Eye className="text-brand-cyan" size={20} />
                     </div>
                     <div className="text-3xl font-display font-black text-white tracking-tighter">4K</div>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Sensor Fusion</span>
-                    <span className="text-[9px] text-brand-purple/60 font-mono mt-1 font-bold">RESOLUTION: NATIVE</span>
+                    <span className="text-[10px] text-brand-gray uppercase tracking-widest font-bold">Sensor Fusion</span>
+                    <span className="text-[9px] text-brand-cyan/60 font-mono mt-1 font-bold">RESOLUTION: NATIVE</span>
                   </div>
                 </motion.div>
               </div>
@@ -502,28 +552,28 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="relative aspect-video rounded-3xl overflow-hidden border border-slate-200 shadow-2xl group bg-brand-navy"
+              className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl group bg-brand-charcoal"
             >
-              {/* Base Image (Luxury Vehicle on Sunny Snowy Road) */}
+              {/* Base Image */}
               <img 
                 src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=1200" 
-                alt="Luxury Vehicle on Sunny Snowy Road" 
+                alt="Luxury vehicle navigating a snowy Canadian road with Astrateq AI vision overlays" 
                 className="w-full h-full object-cover brightness-90 group-hover:scale-105 transition-transform duration-[3s] ease-out"
                 referrerPolicy="no-referrer"
               />
               
               {/* Thermal / Night Vision Overlay */}
-              <div className="absolute inset-0 bg-brand-purple/15 mix-blend-color opacity-50" />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-brand-navy/20" />
+              <div className="absolute inset-0 bg-brand-cyan/15 mix-blend-color opacity-50" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/60 via-transparent to-brand-charcoal/20" />
               
-              {/* Terrain Analysis Grid (Perspective) */}
+              {/* Terrain Analysis Grid */}
               <div className="absolute inset-0 [perspective:500px] pointer-events-none opacity-30">
                 <motion.div 
                   animate={{ 
                     backgroundPosition: ["0px 0px", "0px 40px"] 
                   }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 [transform:rotateX(60deg)] origin-bottom bg-[linear-gradient(to_right,#D946EF33_1px,transparent_1px),linear-gradient(to_bottom,#D946EF33_1px,transparent_1px)] bg-[size:40px_40px]"
+                  className="absolute inset-0 [transform:rotateX(60deg)] origin-bottom bg-[linear-gradient(to_right,#00E5FF33_1px,transparent_1px),linear-gradient(to_bottom,#00E5FF33_1px,transparent_1px)] bg-[size:40px_40px]"
                 />
               </div>
               
@@ -531,183 +581,45 @@ export default function App() {
               <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
                 <div className="flex justify-between items-start">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-purple/40 shadow-[0_0_15px_rgba(217,70,239,0.2)]">
-                      <div className="w-1.5 h-1.5 rounded-full bg-brand-purple animate-pulse shadow-[0_0_8px_#D946EF]" />
+                    <div className="flex items-center gap-2 font-mono text-[10px] text-brand-cyan font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-cyan/40 shadow-[0_0_15px_rgba(0,229,255,0.2)]">
+                      <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_8px_#00E5FF]" />
                       Live Feed: Multi-Spectral Lidar
                     </div>
-                    <div className="flex items-center gap-2 font-mono text-[9px] text-brand-purple/80 font-bold uppercase tracking-widest bg-black/50 backdrop-blur-sm px-2 py-1 rounded border border-brand-purple/20">
-                      Heading: 342° NW | Uptime: 14:22:09
-                    </div>
-                  </div>
-                  <div className="text-right space-y-2">
-                    <div className="font-mono text-[10px] text-brand-purple font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-purple/40">
-                      Lat: 43.6532° N | Lon: 79.3832° W
-                    </div>
-                    <div className="font-mono text-[14px] text-brand-purple font-bold bg-black/50 backdrop-blur-sm px-2 py-1 rounded border border-brand-purple/20 flex items-center gap-2 justify-end">
-                      <motion.span
-                        animate={{ opacity: [1, 0.5, 1] }}
-                        transition={{ duration: 0.5, repeat: Infinity }}
-                      >104</motion.span>
-                      <span className="text-[8px] opacity-60">KM/H</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Central Target Reticle */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[320px]">
-                  <motion.div 
-                    animate={{ 
-                      scale: [1, 1.01, 1],
-                    }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    className="relative aspect-[4/3] border-2 border-brand-purple/30 rounded-2xl flex items-center justify-center overflow-hidden backdrop-blur-[1px]"
-                  >
-                    {/* Traffic Data Layer Overlay */}
-                    <div className="absolute inset-0 pointer-events-none">
-                      {/* Traffic Flow Nodes (Perspective) */}
-                      {[1, 2, 3].map((i) => (
-                        <motion.div
-                          key={`traffic-${i}`}
-                          initial={{ opacity: 0, scale: 0.5, y: 100 }}
-                          animate={{ 
-                            opacity: [0, 0.4, 0],
-                            scale: [0.5, 1.2, 1.5],
-                            y: [-20, -100, -200],
-                            x: [i * 20 - 40, i * 30 - 45]
-                          }}
-                          transition={{ 
-                            duration: 4, 
-                            repeat: Infinity, 
-                            delay: i * 1.2,
-                            ease: "linear"
-                          }}
-                          className="absolute bottom-0 left-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-orange-500/40 to-transparent blur-sm"
-                        />
-                      ))}
-                    </div>
-
-                    {/* Scanning Line */}
-                    <motion.div 
-                      animate={{ top: ["-10%", "110%"] }}
-                      transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-                      className="absolute left-0 right-0 h-[2px] bg-brand-purple shadow-[0_0_20px_#D946EF] z-10"
-                    />
-                    
-                    {/* Target Box */}
-                    <motion.div 
-                      animate={{ 
-                        opacity: [0.6, 1, 0.6],
-                        scale: [0.99, 1, 0.99]
-                      }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                      className="w-4/5 h-1/2 border border-brand-purple/50 rounded flex flex-col items-center justify-center bg-brand-purple/10 backdrop-blur-sm relative"
-                    >
-                      <div className="absolute -top-7 left-0 flex items-center gap-2 text-[10px] font-mono font-bold text-brand-purple bg-black/90 px-3 py-1 rounded-t-md border-t border-x border-brand-purple/40">
-                        <AlertTriangle size={12} className="text-red-500 animate-pulse" />
-                        <span className="text-red-500">HAZARD DETECTED: 12.4m</span>
-                      </div>
-                      
-                      {/* Traffic Congestion Alert */}
-                      <motion.div 
-                        animate={{ opacity: [0.4, 1, 0.4] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="absolute -bottom-7 right-0 flex items-center gap-2 text-[9px] font-mono font-bold text-orange-400 bg-black/90 px-3 py-1 rounded-b-md border-b border-x border-orange-400/30"
-                      >
-                        <Activity size={10} />
-                        CONGESTION AHEAD: 1.2km
-                      </motion.div>
-
-                      <div className="text-[9px] font-mono text-brand-purple font-bold uppercase tracking-[0.2em] animate-pulse">Analyzing Surface Friction...</div>
-                      <div className="mt-2 flex gap-1">
-                        {[1, 2, 3, 4, 5].map(i => (
-                          <motion.div 
-                            key={i}
-                            animate={{ height: [4, 12, 4] }}
-                            transition={{ duration: 0.5, delay: i * 0.1, repeat: Infinity }}
-                            className="w-1 bg-brand-purple/60 rounded-full"
-                          />
-                        ))}
-                      </div>
-                    </motion.div>
-
-                    {/* Corner Accents */}
-                    <div className="absolute top-2 left-2 w-5 h-5 border-t-2 border-l-2 border-brand-purple shadow-[-2px_-2px_10px_rgba(217,70,239,0.3)]" />
-                    <div className="absolute top-2 right-2 w-5 h-5 border-t-2 border-r-2 border-brand-purple shadow-[2px_-2px_10px_rgba(217,70,239,0.3)]" />
-                    <div className="absolute bottom-2 left-2 w-5 h-5 border-b-2 border-l-2 border-brand-purple shadow-[-2px_2px_10px_rgba(217,70,239,0.3)]" />
-                    <div className="absolute bottom-2 right-2 w-5 h-5 border-b-2 border-r-2 border-brand-purple shadow-[2px_2px_10px_rgba(217,70,239,0.3)]" />
-                  </motion.div>
-                </div>
-
-                <div className="flex justify-between items-end">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <div className="h-2 w-40 bg-brand-purple/20 rounded-full overflow-hidden border border-brand-purple/20 p-[1px]">
-                        <motion.div 
-                          animate={{ width: ["10%", "95%", "40%", "85%", "60%"] }}
-                          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                          className="h-full bg-gradient-to-r from-brand-purple to-brand-purple-glow rounded-full shadow-[0_0_15px_#D946EF]"
-                        />
-                      </div>
-                      <span className="text-[9px] font-mono text-brand-purple font-bold tracking-widest bg-black/40 px-2 py-0.5 rounded">BUFF: ACTIVE</span>
-                    </div>
-                    <div className="text-[9px] font-mono text-brand-purple/80 uppercase tracking-widest flex items-center gap-2 font-bold">
-                      <div className="w-1.5 h-1.5 bg-brand-purple rounded-full animate-ping" />
-                      Processing Real-Time Stream...
-                    </div>
-                  </div>
-                  <div className="text-right bg-black/40 backdrop-blur-md p-3 rounded-xl border border-brand-purple/20">
-                    <motion.div 
-                      animate={{ 
-                        color: ["#D946EF", "#F0ABFC", "#D946EF"]
-                      }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="text-3xl font-display font-black tracking-tighter"
-                    >
-                      98.<motion.span
-                        animate={{ opacity: [1, 0.7, 1] }}
-                        transition={{ duration: 0.1, repeat: Infinity }}
-                      >2</motion.span>%
-                    </motion.div>
-                    <div className="text-[9px] font-mono text-brand-purple/60 uppercase tracking-widest font-bold">Confidence Score</div>
                   </div>
                 </div>
               </div>
-
-              {/* Scanning Line Overlay (Global) */}
-              <div className="absolute inset-0 bg-[linear-gradient(transparent_0%,rgba(217,70,239,0.08)_50%,transparent_100%)] bg-[length:100%_15px] animate-scan-lines pointer-events-none opacity-40" />
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Solutions Section */}
-      <section id="solutions" className="py-32 px-4 bg-white relative overflow-hidden">
-        {/* Decorative Background Elements */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand-purple/5 rounded-full blur-[120px] -translate-y-1/2" />
-          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] translate-y-1/2" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.03]" 
-               style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #475569 1px, transparent 0)', backgroundSize: '48px 48px' }} />
-        </div>
-
-        <div className="max-w-6xl mx-auto relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-20"
-          >
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-brand-offwhite">
-              The <span className="text-brand-purple">Solution</span>
+      <section id="solutions" className="py-32 px-4 bg-brand-charcoal relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#00E5FF08,transparent_50%)]" />
+        <div className="max-w-6xl mx-auto relative">
+          <div className="text-center mb-20 space-y-4">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-xs font-mono font-bold text-brand-cyan uppercase tracking-[0.3em] mb-4"
+            >
+              <Shield size={14} />
+              The Astrateq Ecosystem
+            </motion.div>
+            <h2 className="text-4xl md:text-6xl font-display font-black text-brand-offwhite tracking-tight">
+              Precision <span className="text-brand-cyan">Hardware.</span> <br />
+              Intelligent <span className="text-brand-cyan">Defense.</span>
             </h2>
-            <p className="text-brand-gray">Three pillars of intelligent automotive protection</p>
-          </motion.div>
+            <p className="text-brand-gray text-lg max-w-2xl mx-auto font-medium">
+              Astrateq's integrated ecosystem combines military-grade sensors with proprietary AI to create a 360° safety shield around your vehicle.
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <SolutionCard 
               index={0}
-              icon={<Eye className="text-brand-purple" />}
+              icon={<Eye className="text-brand-cyan" />}
               title="AlTrak™"
               subtitle="PREDICTIVE SAFETY"
               description="Our AI system detects hazards before human reaction time, analyzing thousands of data points per second to keep you one step ahead on every road."
@@ -716,7 +628,7 @@ export default function App() {
             />
             <SolutionCard 
               index={1}
-              icon={<Battery className="text-brand-purple" />}
+              icon={<Battery className="text-brand-cyan" />}
               title="EV Battery Intelligence"
               subtitle="RANGE CONFIDENCE"
               description="Drive from Toronto to Montreal with total peace of mind. Our AI optimizes thermal management to give you up to 500 miles of Range Confidence, even in Canadian winters."
@@ -725,7 +637,7 @@ export default function App() {
             />
             <SolutionCard 
               index={2}
-              icon={<Shield className="text-brand-purple" />}
+              icon={<Shield className="text-brand-cyan" />}
               title="Guardian Mode"
               subtitle="24/7 ASSET MONITORING"
               description="Proactive around-the-clock asset monitoring and security. Your vehicle is always watched, always protected, always connected."
@@ -742,62 +654,68 @@ export default function App() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mt-32 relative group"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-[3rem] blur-3xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-            <div className="glass-panel p-8 md:p-12 rounded-[3.5rem] border-slate-200 overflow-hidden bg-white/80 backdrop-blur-xl shadow-2xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-cyan/10 to-brand-cyan/5 rounded-[3rem] blur-3xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+            <div className="glass-panel p-8 md:p-12 rounded-[3.5rem] border-white/5 overflow-hidden bg-brand-secondary/50 backdrop-blur-xl shadow-2xl">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div className="space-y-8">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold tracking-widest uppercase">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-brand-cyan text-xs font-bold tracking-widest uppercase">
                     <Zap size={14} className="animate-pulse" />
                     Product Spotlight
                   </div>
-                  <h3 className="text-4xl md:text-5xl font-display font-black text-slate-900 leading-tight">
-                    EV Battery <span className="text-blue-500">Intelligence</span> Suite
-                  </h3>
-                  <p className="text-lg text-slate-600 leading-relaxed max-w-xl">
-                    Our proprietary AI algorithms monitor cell-level health in real-time, predicting degradation patterns and optimizing thermal management for the harsh Canadian climate.
-                  </p>
                   
+                  <div className="space-y-4">
+                    <h3 className="text-4xl md:text-5xl font-display font-black text-brand-offwhite leading-tight">
+                      EV Battery <br />
+                      <span className="text-brand-cyan">Intelligence.</span>
+                    </h3>
+                    <p className="text-brand-gray text-lg leading-relaxed max-w-xl">
+                      Proprietary thermal management AI that extends battery life and maximizes range in extreme conditions. Engineered for the Great North.
+                    </p>
+                  </div>
+
                   <div className="grid grid-cols-2 gap-6">
-                    <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition-colors group/stat">
-                      <div className="text-3xl font-black text-blue-600 mb-1 group-hover/stat:scale-110 transition-transform">92%</div>
-                      <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Avg. Health Retained</div>
+                    <div className="p-6 rounded-3xl bg-white/5 border border-white/10 hover:border-brand-cyan/30 transition-colors group/stat">
+                      <div className="text-3xl font-display font-black text-brand-cyan mb-1 group-hover/stat:scale-110 transition-transform">+24%</div>
+                      <div className="text-xs font-bold text-brand-gray uppercase tracking-widest">Winter Range</div>
                     </div>
-                    <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition-colors group/stat">
-                      <div className="text-3xl font-black text-blue-600 mb-1 group-hover/stat:scale-110 transition-transform">500mi</div>
-                      <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Optimized Range</div>
+                    <div className="p-6 rounded-3xl bg-white/5 border border-white/10 hover:border-brand-cyan/30 transition-colors group/stat">
+                      <div className="text-3xl font-display font-black text-brand-cyan mb-1 group-hover/stat:scale-110 transition-transform">2.1x</div>
+                      <div className="text-xs font-bold text-brand-gray uppercase tracking-widest">Cell Longevity</div>
                     </div>
                   </div>
 
-                  <button className="flex items-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-blue-600 transition-all group/btn shadow-lg shadow-slate-900/20">
-                    Explore Technical Specs
-                    <ArrowUpRight size={20} className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
-                  </button>
+                  <div className="pt-4">
+                    <button className="group flex items-center gap-3 text-brand-offwhite font-bold tracking-widest text-sm uppercase">
+                      Explore the Technology
+                      <ArrowRight size={18} className="text-brand-cyan group-hover:translate-x-2 transition-transform" />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="relative">
-                  <div className="absolute -inset-4 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-[2.5rem] blur-2xl opacity-20 animate-pulse" />
-                  <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-white shadow-2xl group/img">
+                  <div className="absolute -inset-4 bg-brand-cyan/20 rounded-[2.5rem] blur-2xl opacity-20 animate-pulse" />
+                  <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl group/img">
                     <img 
                       src="https://i.ibb.co/Qvh1LVns/Can-you-add-202604021625.jpg" 
-                      alt="EV Battery Intelligence Interface" 
+                      alt="EV Battery Intelligence" 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
-                    {/* Floating Data Tag */}
+                    {/* Floating Tech Badge */}
                     <motion.div 
                       animate={{ y: [0, -10, 0] }}
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                      className="absolute bottom-8 left-8 p-4 glass-panel rounded-2xl border-white/40 bg-white/20 backdrop-blur-md"
+                      className="absolute bottom-8 left-8 p-4 bg-black/60 backdrop-blur-md rounded-2xl border border-white/10"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center text-white shadow-lg">
-                          <Activity size={20} />
+                        <div className="w-10 h-10 rounded-xl bg-brand-cyan/20 flex items-center justify-center">
+                          <Thermometer size={20} className="text-brand-cyan" />
                         </div>
                         <div>
-                          <div className="text-[10px] font-bold text-white/70 uppercase tracking-widest">Real-time Status</div>
-                          <div className="text-sm font-black text-white">System Nominal</div>
+                          <div className="text-[10px] font-mono text-brand-gray uppercase tracking-wider">Thermal State</div>
+                          <div className="text-sm font-bold text-brand-offwhite">OPTIMIZED</div>
                         </div>
                       </div>
                     </motion.div>
@@ -817,17 +735,17 @@ export default function App() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="py-32 px-4 relative overflow-hidden bg-gradient-to-b from-white via-white to-slate-50/50 text-brand-offwhite border-t border-slate-100"
+        className="py-32 px-4 relative overflow-hidden bg-brand-charcoal text-brand-offwhite border-t border-white/5"
       >
         {/* Technical Background Detail */}
         <div className="absolute inset-0 pointer-events-none opacity-5">
-          <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #D946EF 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-brand-purple/10 rounded-full blur-[120px] -translate-y-1/2" />
+          <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #00E5FF 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-brand-cyan/10 rounded-full blur-[120px] -translate-y-1/2" />
         </div>
 
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center gap-20">
           {/* Brand & Lead Gen & Utilities */}
-          <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-12 pb-12 border-b border-slate-100/50 items-start">
+          <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-12 pb-12 border-b border-white/10 items-start">
             {/* Column 1: Brand */}
             <div className="flex flex-col items-center lg:items-start gap-4">
               <Logo event={currentEvent} />
@@ -840,12 +758,12 @@ export default function App() {
             <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto">
               <div className="w-full space-y-4 relative group/form">
                 {/* Decorative Glow */}
-                <div className="absolute -inset-4 bg-brand-purple/5 rounded-[2rem] blur-2xl opacity-0 group-hover/form:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                <div className="absolute -inset-4 bg-brand-cyan/5 rounded-[2rem] blur-2xl opacity-0 group-hover/form:opacity-100 transition-opacity duration-700 pointer-events-none" />
                 
                 <div className="relative space-y-3">
-                  <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-[0.3em] text-center">Stay in the Loop</div>
+                  <div className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.3em] text-center">Stay in the Loop</div>
                   <form 
-                    className="flex gap-2 p-1 bg-white border border-slate-200 rounded-2xl shadow-sm focus-within:border-brand-purple/50 focus-within:shadow-lg focus-within:shadow-brand-purple/5 transition-all duration-300" 
+                    className="flex gap-2 p-1 bg-white/5 border border-white/10 rounded-2xl shadow-sm focus-within:border-brand-cyan/50 focus-within:shadow-lg focus-within:shadow-brand-cyan/5 transition-all duration-300" 
                     onSubmit={async (e) => { 
                       e.preventDefault(); 
                       const form = e.currentTarget;
@@ -875,12 +793,12 @@ export default function App() {
                       type="email" 
                       name="email"
                       placeholder="Enter your email" 
-                      className="flex-1 px-4 py-2.5 bg-transparent text-sm focus:outline-none placeholder:text-slate-400"
+                      className="flex-1 px-4 py-2.5 bg-transparent text-sm focus:outline-none placeholder:text-brand-gray/40 text-brand-offwhite"
                       required
                     />
                     <button 
                       type="submit"
-                      className="px-6 py-2.5 bg-brand-purple text-white text-xs font-bold rounded-xl hover:bg-brand-purple-glow transition-all shadow-md hover:shadow-brand-purple/30 uppercase tracking-widest active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-6 py-2.5 bg-brand-cyan text-brand-charcoal text-xs font-bold rounded-xl hover:bg-brand-cyan-hover transition-all shadow-md hover:shadow-brand-cyan/30 uppercase tracking-widest active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Join
                     </button>
@@ -890,17 +808,17 @@ export default function App() {
                     <div className="flex items-center justify-center gap-2">
                       <div className="flex -space-x-1.5">
                         {[1,2,3].map(i => (
-                          <div key={i} className="w-5 h-5 rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-sm">
+                          <div key={i} className="w-5 h-5 rounded-full border-2 border-brand-charcoal bg-brand-secondary overflow-hidden shadow-sm">
                             <img src={`https://i.pravatar.cc/40?img=${i+10}`} alt="User" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
                           </div>
                         ))}
                       </div>
                       <p className="text-[11px] text-brand-gray/70 font-bold uppercase tracking-wider">
-                        Join <span className="text-brand-purple">2,400+</span> drivers receiving updates
+                        Join <span className="text-brand-cyan">2,400+</span> drivers receiving updates
                       </p>
                     </div>
                     <p className="text-[10px] text-brand-gray/50 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                      <Shield size={12} className="text-brand-purple/50" />
+                      <Shield size={12} className="text-brand-cyan/50" />
                       Privacy Guaranteed • No Spam
                     </p>
                   </div>
@@ -912,23 +830,23 @@ export default function App() {
             <div className="flex flex-col items-center lg:items-end gap-8">
               {/* System Status - Enhanced with Radar Effect */}
               <div className="space-y-3 text-center lg:text-right group/status">
-                <div className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-[0.4em] group-hover/status:text-brand-purple-glow transition-all duration-500">System Status</div>
+                <div className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.4em] group-hover/status:text-brand-cyan-hover transition-all duration-500">System Status</div>
                 <div className="relative">
                   {/* Radar Pulse Rings */}
                   <div className="absolute -inset-2 bg-emerald-500/10 rounded-full blur-xl opacity-0 group-hover/status:opacity-100 transition-opacity duration-700" />
                   
-                  <div className="relative flex items-center gap-4 px-6 py-3 bg-white border border-emerald-500/20 rounded-2xl shadow-[0_4px_20px_-4px_rgba(16,185,129,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(16,185,129,0.2)] transition-all duration-500 backdrop-blur-md group-hover/status:border-emerald-500/40">
+                  <div className="relative flex items-center gap-4 px-6 py-3 bg-brand-secondary/50 border border-emerald-500/20 rounded-2xl shadow-[0_4px_20px_-4px_rgba(16,185,129,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(16,185,129,0.2)] transition-all duration-500 backdrop-blur-md group-hover/status:border-emerald-500/40">
                     <div className="relative flex items-center justify-center">
                       <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse" />
                       <div className="absolute w-6 h-6 rounded-full border border-emerald-500/40 animate-ping opacity-40" />
                       <div className="absolute w-8 h-8 rounded-full border border-emerald-500/20 animate-ping [animation-delay:0.5s] opacity-20" />
                     </div>
                     <div className="flex flex-col items-start leading-none">
-                      <span className="text-[13px] font-black text-emerald-600 uppercase tracking-tighter">All Systems Nominal</span>
+                      <span className="text-[13px] font-black text-emerald-500 uppercase tracking-tighter">All Systems Nominal</span>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[9px] font-mono text-emerald-600/60 font-bold">LATENCY: 8MS</span>
-                        <div className="w-1 h-1 rounded-full bg-emerald-600/30" />
-                        <span className="text-[9px] font-mono text-emerald-600/60 font-bold">UPTIME: 99.9%</span>
+                        <span className="text-[9px] font-mono text-emerald-500/60 font-bold">LATENCY: 8MS</span>
+                        <div className="w-1 h-1 rounded-full bg-emerald-500/30" />
+                        <span className="text-[9px] font-mono text-emerald-500/60 font-bold">UPTIME: 99.9%</span>
                       </div>
                     </div>
                   </div>
@@ -938,24 +856,24 @@ export default function App() {
               <div className="flex flex-col items-center lg:items-end gap-8">
                 {/* Trust Badges - Enhanced Glassmorphism */}
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-8 p-5 bg-white/40 backdrop-blur-xl rounded-[2rem] border border-slate-200/60 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] group/badges relative overflow-hidden">
+                  <div className="flex items-center gap-8 p-5 bg-brand-secondary/50 backdrop-blur-xl rounded-[2rem] border border-white/10 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] group/badges relative overflow-hidden">
                     {/* Subtle Background Glow */}
-                    <div className="absolute -top-10 -right-10 w-20 h-20 bg-brand-purple/5 rounded-full blur-2xl group-hover/badges:bg-brand-purple/10 transition-colors duration-700" />
+                    <div className="absolute -top-10 -right-10 w-20 h-20 bg-brand-cyan/5 rounded-full blur-2xl group-hover/badges:bg-brand-cyan/10 transition-colors duration-700" />
                     
                     <div title="Transport Canada Compliant" className="flex flex-col items-center gap-2 group/badge cursor-help">
-                      <div className="w-10 h-10 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-slate-100 group-hover/badge:border-brand-purple/40 group-hover/badge:shadow-lg group-hover/badge:shadow-brand-purple/5 transition-all duration-300">
-                        <ShieldCheck size={20} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors duration-300" />
+                      <div className="w-10 h-10 rounded-2xl bg-white/5 shadow-sm flex items-center justify-center border border-white/10 group-hover/badge:border-brand-cyan/40 group-hover/badge:shadow-lg group-hover/badge:shadow-brand-cyan/5 transition-all duration-300">
+                        <ShieldCheck size={20} className="text-brand-gray/40 group-hover/badge:text-brand-cyan transition-colors duration-300" />
                       </div>
-                      <span className="text-[9px] font-black text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-[0.15em] transition-colors duration-300">TC Compliant</span>
+                      <span className="text-[9px] font-black text-brand-gray/40 group-hover/badge:text-brand-cyan uppercase tracking-[0.15em] transition-colors duration-300">TC Compliant</span>
                     </div>
                     
-                    <div className="w-[1px] h-10 bg-gradient-to-b from-transparent via-slate-200 to-transparent" />
+                    <div className="w-[1px] h-10 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
                     
                     <div title="ISO 9001 Certified" className="flex flex-col items-center gap-2 group/badge cursor-help">
-                      <div className="w-10 h-10 rounded-2xl bg-white shadow-sm flex items-center justify-center border border-slate-100 group-hover/badge:border-brand-purple/40 group-hover/badge:shadow-lg group-hover/badge:shadow-brand-purple/5 transition-all duration-300">
-                        <Scale size={20} className="text-brand-purple/40 group-hover/badge:text-brand-purple transition-colors duration-300" />
+                      <div className="w-10 h-10 rounded-2xl bg-white/5 shadow-sm flex items-center justify-center border border-white/10 group-hover/badge:border-brand-cyan/40 group-hover/badge:shadow-lg group-hover/badge:shadow-brand-cyan/5 transition-all duration-300">
+                        <Scale size={20} className="text-brand-gray/40 group-hover/badge:text-brand-cyan transition-colors duration-300" />
                       </div>
-                      <span className="text-[9px] font-black text-brand-gray/40 group-hover/badge:text-brand-purple uppercase tracking-[0.15em] transition-colors duration-300">ISO 9001</span>
+                      <span className="text-[9px] font-black text-brand-gray/40 group-hover/badge:text-brand-cyan uppercase tracking-[0.15em] transition-colors duration-300">ISO 9001</span>
                     </div>
                   </div>
                 </div>
@@ -965,31 +883,31 @@ export default function App() {
                   <div className="flex items-center gap-8">
                     {/* Language Toggle - Refined */}
                     <div className="flex items-center gap-5 text-[11px] font-black tracking-[0.2em] text-brand-gray" role="navigation" aria-label="Language selection">
-                      <button className="text-brand-purple relative group/lang">
+                      <button className="text-brand-cyan relative group/lang">
                         EN
                         <motion.div 
                           layoutId="footer-lang-active"
-                          className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-brand-purple rounded-full shadow-[0_0_8px_#D946EF]" 
+                          className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-brand-cyan rounded-full shadow-[0_0_8px_#00E5FF]" 
                         />
                       </button>
-                      <div className="w-[1px] h-4 bg-slate-200" />
-                      <button className="hover:text-brand-purple transition-colors duration-300">FR</button>
+                      <div className="w-[1px] h-4 bg-white/10" />
+                      <button className="hover:text-brand-cyan transition-colors duration-300">FR</button>
                     </div>
                     
-                    <div className="w-[1px] h-8 bg-slate-200" />
+                    <div className="w-[1px] h-8 bg-white/10" />
                     
                     {/* Social Icons - Brand Specific Colors */}
                     <div className="flex items-center gap-4">
-                      <a href="#" className="w-10 h-10 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-[#0077b5] hover:border-[#0077b5]/30 hover:shadow-xl hover:shadow-[#0077b5]/10 transition-all duration-300 group/social" title="LinkedIn">
+                      <a href="#" className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-gray/60 hover:text-brand-cyan hover:border-brand-cyan/30 hover:shadow-xl hover:shadow-brand-cyan/10 transition-all duration-300 group/social" title="LinkedIn">
                         <Linkedin size={18} className="group-hover/social:scale-110 transition-transform" />
                       </a>
-                      <a href="#" className="w-10 h-10 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-[#1DA1F2] hover:border-[#1DA1F2]/30 hover:shadow-xl hover:shadow-[#1DA1F2]/10 transition-all duration-300 group/social" title="Twitter">
+                      <a href="#" className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-gray/60 hover:text-brand-cyan hover:border-brand-cyan/30 hover:shadow-xl hover:shadow-brand-cyan/10 transition-all duration-300 group/social" title="Twitter">
                         <Twitter size={18} className="group-hover/social:scale-110 transition-transform" />
                       </a>
-                      <a href="#" className="w-10 h-10 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-[#E4405F] hover:border-[#E4405F]/30 hover:shadow-xl hover:shadow-[#E4405F]/10 transition-all duration-300 group/social" title="Instagram">
+                      <a href="#" className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-gray/60 hover:text-brand-cyan hover:border-brand-cyan/30 hover:shadow-xl hover:shadow-brand-cyan/10 transition-all duration-300 group/social" title="Instagram">
                         <motion.div whileHover={{ rotate: 15 }}><Activity size={18} className="group-hover/social:scale-110 transition-transform" /></motion.div>
                       </a>
-                      <a href="#" className="w-10 h-10 rounded-2xl bg-white border border-slate-100 flex items-center justify-center text-brand-gray/60 hover:text-[#FF0000] hover:border-[#FF0000]/30 hover:shadow-xl hover:shadow-[#FF0000]/10 transition-all duration-300 group/social" title="YouTube">
+                      <a href="#" className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-gray/60 hover:text-brand-cyan hover:border-brand-cyan/30 hover:shadow-xl hover:shadow-brand-cyan/10 transition-all duration-300 group/social" title="YouTube">
                         <Zap size={18} className="group-hover/social:scale-110 transition-transform" />
                       </a>
                     </div>
@@ -1005,29 +923,29 @@ export default function App() {
               {/* Family Card: Refined Tech-Luxury */}
               <motion.div 
                 whileHover={{ y: -8, scale: 1.01 }}
-                className="group relative p-10 rounded-[3rem] overflow-hidden border border-slate-200 bg-white shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-700 hover:shadow-[0_40px_80px_-20px_rgba(217,70,239,0.1)] hover:border-brand-purple/20"
+                className="group relative p-10 rounded-[3rem] overflow-hidden border border-white/5 bg-brand-secondary/30 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-700 hover:shadow-[0_40px_80px_-20px_rgba(0,229,255,0.1)] hover:border-brand-cyan/20"
               >
                 {/* Subtle Gradient & Pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/[0.02] via-white to-brand-purple/[0.05] opacity-100" />
-                <div className="absolute -right-20 -top-20 w-80 h-80 bg-brand-purple/5 rounded-full blur-[100px] group-hover:bg-brand-purple/10 transition-colors duration-1000" />
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/[0.02] via-transparent to-brand-cyan/[0.05] opacity-100" />
+                <div className="absolute -right-20 -top-20 w-80 h-80 bg-brand-cyan/5 rounded-full blur-[100px] group-hover:bg-brand-cyan/10 transition-colors duration-1000" />
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none group-hover:opacity-[0.05] transition-opacity duration-700" 
-                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #D946EF 1.5px, transparent 0)', backgroundSize: '24px 24px' }} />
+                     style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #00E5FF 1.5px, transparent 0)', backgroundSize: '24px 24px' }} />
 
                 <div className="relative z-10 space-y-8">
                   <div className="flex items-center justify-between">
                     <div className="relative">
-                      <div className="absolute -inset-2 bg-brand-purple/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-purple to-brand-purple-glow flex items-center justify-center shadow-xl shadow-brand-purple/20 group-hover:scale-105 transition-transform duration-500">
-                        <Shield className="text-white" size={32} />
+                      <div className="absolute -inset-2 bg-brand-cyan/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-cyan to-brand-cyan-hover flex items-center justify-center shadow-xl shadow-brand-cyan/20 group-hover:scale-105 transition-transform duration-500">
+                        <Shield className="text-brand-charcoal" size={32} />
                       </div>
                     </div>
-                    <div className="px-4 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-[10px] font-mono font-bold text-brand-purple uppercase tracking-[0.2em] shadow-sm group-hover:bg-brand-purple/5 group-hover:border-brand-purple/10 transition-all">
+                    <div className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.2em] shadow-sm group-hover:bg-brand-cyan/5 group-hover:border-brand-cyan/10 transition-all">
                       Family Protection Suite
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <h4 className="text-3xl font-display font-black text-brand-offwhite tracking-tight group-hover:text-brand-purple transition-colors duration-500">
+                    <h4 className="text-3xl font-display font-black text-brand-offwhite tracking-tight group-hover:text-brand-cyan transition-colors duration-500">
                       For Canadian Families
                     </h4>
                     <p className="text-base text-brand-gray leading-relaxed font-medium">
@@ -1035,16 +953,16 @@ export default function App() {
                     </p>
                   </div>
 
-                  <div className="pt-8 border-t border-slate-100">
+                  <div className="pt-8 border-t border-white/10">
                     <button 
                       onClick={() => setIsWaitlistOpen(true)}
-                      className="group/btn flex items-center gap-4 text-xs font-black text-brand-purple uppercase tracking-[0.3em]"
+                      className="group/btn flex items-center gap-4 text-xs font-black text-brand-cyan uppercase tracking-[0.3em]"
                     >
                       <span className="relative">
                         Get the 2026 Safety Blueprint
-                        <div className="absolute -bottom-1.5 left-0 w-0 h-1 bg-brand-purple group-hover/btn:w-full transition-all duration-500 rounded-full" />
+                        <div className="absolute -bottom-1.5 left-0 w-0 h-1 bg-brand-cyan group-hover/btn:w-full transition-all duration-500 rounded-full" />
                       </span>
-                      <div className="w-10 h-10 rounded-full bg-brand-purple/5 flex items-center justify-center group-hover/btn:bg-brand-purple group-hover/btn:text-white group-hover/btn:shadow-lg group-hover/btn:shadow-brand-purple/30 transition-all duration-500">
+                      <div className="w-10 h-10 rounded-full bg-brand-cyan/5 flex items-center justify-center group-hover/btn:bg-brand-cyan group-hover/btn:text-brand-charcoal group-hover/btn:shadow-lg group-hover/btn:shadow-brand-cyan/30 transition-all duration-500">
                         <ChevronRight size={20} />
                       </div>
                     </button>
@@ -1288,6 +1206,63 @@ export default function App() {
       />
       
       <SuccessToast isVisible={showSuccess} />
+    </div>
+  );
+}
+
+function WaitlistForm({ spotsRemaining, onSubmit }: { spotsRemaining: number, onSubmit: (e: React.FormEvent<HTMLFormElement>) => void }) {
+  return (
+    <div className="w-full max-w-md p-1 bg-white/5 border border-white/10 rounded-2xl shadow-2xl backdrop-blur-md group/form relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-brand-cyan/5 to-transparent opacity-0 group-hover/form:opacity-100 transition-opacity duration-700" />
+      <form 
+        className="flex gap-2 relative z-10"
+        onSubmit={onSubmit}
+      >
+        <input 
+          type="email" 
+          name="email"
+          placeholder="Enter your email for early access" 
+          className="flex-1 px-6 py-4 bg-transparent text-sm focus:outline-none placeholder:text-brand-gray/40 text-brand-offwhite font-medium"
+          required
+        />
+        <button 
+          type="submit"
+          className="px-8 py-4 bg-brand-cyan text-brand-charcoal text-xs font-bold rounded-xl hover:bg-brand-cyan-hover transition-all shadow-lg hover:shadow-brand-cyan/30 uppercase tracking-[0.2em] active:scale-95"
+        >
+          Join Waitlist
+        </button>
+      </form>
+    </div>
+  );
+}
+
+function TestimonialRow() {
+  const testimonials = [
+    { name: "Alex M.", role: "EV Enthusiast", text: "Game changer for winter driving." },
+    { name: "Sarah K.", role: "Fleet Manager", text: "ROI was immediate. Highly recommend." },
+    { name: "David L.", role: "Safety First", text: "The predictive alerts are uncanny." }
+  ];
+
+  return (
+    <div className="flex flex-wrap justify-center gap-6 mt-4">
+      {testimonials.map((t, i) => (
+        <motion.div 
+          key={i}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 + i * 0.1 }}
+          className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full"
+        >
+          <div className="flex -space-x-1">
+            {[1, 2, 3, 4, 5].map(s => (
+              <Star key={s} size={10} className="text-brand-cyan fill-brand-cyan" />
+            ))}
+          </div>
+          <span className="text-[10px] font-bold text-brand-gray uppercase tracking-widest">{t.name}</span>
+          <div className="w-1 h-1 rounded-full bg-brand-cyan/30" />
+          <span className="text-[10px] font-medium text-brand-gray/60 italic">"{t.text}"</span>
+        </motion.div>
+      ))}
     </div>
   );
 }
@@ -1915,12 +1890,11 @@ function FAQSection({ onContactSupport }: { onContactSupport: () => void }) {
   ];
 
   return (
-    <section id="faq" className="py-32 px-4 bg-slate-50 relative overflow-hidden">
+    <section id="faq" className="py-32 px-4 bg-brand-secondary relative overflow-hidden" role="region" aria-label="Frequently asked questions">
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-purple/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand-purple/5 rounded-full blur-[120px]" />
-        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #cbd5e1 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-cyan/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand-cyan/5 rounded-full blur-[120px]" />
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
@@ -1933,44 +1907,32 @@ function FAQSection({ onContactSupport }: { onContactSupport: () => void }) {
               viewport={{ once: true }}
               className="sticky top-32"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-purple/10 border border-brand-purple/20 mb-6">
-                <HelpCircle className="text-brand-purple" size={14} />
-                <span className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest">Support Center</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 mb-6">
+                <HelpCircle className="text-brand-cyan" size={14} />
+                <span className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-widest">Support Center</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-display font-bold text-brand-offwhite mb-6 leading-tight">
-                Got <span className="text-brand-purple">Questions?</span><br />
+                Got <span className="text-brand-cyan">Questions?</span><br />
                 We've Got Answers.
               </h2>
               <p className="text-brand-gray text-lg mb-8 leading-relaxed">
                 Explore our detailed documentation or reach out to our Toronto-based support team for specialized inquiries.
               </p>
               
-              <div className="p-8 rounded-3xl bg-brand-offwhite text-white shadow-xl relative overflow-hidden group/card">
-                {/* Decorative Background Glow */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-purple/20 rounded-full blur-3xl -mr-16 -mt-16 group-hover/card:bg-brand-purple/30 transition-colors" />
+              <div className="p-8 rounded-3xl bg-brand-charcoal text-white shadow-xl relative overflow-hidden group/card border border-white/5">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/20 rounded-full blur-3xl -mr-16 -mt-16 group-hover/card:bg-brand-cyan/30 transition-colors" />
                 
                 <div className="relative z-10">
                   <h4 className="text-xl font-display font-bold mb-3">Still need help?</h4>
-                  <p className="text-sm text-slate-300 mb-6 leading-relaxed">
+                  <p className="text-sm text-brand-gray mb-6 leading-relaxed">
                     Our technical specialists are available 24/7 for emergency assistance and specialized vehicle integration support.
                   </p>
                   <button 
                     onClick={onContactSupport}
-                    className="w-full py-4 bg-brand-purple text-white text-xs font-bold rounded-xl hover:bg-brand-purple-glow transition-all uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(217,70,239,0.3)] hover:shadow-[0_0_25px_rgba(217,70,239,0.5)] active:scale-[0.98]"
+                    className="w-full py-4 bg-brand-cyan text-brand-charcoal text-xs font-bold rounded-xl hover:bg-brand-cyan-hover transition-all uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(0,229,255,0.3)] active:scale-[0.98]"
                   >
                     Contact Support
                   </button>
-                  
-                  <div className="mt-6 pt-6 border-t border-white/10 flex items-center gap-3">
-                    <div className="flex -space-x-2">
-                      {[1,2,3].map(i => (
-                        <div key={i} className="w-6 h-6 rounded-full border border-brand-offwhite bg-slate-800 overflow-hidden">
-                          <img src={`https://i.pravatar.cc/60?img=${i+20}`} alt="Support Agent" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
-                        </div>
-                      ))}
-                    </div>
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">3 Agents Online</span>
-                  </div>
                 </div>
               </div>
             </motion.div>
@@ -1985,10 +1947,10 @@ function FAQSection({ onContactSupport }: { onContactSupport: () => void }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+                className="bg-brand-charcoal rounded-3xl p-8 border border-white/5 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 rounded-2xl bg-brand-purple/10 flex items-center justify-center text-brand-purple border border-brand-purple/20">
+                  <div className="w-12 h-12 rounded-2xl bg-brand-cyan/10 flex items-center justify-center text-brand-cyan border border-brand-cyan/20">
                     {group.icon}
                   </div>
                   <h3 className="text-xl font-display font-bold text-brand-offwhite">
@@ -1996,7 +1958,7 @@ function FAQSection({ onContactSupport }: { onContactSupport: () => void }) {
                   </h3>
                 </div>
                 
-                <div className="divide-y divide-slate-100">
+                <div className="divide-y divide-white/5">
                   {group.questions.map((faq, fIdx) => (
                     <FAQItem key={fIdx} index={fIdx} question={faq.q} answer={faq.a} />
                   ))}
@@ -2006,6 +1968,22 @@ function FAQSection({ onContactSupport }: { onContactSupport: () => void }) {
           </div>
         </div>
       </div>
+
+      {/* FAQ Schema */}
+      <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.flatMap(g => g.questions.map(q => ({
+          "@type": "Question",
+          "name": q.q,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": q.a
+          }
+        })))
+      })}
+      </script>
     </section>
   );
 }
