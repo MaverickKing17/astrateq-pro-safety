@@ -6,7 +6,7 @@
 import { ReactNode, useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Markdown from "react-markdown";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 import { LEGAL_CONTENT } from "./legalContent";
 import { 
   ShieldCheck, 
@@ -44,7 +44,10 @@ import {
   Thermometer,
   Play,
   RefreshCw,
-  Star
+  Star,
+  Navigation,
+  Wind,
+  CloudRain
 } from "lucide-react";
 
 function Logo({ className = "" }: { className?: string }) {
@@ -198,6 +201,178 @@ function VehicleDashboard() {
       <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[2.5rem]">
         <div className="w-full h-full bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,229,255,0.05)_50%,transparent_100%)] animate-scanline opacity-20" />
       </div>
+    </div>
+  );
+}
+
+function RouteOptimizer() {
+  const [isOptimizing, setIsOptimizing] = useState(false);
+  const [routes, setRoutes] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  const optimizeRoute = async () => {
+    setIsOptimizing(true);
+    setError(null);
+    try {
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+      const prompt = `
+        As the Astrateq AlTrak™ AI Navigation Engine, suggest 3 optimized driving routes for a vehicle in Toronto.
+        Consider the following real-time data:
+        - Weather: Heavy Snow, -12°C
+        - Traffic: High congestion on Gardiner Expressway
+        - Predictive Hazards: Black ice detected on Don Valley Parkway, 94% hazard probability.
+        - Vehicle: EV with 84% battery.
+        
+        Provide 3 distinct options:
+        1. "AlTrak™ Safety Path" (Maximum safety, avoiding all predicted hazards)
+        2. "Efficiency Prime" (Minimum energy consumption for EV)
+        3. "Rapid Response" (Fastest time, but may have higher risk)
+      `;
+
+      const response = await ai.models.generateContent({
+        model: "gemini-3-flash-preview",
+        contents: prompt,
+        config: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: Type.ARRAY,
+            items: {
+              type: Type.OBJECT,
+              properties: {
+                name: { type: Type.STRING },
+                efficiency: { type: Type.NUMBER },
+                safety: { type: Type.NUMBER },
+                time: { type: Type.STRING },
+                reasoning: { type: Type.STRING },
+                hazards: { 
+                  type: Type.ARRAY,
+                  items: { type: Type.STRING }
+                }
+              },
+              required: ["name", "efficiency", "safety", "time", "reasoning", "hazards"]
+            }
+          }
+        }
+      });
+
+      const data = JSON.parse(response.text);
+      setRoutes(data);
+    } catch (err) {
+      console.error("Route Optimization Error:", err);
+      setError("Failed to connect to AlTrak™ Cloud. Please check your connection.");
+    } finally {
+      setIsOptimizing(false);
+    }
+  };
+
+  return (
+    <div className="w-full max-w-4xl mx-auto p-8 bg-brand-secondary/50 backdrop-blur-xl border border-white/10 rounded-[2.5rem] relative overflow-hidden">
+      <div className="flex flex-col gap-8 relative z-10">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-brand-cyan/10 flex items-center justify-center">
+              <Navigation className="text-brand-cyan" size={20} />
+            </div>
+            <div>
+              <h3 className="text-lg font-display font-bold text-brand-offwhite">AlTrak™ AI Route Optimizer</h3>
+              <p className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Predictive Navigation Engine</p>
+            </div>
+          </div>
+          <button
+            onClick={optimizeRoute}
+            disabled={isOptimizing}
+            className={`px-6 py-2 rounded-xl font-bold text-xs uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${
+              isOptimizing 
+                ? 'bg-white/5 text-brand-gray cursor-not-allowed' 
+                : 'bg-brand-cyan text-brand-charcoal hover:bg-brand-cyan-hover shadow-lg shadow-brand-cyan/20'
+            }`}
+          >
+            {isOptimizing ? (
+              <>
+                <RefreshCw size={14} className="animate-spin" />
+                Processing...
+              </>
+            ) : (
+              <>
+                <Zap size={14} />
+                Optimize Route
+              </>
+            )}
+          </button>
+        </div>
+
+        {error && (
+          <div className="p-4 bg-rose-500/10 border border-rose-500/30 rounded-2xl flex items-center gap-3 text-rose-500 text-xs font-medium">
+            <AlertTriangle size={16} />
+            {error}
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {routes.length > 0 ? (
+            routes.map((route, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className="p-5 bg-white/5 border border-white/10 rounded-2xl flex flex-col gap-4 group hover:border-brand-cyan/30 transition-colors"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-brand-offwhite uppercase tracking-wider">{route.name}</span>
+                  <span className="text-[10px] font-mono text-brand-cyan">{route.time}</span>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-[9px] font-mono text-brand-gray uppercase tracking-widest">
+                      <span>Safety Score</span>
+                      <span className={route.safety > 80 ? 'text-emerald-400' : 'text-brand-ember'}>{route.safety}%</span>
+                    </div>
+                    <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                      <div className={`h-full transition-all duration-1000 ${route.safety > 80 ? 'bg-emerald-400' : 'bg-brand-ember'}`} style={{ width: `${route.safety}%` }} />
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-[9px] font-mono text-brand-gray uppercase tracking-widest">
+                      <span>Efficiency</span>
+                      <span className="text-brand-cyan">{route.efficiency}%</span>
+                    </div>
+                    <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-full bg-brand-cyan" style={{ width: `${route.efficiency}%` }} />
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-[10px] text-brand-gray leading-relaxed italic">"{route.reasoning}"</p>
+
+                {route.hazards.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {route.hazards.map((h: string, i: number) => (
+                      <span key={i} className="px-2 py-0.5 bg-rose-500/10 text-rose-500 text-[8px] font-bold uppercase tracking-tighter rounded-md border border-rose-500/20">
+                        {h}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            ))
+          ) : (
+            <div className="col-span-3 py-12 flex flex-col items-center justify-center gap-4 border-2 border-dashed border-white/5 rounded-2xl">
+              <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center">
+                <Globe className="text-brand-gray/20" size={32} />
+              </div>
+              <div className="text-center">
+                <p className="text-sm font-display font-medium text-brand-gray">No Active Route Optimization</p>
+                <p className="text-[10px] font-mono text-brand-gray/40 uppercase tracking-widest">Awaiting System Command</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Background HUD Grid */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #00E5FF 1px, transparent 0)', backgroundSize: '20px 20px' }} />
     </div>
   );
 }
@@ -577,6 +752,14 @@ export default function App() {
                 <p className="text-sm text-brand-gray font-mono uppercase tracking-[0.2em]">Real-time vehicle telemetry & mode control</p>
               </div>
               <VehicleDashboard />
+            </div>
+
+            <div className="w-full py-12">
+              <div className="text-center mb-10">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-brand-offwhite mb-2">AI Predictive Navigation</h2>
+                <p className="text-sm text-brand-gray font-mono uppercase tracking-[0.2em]">AlTrak™ Cloud-Sync Route Optimization</p>
+              </div>
+              <RouteOptimizer />
             </div>
 
             <div className="flex flex-col items-center gap-6 w-full max-w-2xl">
