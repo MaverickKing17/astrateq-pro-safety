@@ -218,9 +218,33 @@ function VehicleDashboard() {
   }, [mode]);
 
   const modes = [
-    { id: 'Eco', icon: <Cpu size={16} />, color: 'text-emerald-400', bg: 'bg-emerald-400/10', border: 'border-emerald-400/30' },
-    { id: 'Auto', icon: <Activity size={16} />, color: 'text-brand-cyan', bg: 'bg-brand-cyan/10', border: 'border-brand-cyan/30' },
-    { id: 'Sport', icon: <Zap size={16} />, color: 'text-brand-ember', bg: 'bg-brand-ember/10', border: 'border-brand-ember/30' },
+    { 
+      id: 'Eco', 
+      icon: <Cpu size={18} />, 
+      color: 'text-emerald-400', 
+      bg: 'bg-emerald-400/20', 
+      border: 'border-emerald-400/50',
+      glow: 'shadow-[0_0_20px_rgba(52,211,153,0.4)]',
+      activeGlow: 'shadow-[0_0_40px_rgba(52,211,153,0.6)]'
+    },
+    { 
+      id: 'Auto', 
+      icon: <Activity size={18} />, 
+      color: 'text-brand-cyan', 
+      bg: 'bg-brand-cyan/20', 
+      border: 'border-brand-cyan/50',
+      glow: 'shadow-[0_0_20px_rgba(0,229,255,0.4)]',
+      activeGlow: 'shadow-[0_0_40px_rgba(0,229,255,0.6)]'
+    },
+    { 
+      id: 'Sport', 
+      icon: <Zap size={18} />, 
+      color: 'text-brand-ember', 
+      bg: 'bg-brand-ember/20', 
+      border: 'border-brand-ember/50',
+      glow: 'shadow-[0_0_20px_rgba(255,184,0,0.4)]',
+      activeGlow: 'shadow-[0_0_40px_rgba(255,184,0,0.6)]'
+    },
   ];
 
   return (
@@ -366,36 +390,58 @@ function VehicleDashboard() {
             </div>
 
             {/* Mode Selector */}
-            <div className="col-span-2 p-4 bg-white/5 border border-white/10 rounded-2xl">
-              <div className="flex items-center justify-between mb-4">
-                <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Driving Mode</div>
+            <div className="col-span-2 p-6 bg-white/5 border border-white/10 rounded-3xl">
+              <div className="flex items-center justify-between mb-6">
+                <div className="text-[10px] font-mono font-black text-brand-gray uppercase tracking-[0.3em]">Neural Driving Mode</div>
                 <button 
                   onClick={toggleListening}
-                  className={`flex items-center gap-2 px-3 py-1 rounded-full border transition-all duration-300 ${
+                  className={`group/voice flex items-center gap-3 px-5 py-2 rounded-full border transition-all duration-500 ${
                     isListening 
-                      ? 'bg-brand-cyan/20 border-brand-cyan text-brand-cyan animate-pulse' 
-                      : 'bg-white/5 border-white/10 text-brand-gray hover:text-brand-offwhite'
+                      ? 'bg-brand-cyan/30 border-brand-cyan text-brand-cyan shadow-[0_0_30px_rgba(0,229,255,0.5)] animate-pulse' 
+                      : 'bg-white/5 border-white/20 text-brand-gray hover:text-brand-offwhite hover:border-brand-cyan/50 hover:bg-brand-cyan/10'
                   }`}
                 >
-                  {isListening ? <Mic size={12} /> : <MicOff size={12} />}
-                  <span className="text-[9px] font-bold uppercase tracking-widest">
-                    {isListening ? 'Listening...' : 'Voice Command'}
+                  <div className="relative">
+                    {isListening ? <Mic size={14} /> : <MicOff size={14} />}
+                    {isListening && (
+                      <div className="absolute -inset-1 bg-brand-cyan/40 rounded-full animate-ping" />
+                    )}
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em]">
+                    {isListening ? 'System Listening...' : 'Voice Command'}
                   </span>
                 </button>
               </div>
-              <div className="flex gap-3">
+              <div className="flex gap-4">
                 {modes.map((m) => (
                   <button
                     key={m.id}
                     onClick={() => setMode(m.id as any)}
-                    className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border transition-all duration-300 ${
+                    className={`flex-1 relative group/mode flex items-center justify-center gap-3 py-5 px-6 rounded-2xl border transition-all duration-500 overflow-hidden ${
                       mode === m.id 
-                        ? `${m.bg} ${m.border} ${m.color} shadow-lg shadow-black/20` 
-                        : 'bg-transparent border-white/5 text-brand-gray hover:bg-white/5'
+                        ? `${m.bg} ${m.border} ${m.color} ${m.activeGlow} scale-[1.02] z-10` 
+                        : 'bg-transparent border-white/10 text-brand-gray hover:bg-white/5 hover:border-white/30'
                     }`}
                   >
-                    {m.icon}
-                    <span className="text-xs font-bold uppercase tracking-widest">{m.id}</span>
+                    {/* Active Background Glow */}
+                    {mode === m.id && (
+                      <motion.div 
+                        layoutId="activeModeGlow"
+                        className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50"
+                      />
+                    )}
+                    
+                    <div className={`relative z-10 transition-transform duration-500 ${mode === m.id ? 'scale-110' : 'group-hover/mode:scale-110'}`}>
+                      {m.icon}
+                    </div>
+                    <span className={`relative z-10 text-sm font-black uppercase tracking-[0.2em] transition-all duration-500 ${mode === m.id ? 'opacity-100' : 'opacity-60 group-hover/mode:opacity-100'}`}>
+                      {m.id}
+                    </span>
+
+                    {/* Scanning Line for Active Mode */}
+                    {mode === m.id && (
+                      <div className="absolute inset-0 w-full h-[1px] bg-white/20 -translate-y-full animate-scan pointer-events-none" />
+                    )}
                   </button>
                 ))}
               </div>
