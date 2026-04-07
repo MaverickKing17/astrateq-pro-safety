@@ -25,6 +25,8 @@ import {
   Mail,
   Linkedin,
   Twitter,
+  Facebook,
+  Instagram,
   Cookie,
   X,
   ExternalLink,
@@ -47,8 +49,40 @@ import {
   Star,
   Navigation,
   Wind,
-  CloudRain
+  CloudRain,
+  Mic,
+  MicOff
 } from "lucide-react";
+
+const SocialIcon = ({ href, title, icon, hoverColor }: { href: string, title: string, icon: React.ReactNode, hoverColor: string }) => (
+  <a 
+    href={href} 
+    title={title}
+    className={`w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-gray/60 transition-all duration-300 group/social hover:scale-110 hover:shadow-xl ${hoverColor}`}
+  >
+    <div className="group-hover/social:scale-110 transition-transform">
+      {icon}
+    </div>
+  </a>
+);
+
+const TikTokIcon = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
+
+const SnapchatIcon = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M12 3c-1.2 0-2.4.3-3.5.8C7.4 4.4 6.5 5.2 6 6.2c-.5 1-.8 2.1-.8 3.3 0 1.2.3 2.4.8 3.5.5 1 1.4 1.8 2.5 2.4.5.3.9.6 1.2 1 .3.4.5.8.6 1.3.1.5.1 1 .1 1.5 0 .5-.1 1-.3 1.5-.2.5-.5 1-.9 1.4-.4.4-.9.7-1.4.9-.5.2-1 .3-1.5.3-1.2 0-2.4-.3-3.5-.8-1.1-.5-2-1.3-2.5-2.4-.5-1-.8-2.1-.8-3.3 0-1.2.3-2.4.8-3.5.5-1 1.4-1.8 2.5-2.4C4.1 3.3 5.3 3 6.5 3c1.2 0 2.4.3 3.5.8 1.1.5 2 1.3 2.5 2.4.5 1 .8 2.1.8 3.3 0 1.2-.3 2.4-.8 3.5-.5 1-1.4 1.8-2.5 2.4-.5.3-.9.6-1.2 1-.3.4-.5.8-.6 1.3-.1.5-.1 1-.1 1.5 0 .5.1 1 .3 1.5.2.5.5 1 .9 1.4.4.4.9.7 1.4.9.5.2 1 .3 1.5.3 1.2 0 2.4-.3 3.5-.8 1.1-.5 2-1.3 2.5-2.4.5 1 .8 2.1.8 3.3 0 1.2-.3 2.4-.8 3.5-.5 1-1.4 1.8-2.5 2.4-.5.3-.9.6-1.2 1-.3.4-.5.8-.6 1.3-.1.5-.1 1-.1 1.5 0-.5.1 1 .3 1.5.2.5.5 1 .9 1.4.4.4.9.7 1.4.9.5.2 1 .3 1.5.3 1.2 0 2.4.3 3.5.8 1.1.5 2 1.3 2.5 2.4.5 1 .8 2.1.8 3.3 0 1.2-.3 2.4-.8 3.5-.5 1-1.4 1.8-2.5 2.4-1.1.5-2.3.8-3.5.8z" />
+  </svg>
+);
+
+const PinterestIcon = ({ size = 18, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M8 20c.5-1.1 1.1-2.3 1.1-2.3.3-.6.6-1.2.6-1.2s-.3-.6-.5-1.5c0-1.4.8-2.5 1.9-2.5.9 0 1.3.7 1.3 1.5 0 .9-.6 2.3-.9 3.5-.2 1.1.6 2 1.7 2 2 0 3.5-2.1 3.5-5.2 0-2.7-2-4.6-4.7-4.6-3.2 0-5.1 2.4-5.1 4.9 0 1 .4 2 1 2.4.1.1.1.2.1.3-.1.4-.3 1.2-.3 1.3 0 .1-.1.2-.3.1-1.2-.6-1.9-2.4-1.9-3.8 0-3.1 2.3-6 6.5-6 3.4 0 6.1 2.4 6.1 5.7 0 3.4-2.1 6.1-5.1 6.1-1 0-1.9-.5-2.2-1.2l-.6 2.3c-.2.8-.8 1.8-1.2 2.4" />
+  </svg>
+);
 
 function Logo({ className = "" }: { className?: string }) {
   return (
@@ -77,6 +111,53 @@ function VehicleDashboard() {
   const [mode, setMode] = useState<'Eco' | 'Sport' | 'Auto'>('Auto');
   const [speed, setSpeed] = useState(0);
   const [battery] = useState(84);
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
+  // Initialize Speech Recognition
+  useEffect(() => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = false;
+      recognitionRef.current.lang = 'en-US';
+
+      recognitionRef.current.onresult = (event: any) => {
+        const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
+        
+        if (transcript.includes('eco')) {
+          setMode('Eco');
+        } else if (transcript.includes('sport')) {
+          setMode('Sport');
+        } else if (transcript.includes('auto')) {
+          setMode('Auto');
+        }
+      };
+
+      recognitionRef.current.onerror = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current.onend = () => {
+        setIsListening(false);
+      };
+    }
+  }, []);
+
+  const toggleListening = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+    } else {
+      try {
+        recognitionRef.current?.start();
+        setIsListening(true);
+      } catch (err) {
+        console.error('Failed to start recognition:', err);
+      }
+    }
+  };
 
   // Simulate speed changes
   useEffect(() => {
@@ -176,7 +257,22 @@ function VehicleDashboard() {
 
           {/* Mode Selector */}
           <div className="col-span-2 p-4 bg-white/5 border border-white/10 rounded-2xl">
-            <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest mb-4">Driving Mode</div>
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Driving Mode</div>
+              <button 
+                onClick={toggleListening}
+                className={`flex items-center gap-2 px-3 py-1 rounded-full border transition-all duration-300 ${
+                  isListening 
+                    ? 'bg-brand-cyan/20 border-brand-cyan text-brand-cyan animate-pulse' 
+                    : 'bg-white/5 border-white/10 text-brand-gray hover:text-brand-offwhite'
+                }`}
+              >
+                {isListening ? <Mic size={12} /> : <MicOff size={12} />}
+                <span className="text-[9px] font-bold uppercase tracking-widest">
+                  {isListening ? 'Listening...' : 'Voice Command'}
+                </span>
+              </button>
+            </div>
             <div className="flex gap-3">
               {modes.map((m) => (
                 <button
@@ -1282,20 +1378,15 @@ export default function App() {
                     
                     <div className="w-[1px] h-8 bg-white/10" />
                     
-                    {/* Social Icons - Brand Specific Colors */}
-                    <div className="flex items-center gap-4">
-                      <a href="#" className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-gray/60 hover:text-brand-cyan hover:border-brand-cyan/30 hover:shadow-xl hover:shadow-brand-cyan/10 transition-all duration-300 group/social" title="LinkedIn">
-                        <Linkedin size={18} className="group-hover/social:scale-110 transition-transform" />
-                      </a>
-                      <a href="#" className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-gray/60 hover:text-brand-cyan hover:border-brand-cyan/30 hover:shadow-xl hover:shadow-brand-cyan/10 transition-all duration-300 group/social" title="Twitter">
-                        <Twitter size={18} className="group-hover/social:scale-110 transition-transform" />
-                      </a>
-                      <a href="#" className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-gray/60 hover:text-brand-cyan hover:border-brand-cyan/30 hover:shadow-xl hover:shadow-brand-cyan/10 transition-all duration-300 group/social" title="Instagram">
-                        <motion.div whileHover={{ rotate: 15 }}><Activity size={18} className="group-hover/social:scale-110 transition-transform" /></motion.div>
-                      </a>
-                      <a href="#" className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-gray/60 hover:text-brand-cyan hover:border-brand-cyan/30 hover:shadow-xl hover:shadow-brand-cyan/10 transition-all duration-300 group/social" title="YouTube">
-                        <Zap size={18} className="group-hover/social:scale-110 transition-transform" />
-                      </a>
+                    {/* Social Icons - Brand Specific Colors & Enhanced Visuals */}
+                    <div className="flex flex-wrap items-center justify-center lg:justify-end gap-3">
+                      <SocialIcon href="#" title="LinkedIn" icon={<Linkedin size={18} />} hoverColor="hover:text-[#0077B5] hover:border-[#0077B5]/30 hover:shadow-[#0077B5]/20" />
+                      <SocialIcon href="#" title="Twitter" icon={<Twitter size={18} />} hoverColor="hover:text-[#1DA1F2] hover:border-[#1DA1F2]/30 hover:shadow-[#1DA1F2]/20" />
+                      <SocialIcon href="#" title="Facebook" icon={<Facebook size={18} />} hoverColor="hover:text-[#1877F2] hover:border-[#1877F2]/30 hover:shadow-[#1877F2]/20" />
+                      <SocialIcon href="#" title="Instagram" icon={<Instagram size={18} />} hoverColor="hover:text-[#E4405F] hover:border-[#E4405F]/30 hover:shadow-[#E4405F]/20" />
+                      <SocialIcon href="#" title="TikTok" icon={<TikTokIcon size={18} />} hoverColor="hover:text-[#000000] hover:border-white/30 hover:shadow-white/10" />
+                      <SocialIcon href="#" title="Snapchat" icon={<SnapchatIcon size={18} />} hoverColor="hover:text-[#FFFC00] hover:border-[#FFFC00]/30 hover:shadow-[#FFFC00]/20" />
+                      <SocialIcon href="#" title="Pinterest" icon={<PinterestIcon size={18} />} hoverColor="hover:text-[#BD081C] hover:border-[#BD081C]/30 hover:shadow-[#BD081C]/20" />
                     </div>
                   </div>
                 </div>
@@ -1598,33 +1689,38 @@ export default function App() {
 
 function WaitlistForm({ spotsRemaining, onSubmit }: { spotsRemaining: number, onSubmit: (e: React.FormEvent<HTMLFormElement>) => void }) {
   return (
-    <div className="w-full max-w-lg p-1 bg-gradient-to-br from-brand-cyan/30 via-brand-cyan/5 to-brand-cyan/30 rounded-2xl shadow-[0_0_50px_-12px_rgba(0,229,255,0.25)] backdrop-blur-2xl group/form relative overflow-hidden transition-all duration-500 hover:shadow-[0_0_60px_-10px_rgba(0,229,255,0.4)]">
+    <div className="w-full max-w-lg p-[2px] bg-gradient-to-br from-brand-cyan/40 via-brand-cyan/10 to-brand-cyan/40 rounded-2xl shadow-[0_0_50px_-12px_rgba(0,229,255,0.3)] backdrop-blur-2xl group/form relative overflow-hidden transition-all duration-500 hover:shadow-[0_0_70px_-10px_rgba(0,229,255,0.5)]">
       {/* Animated Scanline */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,229,255,0.05)_50%,transparent_100%)] h-[200%] w-full animate-scanline pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,229,255,0.1)_50%,transparent_100%)] h-[200%] w-full animate-scanline pointer-events-none" />
       
-      <div className="relative glass-panel p-1.5 rounded-2xl border-brand-cyan/20 bg-brand-secondary/40">
+      {/* Background Radar Pulse */}
+      <div className="absolute -inset-20 bg-brand-cyan/5 rounded-full blur-[80px] animate-pulse pointer-events-none" />
+
+      <div className="relative glass-panel p-2 rounded-2xl border-brand-cyan/20 bg-brand-secondary/60 backdrop-blur-3xl">
         <form 
           className="flex flex-col md:flex-row gap-3 relative z-10"
           onSubmit={onSubmit}
         >
           <div className="flex-1 relative group/input">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-cyan/40 group-focus-within/input:text-brand-cyan transition-colors">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-cyan/40 group-focus-within/input:text-brand-cyan transition-colors z-20">
               <Mail size={18} />
             </div>
             <input 
               type="email" 
               name="email"
               placeholder="Enter your email for early access" 
-              className="w-full pl-12 pr-6 py-4 bg-white/5 border border-white/10 rounded-xl text-sm focus:outline-none focus:border-brand-cyan/50 focus:bg-white/10 placeholder:text-brand-gray/40 text-brand-offwhite font-medium transition-all"
+              className="w-full pl-12 pr-6 py-4 bg-brand-charcoal/40 border border-white/10 rounded-xl text-sm focus:outline-none focus:border-brand-cyan/50 focus:bg-brand-charcoal/60 placeholder:text-brand-gray/40 text-brand-offwhite font-medium transition-all shadow-inner"
               required
             />
+            {/* Input HUD Accent */}
+            <div className="absolute bottom-0 left-12 right-6 h-[1px] bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent opacity-0 group-focus-within/input:opacity-100 transition-opacity" />
           </div>
           <button 
             type="submit"
-            className="group/btn relative px-10 py-4 bg-brand-cyan text-brand-charcoal text-sm font-black rounded-xl overflow-hidden transition-all active:scale-95 shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:shadow-[0_0_30px_rgba(0,229,255,0.5)]"
+            className="group/btn relative px-10 py-4 bg-brand-cyan text-brand-charcoal text-sm font-black rounded-xl overflow-hidden transition-all active:scale-95 shadow-[0_0_20px_rgba(0,229,255,0.4)] hover:shadow-[0_0_40px_rgba(0,229,255,0.6)]"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 ease-in-out" />
-            <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-[0.25em]">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 ease-in-out" />
+            <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-[0.25em] drop-shadow-sm">
               Join Waitlist
               <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </span>
@@ -1632,11 +1728,11 @@ function WaitlistForm({ spotsRemaining, onSubmit }: { spotsRemaining: number, on
         </form>
       </div>
       
-      {/* Corner Accents */}
-      <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-brand-cyan/60" />
-      <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-brand-cyan/60" />
-      <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-brand-cyan/60" />
-      <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-brand-cyan/60" />
+      {/* Corner Accents - Enhanced */}
+      <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-brand-cyan/60 rounded-tl-xl" />
+      <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-brand-cyan/60 rounded-tr-xl" />
+      <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-brand-cyan/60 rounded-bl-xl" />
+      <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-brand-cyan/60 rounded-br-xl" />
     </div>
   );
 }
@@ -1649,27 +1745,33 @@ function TestimonialRow() {
   ];
 
   return (
-    <div className="flex flex-wrap justify-center gap-4 mt-6">
+    <div className="flex flex-wrap justify-center gap-6 mt-10">
       {testimonials.map((t, i) => (
         <motion.div 
           key={i}
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 + i * 0.1 }}
-          className="flex items-center gap-4 px-6 py-3 bg-brand-secondary/40 backdrop-blur-xl border border-white/5 rounded-2xl hover:border-brand-cyan/30 transition-all group relative overflow-hidden"
+          transition={{ delay: 0.8 + i * 0.15, duration: 0.6 }}
+          className="flex items-center gap-5 px-8 py-4 bg-brand-secondary/30 backdrop-blur-2xl border border-white/5 rounded-[2rem] hover:border-brand-cyan/40 transition-all group relative overflow-hidden shadow-xl hover:shadow-brand-cyan/5"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          {/* Scanning Line Effect */}
+          <div className="absolute inset-0 w-full h-[1px] bg-brand-cyan/10 -translate-y-full group-hover:animate-scan pointer-events-none" />
           
-          <div className="flex items-center gap-3 relative z-10">
-            <div className="flex -space-x-1">
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          <div className="flex items-center gap-4 relative z-10">
+            <div className="flex -space-x-1.5">
               {[1, 2, 3, 4, 5].map(s => (
-                <Star key={s} size={10} className="text-brand-cyan fill-brand-cyan drop-shadow-[0_0_4px_rgba(0,229,255,0.6)]" />
+                <Star key={s} size={12} className="text-brand-cyan fill-brand-cyan drop-shadow-[0_0_6px_rgba(0,229,255,0.8)]" />
               ))}
             </div>
-            <div className="h-4 w-[1px] bg-white/10" />
-            <span className="text-[10px] font-black text-brand-offwhite uppercase tracking-[0.2em]">{t.name}</span>
-            <div className="w-1 h-1 rounded-full bg-brand-cyan animate-pulse" />
-            <span className="text-[11px] font-medium text-brand-gray/80 group-hover:text-brand-offwhite transition-colors italic">"{t.text}"</span>
+            <div className="h-5 w-[1px] bg-white/10" />
+            <div className="flex flex-col">
+              <span className="text-[11px] font-black text-brand-offwhite uppercase tracking-[0.25em] leading-none mb-1">{t.name}</span>
+              <span className="text-[8px] font-mono text-brand-cyan/60 uppercase tracking-widest leading-none">Verified Driver</span>
+            </div>
+            <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_8px_#00E5FF]" />
+            <span className="text-[12px] font-medium text-brand-gray/90 group-hover:text-brand-offwhite transition-colors italic tracking-tight">"{t.text}"</span>
           </div>
         </motion.div>
       ))}

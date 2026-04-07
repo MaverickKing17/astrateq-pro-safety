@@ -1,5 +1,5 @@
 {
   "name": "Astrateq Gadgets",
   "description": "Predictive AI for the Modern Canadian Driver. AI-powered automotive safety gadgets engineered in Toronto.",
-  "requestFramePermissions": []
+  "requestFramePermissions": ["microphone"]
 }
