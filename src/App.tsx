@@ -51,7 +51,9 @@ import {
   Wind,
   CloudRain,
   Mic,
-  MicOff
+  MicOff,
+  Leaf,
+  TrendingUp
 } from "lucide-react";
 
 const SocialIcon = ({ href, title, icon, hoverColor }: { href: string, title: string, icon: React.ReactNode, hoverColor: string }) => (
@@ -406,53 +408,110 @@ function RouteOptimizer() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {routes.length > 0 ? (
-            routes.map((route, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                className="p-5 bg-white/5 border border-white/10 rounded-2xl flex flex-col gap-4 group hover:border-brand-cyan/30 transition-colors"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-brand-offwhite uppercase tracking-wider">{route.name}</span>
-                  <span className="text-[10px] font-mono text-brand-cyan">{route.time}</span>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-[9px] font-mono text-brand-gray uppercase tracking-widest">
-                      <span>Safety Score</span>
-                      <span className={route.safety > 80 ? 'text-emerald-400' : 'text-brand-ember'}>{route.safety}%</span>
+            routes.map((route, idx) => {
+              const isSafety = route.name.toLowerCase().includes('safety');
+              const isEfficiency = route.name.toLowerCase().includes('efficiency');
+              const isRapid = route.name.toLowerCase().includes('rapid');
+              
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className={`p-6 bg-brand-secondary/40 border rounded-[2rem] flex flex-col gap-5 group transition-all duration-500 relative overflow-hidden ${
+                    isSafety 
+                      ? 'border-emerald-500/30 hover:border-emerald-500/60 shadow-lg hover:shadow-emerald-500/10' 
+                      : 'border-white/10 hover:border-brand-cyan/40 shadow-lg hover:shadow-brand-cyan/10'
+                  }`}
+                >
+                  {/* Card Background HUD Grid */}
+                  <div className="absolute inset-0 pointer-events-none opacity-[0.05] group-hover:opacity-[0.08] transition-opacity" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '15px 15px' }} />
+                  
+                  {isSafety && (
+                    <div className="absolute top-0 right-0 px-3 py-1 bg-emerald-500 text-[8px] font-black text-brand-charcoal uppercase tracking-[0.2em] rounded-bl-xl z-20 shadow-lg">
+                      Recommended
                     </div>
-                    <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                      <div className={`h-full transition-all duration-1000 ${route.safety > 80 ? 'bg-emerald-400' : 'bg-brand-ember'}`} style={{ width: `${route.safety}%` }} />
-                    </div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-[9px] font-mono text-brand-gray uppercase tracking-widest">
-                      <span>Efficiency</span>
-                      <span className="text-brand-cyan">{route.efficiency}%</span>
-                    </div>
-                    <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                      <div className="h-full bg-brand-cyan" style={{ width: `${route.efficiency}%` }} />
-                    </div>
-                  </div>
-                </div>
+                  )}
 
-                <p className="text-[10px] text-brand-gray leading-relaxed italic">"{route.reasoning}"</p>
-
-                {route.hazards.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {route.hazards.map((h: string, i: number) => (
-                      <span key={i} className="px-2 py-0.5 bg-rose-500/10 text-rose-500 text-[8px] font-bold uppercase tracking-tighter rounded-md border border-rose-500/20">
-                        {h}
-                      </span>
-                    ))}
+                  <div className="flex items-start justify-between relative z-10">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-2">
+                        {isSafety && <Shield size={14} className="text-emerald-400" />}
+                        {isEfficiency && <Leaf size={14} className="text-brand-cyan" />}
+                        {isRapid && <TrendingUp size={14} className="text-brand-ember" />}
+                        <span className={`text-xs font-black uppercase tracking-widest ${isSafety ? 'text-emerald-400' : 'text-brand-offwhite'}`}>
+                          {route.name}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-brand-gray/60">
+                        <Clock size={10} />
+                        <span className="text-[10px] font-mono font-bold">{route.time}</span>
+                      </div>
+                    </div>
                   </div>
-                )}
-              </motion.div>
-            ))
+                  
+                  <div className="space-y-4 relative z-10">
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-[10px] font-mono text-brand-gray uppercase tracking-widest font-bold">
+                        <span className="flex items-center gap-1.5">
+                          <Shield size={10} className={route.safety > 80 ? 'text-emerald-400' : 'text-brand-ember'} />
+                          Safety Score
+                        </span>
+                        <span className={route.safety > 80 ? 'text-emerald-400' : 'text-brand-ember'}>{route.safety}%</span>
+                      </div>
+                      <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden border border-white/5">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          animate={{ width: `${route.safety}%` }}
+                          transition={{ duration: 1.5, ease: "easeOut" }}
+                          className={`h-full relative ${route.safety > 80 ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-brand-ember shadow-[0_0_10px_rgba(255,165,0,0.5)]'}`}
+                        >
+                          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.2)_50%,transparent_100%)] animate-shimmer" />
+                        </motion.div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-[10px] font-mono text-brand-gray uppercase tracking-widest font-bold">
+                        <span className="flex items-center gap-1.5">
+                          <Zap size={10} className="text-brand-cyan" />
+                          Efficiency
+                        </span>
+                        <span className="text-brand-cyan">{route.efficiency}%</span>
+                      </div>
+                      <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden border border-white/5">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          animate={{ width: `${route.efficiency}%` }}
+                          transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
+                          className="h-full bg-brand-cyan shadow-[0_0_10px_rgba(0,229,255,0.5)] relative"
+                        >
+                          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.2)_50%,transparent_100%)] animate-shimmer" />
+                        </motion.div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative z-10">
+                    <p className="text-[11px] text-brand-gray leading-relaxed font-medium border-l-2 border-white/5 pl-4 group-hover:border-brand-cyan/20 transition-colors">
+                      {route.reasoning}
+                    </p>
+                  </div>
+
+                  {route.hazards.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-auto relative z-10">
+                      {route.hazards.map((h: string, i: number) => (
+                        <div key={i} className="flex items-center gap-1.5 px-3 py-1 bg-brand-ember/10 text-brand-ember text-[9px] font-black uppercase tracking-tighter rounded-lg border border-brand-ember/20 group-hover:bg-brand-ember/20 transition-colors">
+                          <AlertTriangle size={10} />
+                          {h}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })
           ) : (
             <div className="col-span-3 py-12 flex flex-col items-center justify-center gap-4 border-2 border-dashed border-white/5 rounded-2xl">
               <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center">
