@@ -740,12 +740,18 @@ export default function App() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-brand-charcoal/80 backdrop-blur-md border-b border-white/10" role="banner">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <Logo />
-          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-brand-gray" aria-label="Main navigation">
-            <button onClick={() => scrollToSection('vision')} className="hover:text-brand-cyan transition-colors">Vision</button>
-            <button onClick={() => scrollToSection('solutions')} className="hover:text-brand-cyan transition-colors">Solutions</button>
+          <nav className="hidden md:flex items-center gap-8 text-sm font-bold text-brand-gray" aria-label="Main navigation">
+            <button onClick={() => scrollToSection('vision')} className="hover:text-brand-cyan transition-all hover:tracking-widest duration-300 relative group">
+              Vision
+              <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-cyan group-hover:w-full transition-all duration-300" />
+            </button>
+            <button onClick={() => scrollToSection('solutions')} className="hover:text-brand-cyan transition-all hover:tracking-widest duration-300 relative group">
+              Solutions
+              <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-cyan group-hover:w-full transition-all duration-300" />
+            </button>
             <button 
               onClick={() => setIsWaitlistOpen(true)}
-              className="px-4 py-2 bg-brand-cyan text-brand-charcoal rounded-[6px] hover:bg-brand-cyan-hover transition-colors shadow-lg shadow-brand-cyan/20"
+              className="px-5 py-2.5 bg-brand-ember text-brand-charcoal rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-brand-ember/90 transition-all shadow-lg shadow-brand-ember/30 hover:shadow-brand-ember/50 hover:-translate-y-0.5 active:scale-95 border border-white/10"
             >
               Beta Waitlist
             </button>
@@ -1841,12 +1847,17 @@ function WaitlistForm({ spotsRemaining, onSubmit }: { spotsRemaining: number, on
           </div>
           <button 
             type="submit"
-            className="group/btn relative px-10 py-4 bg-brand-cyan text-brand-charcoal text-sm font-black rounded-xl overflow-hidden transition-all active:scale-95 shadow-[0_0_20px_rgba(0,229,255,0.4)] hover:shadow-[0_0_40px_rgba(0,229,255,0.6)]"
+            className="group/btn relative px-10 py-4 bg-brand-ember text-brand-charcoal text-sm font-black rounded-xl overflow-hidden transition-all active:scale-95 shadow-[0_0_25px_rgba(255,184,0,0.4)] hover:shadow-[0_0_50px_rgba(255,184,0,0.6)] border border-white/20 animate-pulse-subtle"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 ease-in-out" />
-            <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-[0.25em] drop-shadow-sm">
+            {/* Shimmer Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
+            
+            {/* Inner Glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.3)_0%,transparent_70%)] opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+
+            <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-[0.25em] drop-shadow-sm holographic-glow">
               Join Waitlist
-              <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
             </span>
           </button>
         </form>
@@ -2695,7 +2706,7 @@ function WaitlistModal({ isOpen, onClose, onSubmit }: { isOpen: boolean, onClose
               </div>
               <button 
                 type="submit"
-                className="w-full py-4 bg-brand-cyan text-brand-charcoal font-bold rounded-xl hover:bg-brand-cyan-hover transition-all shadow-lg shadow-brand-cyan/30 active:scale-[0.98] uppercase tracking-widest holographic-glow"
+                className="w-full py-4 bg-brand-ember text-brand-charcoal font-bold rounded-xl hover:bg-brand-ember/90 transition-all shadow-lg shadow-brand-ember/30 active:scale-[0.98] uppercase tracking-widest holographic-glow border border-white/20"
               >
                 SECURE MY SPOT
               </button>
