@@ -2053,95 +2053,111 @@ function OfferItem({ text, value }: { text: string, value: string }) {
 
 function WaitlistForm({ spotsRemaining, onSubmit }: { spotsRemaining: number, onSubmit: (e: React.FormEvent<HTMLFormElement>) => void }) {
   return (
-    <div className="w-full max-w-lg p-[2px] bg-gradient-to-br from-brand-cyan/40 via-brand-cyan/10 to-brand-cyan/40 rounded-2xl shadow-[0_0_50px_-12px_rgba(0,229,255,0.3)] backdrop-blur-2xl group/form relative overflow-hidden transition-all duration-500 hover:shadow-[0_0_70px_-10px_rgba(0,229,255,0.5)]">
+    <div className="w-full max-w-4xl p-[2px] bg-gradient-to-br from-brand-cyan/40 via-brand-cyan/10 to-brand-cyan/40 rounded-3xl shadow-[0_0_80px_-20px_rgba(0,229,255,0.4)] backdrop-blur-3xl group/form relative overflow-hidden transition-all duration-700 hover:shadow-[0_0_100px_-10px_rgba(0,229,255,0.6)]">
       {/* Animated Scanline */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,229,255,0.1)_50%,transparent_100%)] h-[200%] w-full animate-scanline pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,229,255,0.15)_50%,transparent_100%)] h-[200%] w-full animate-scanline pointer-events-none" />
       
       {/* Background Radar Pulse */}
-      <div className="absolute -inset-20 bg-brand-cyan/5 rounded-full blur-[80px] animate-pulse pointer-events-none" />
+      <div className="absolute -inset-40 bg-brand-cyan/10 rounded-full blur-[120px] animate-pulse pointer-events-none" />
 
-      <div className="relative glass-panel p-2 rounded-2xl border-brand-cyan/20 bg-brand-secondary/60 backdrop-blur-3xl">
+      <div className="relative glass-panel p-3 rounded-[1.4rem] border-brand-cyan/30 bg-brand-secondary/70 backdrop-blur-3xl">
         <form 
-          className="flex flex-col md:flex-row gap-3 relative z-10"
+          className="flex flex-col md:flex-row gap-4 relative z-10"
           onSubmit={onSubmit}
         >
-          <div className="flex-1 relative group/input">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-cyan/40 group-focus-within/input:text-brand-cyan transition-colors z-20">
-              <Mail size={18} />
+          <div className="flex-[2] relative group/input">
+            <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-cyan/60 group-focus-within/input:text-brand-cyan transition-colors z-20">
+              <Mail size={22} />
             </div>
             <input 
               type="email" 
               name="email"
-              placeholder="Enter your email for early access" 
-              className="w-full pl-12 pr-6 py-4 bg-brand-charcoal/40 border border-white/10 rounded-xl text-sm focus:outline-none focus:border-brand-cyan/50 focus:bg-brand-charcoal/60 placeholder:text-brand-gray/40 text-brand-offwhite font-medium transition-all shadow-inner"
+              placeholder="Enter your email for priority founding access" 
+              className="w-full pl-16 pr-8 py-6 bg-brand-charcoal/60 border border-white/10 rounded-2xl text-lg focus:outline-none focus:border-brand-cyan/50 focus:bg-brand-charcoal/80 placeholder:text-brand-gray/30 text-brand-offwhite font-medium transition-all shadow-inner"
               required
             />
             {/* Input HUD Accent */}
-            <div className="absolute bottom-0 left-12 right-6 h-[1px] bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent opacity-0 group-focus-within/input:opacity-100 transition-opacity" />
+            <div className="absolute bottom-0 left-16 right-8 h-[2px] bg-gradient-to-r from-transparent via-brand-cyan/40 to-transparent opacity-0 group-focus-within/input:opacity-100 transition-opacity" />
           </div>
           <button 
             type="submit"
-            className="group/btn relative px-10 py-4 bg-brand-ember text-brand-charcoal text-sm font-black rounded-xl overflow-hidden transition-all active:scale-95 shadow-[0_0_25px_rgba(255,184,0,0.4)] hover:shadow-[0_0_50px_rgba(255,184,0,0.6)] border border-white/20 animate-pulse-subtle"
+            className="flex-1 group/btn relative px-12 py-6 bg-brand-ember text-brand-charcoal text-base font-black rounded-2xl overflow-hidden transition-all active:scale-95 shadow-[0_0_35px_rgba(255,184,0,0.5)] hover:shadow-[0_0_60px_rgba(255,184,0,0.7)] border border-white/30 animate-pulse-subtle"
           >
             {/* Shimmer Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
             
             {/* Inner Glow */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.3)_0%,transparent_70%)] opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.4)_0%,transparent_70%)] opacity-0 group-hover/btn:opacity-100 transition-opacity" />
 
-            <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-[0.25em] drop-shadow-sm holographic-glow">
+            <span className="relative z-10 flex items-center justify-center gap-3 uppercase tracking-[0.3em] drop-shadow-md holographic-glow">
               Secure My Founding Spot
-              <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
+              <ChevronRight size={22} className="group-hover:translate-x-2 transition-transform duration-500" />
             </span>
           </button>
         </form>
       </div>
       
       {/* Corner Accents - Enhanced */}
-      <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-brand-cyan/60 rounded-tl-xl" />
-      <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-brand-cyan/60 rounded-tr-xl" />
-      <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-brand-cyan/60 rounded-bl-xl" />
-      <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-brand-cyan/60 rounded-br-xl" />
+      <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-brand-cyan/80 rounded-tl-2xl" />
+      <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-brand-cyan/80 rounded-br-2xl" />
     </div>
   );
 }
 
 function TestimonialRow() {
   const testimonials = [
-    { name: "Alex M.", role: "EV Enthusiast", text: "Game changer for winter driving." },
-    { name: "Sarah K.", role: "Fleet Manager", text: "ROI was immediate. Highly recommend." },
-    { name: "David L.", role: "Safety First", text: "The predictive alerts are uncanny." }
+    { name: "Alex M.", role: "EV Enthusiast", text: "The predictive accuracy is uncanny. It detected black ice on the 401 before I could even see it." },
+    { name: "Sarah K.", role: "Fleet Manager", text: "Our insurance premiums dropped by 18% within three months. The ROI is undeniable." },
+    { name: "David L.", role: "Family Safety", text: "Guardian Mode is like having a private security detail for my family. Total peace of mind." }
   ];
 
   return (
-    <div className="flex flex-wrap justify-center gap-6 mt-10">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 max-w-7xl mx-auto px-4">
       {testimonials.map((t, i) => (
         <motion.div 
           key={i}
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 + i * 0.15, duration: 0.6 }}
-          className="flex items-center gap-5 px-8 py-4 bg-brand-secondary/30 backdrop-blur-2xl border border-white/5 rounded-[2rem] hover:border-brand-cyan/40 transition-all group relative overflow-hidden shadow-xl hover:shadow-brand-cyan/5"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: i * 0.2, duration: 0.8 }}
+          className="glass-panel p-10 rounded-[3rem] border-white/5 bg-brand-secondary/40 relative overflow-hidden group hover:border-brand-cyan/30 transition-all duration-500"
         >
-          {/* Scanning Line Effect */}
-          <div className="absolute inset-0 w-full h-[1px] bg-brand-cyan/10 -translate-y-full group-hover:animate-scan pointer-events-none" />
+          {/* HUD Accents */}
+          <div className="absolute top-0 left-0 w-12 h-12 border-t border-l border-brand-cyan/20 rounded-tl-[3rem]" />
+          <div className="absolute bottom-0 right-0 w-12 h-12 border-b border-r border-brand-cyan/20 rounded-br-[3rem]" />
           
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          
-          <div className="flex items-center gap-4 relative z-10">
-            <div className="flex -space-x-1.5">
-              {[1, 2, 3, 4, 5].map(s => (
-                <Star key={s} size={12} className="text-brand-cyan fill-brand-cyan drop-shadow-[0_0_6px_rgba(0,229,255,0.8)]" />
-              ))}
+          <div className="space-y-8 relative z-10">
+            <div className="flex items-center justify-between">
+              <div className="flex -space-x-1">
+                {[1, 2, 3, 4, 5].map(s => (
+                  <Star key={s} size={14} className="text-brand-ember fill-brand-ember drop-shadow-[0_0_8px_rgba(255,184,0,0.6)]" />
+                ))}
+              </div>
+              <div className="px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-[8px] font-mono font-black text-brand-cyan uppercase tracking-widest">
+                Verified Driver
+              </div>
             </div>
-            <div className="h-5 w-[1px] bg-white/10" />
-            <div className="flex flex-col">
-              <span className="text-[11px] font-black text-brand-offwhite uppercase tracking-[0.25em] leading-none mb-1">{t.name}</span>
-              <span className="text-[8px] font-mono text-brand-cyan/60 uppercase tracking-widest leading-none">Verified Driver</span>
+
+            <blockquote className="text-xl font-display font-medium text-brand-offwhite leading-relaxed italic">
+              "{t.text}"
+            </blockquote>
+
+            <div className="flex items-center gap-4 pt-6 border-t border-white/5">
+              <div className="w-12 h-12 rounded-2xl bg-brand-charcoal border border-white/10 flex items-center justify-center text-brand-cyan font-display font-black text-xl shadow-inner">
+                {t.name[0]}
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-black text-brand-offwhite uppercase tracking-widest">{t.name}</span>
+                <span className="text-[10px] font-mono text-brand-gray/60 uppercase tracking-widest">{t.role}</span>
+              </div>
+              <div className="ml-auto">
+                <div className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_10px_#00E5FF]" />
+              </div>
             </div>
-            <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_8px_#00E5FF]" />
-            <span className="text-[12px] font-medium text-brand-gray/90 group-hover:text-brand-offwhite transition-colors italic tracking-tight">"{t.text}"</span>
           </div>
+
+          {/* Background Glow */}
+          <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-brand-cyan/5 rounded-full blur-[60px] group-hover:bg-brand-cyan/10 transition-all duration-700" />
         </motion.div>
       ))}
     </div>
@@ -2589,7 +2605,7 @@ function DramaticProductShowcase({
           <img 
             src={image} 
             alt={title} 
-            className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-1000"
+            className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-1000"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/60 via-transparent to-transparent" />
