@@ -115,7 +115,49 @@ function VehicleDashboard() {
   const [speed, setSpeed] = useState(0);
   const [battery] = useState(84);
   const [isListening, setIsListening] = useState(false);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanProgress, setScanProgress] = useState(0);
+  const [scanResult, setScanResult] = useState<null | any>(null);
+  const [selectedVehicle, setSelectedVehicle] = useState('Tesla Model Y');
   const recognitionRef = useRef<any>(null);
+
+  const vehicles = [
+    'Tesla Model Y',
+    'Tesla Model 3',
+    'Rivian R1S',
+    'Ford F-150 Lightning',
+    'Hyundai IONIQ 5',
+    'Lucid Air'
+  ];
+
+  const startScan = () => {
+    setIsScanning(true);
+    setScanProgress(0);
+    setScanResult(null);
+    
+    const duration = 3000;
+    const interval = 30;
+    const steps = duration / interval;
+    let currentStep = 0;
+
+    const timer = setInterval(() => {
+      currentStep++;
+      const progress = (currentStep / steps) * 100;
+      setScanProgress(progress);
+
+      if (currentStep >= steps) {
+        clearInterval(timer);
+        setIsScanning(false);
+        setScanResult({
+          batteryHealth: "98.4% - Optimal Thermal Efficiency",
+          sensorShield: "360° Neural Array: 100% Operational",
+          maintenance: "Brake Pad Life: 14,200km Remaining",
+          security: "Guardian Mode: Active - No Threats Detected",
+          efficiency: "+12.4% Range Optimization via Astrateq AI"
+        });
+      }
+    }, interval);
+  };
 
   // Initialize Speech Recognition
   useEffect(() => {
@@ -182,123 +224,245 @@ function VehicleDashboard() {
   ];
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-8 bg-brand-secondary/50 backdrop-blur-xl border border-white/10 rounded-[2.5rem] relative overflow-hidden group">
-      {/* HUD Accents */}
-      <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-brand-cyan/20 rounded-tl-[2.5rem]" />
-      <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-brand-cyan/20 rounded-br-[2.5rem]" />
-      
-      <div className="flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
-        {/* Speedometer */}
-        <div className="flex flex-col items-center gap-2">
-          <div className="relative w-40 h-40 flex items-center justify-center">
-            <svg className="w-full h-full -rotate-90" viewBox="0 0 160 160">
-              <circle
-                cx="80"
-                cy="80"
-                r="70"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="4"
-                className="text-white/5"
-              />
-              <motion.circle
-                cx="80"
-                cy="80"
-                r="70"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeDasharray="440"
-                animate={{ strokeDashoffset: 440 - (speed / 160) * 440 }}
-                className="text-brand-cyan drop-shadow-[0_0_8px_rgba(0,229,255,0.5)]"
-              />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-5xl font-display font-black text-brand-offwhite tracking-tighter">{speed}</span>
-              <span className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">km/h</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 text-brand-cyan/60">
-            <Gauge size={14} />
-            <span className="text-[10px] font-mono uppercase tracking-widest">Velocity</span>
-          </div>
-        </div>
+    <div className="w-full max-w-5xl mx-auto space-y-8">
+      {/* Vehicle Selector HUD */}
+      <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
+        {vehicles.map(v => (
+          <button
+            key={v}
+            onClick={() => setSelectedVehicle(v)}
+            className={`px-4 py-2 rounded-xl border text-[10px] font-mono font-black uppercase tracking-widest transition-all duration-300 ${
+              selectedVehicle === v 
+                ? 'bg-brand-cyan/20 border-brand-cyan text-brand-cyan shadow-[0_0_15px_rgba(0,229,255,0.3)]' 
+                : 'bg-white/5 border-white/10 text-brand-gray hover:border-white/30'
+            }`}
+          >
+            {v}
+          </button>
+        ))}
+      </div>
 
-        {/* Status Grid */}
-        <div className="grid grid-cols-2 gap-6 flex-1 w-full">
-          <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <Battery className="text-emerald-400" size={20} />
-              <span className="text-xs font-mono text-emerald-400 font-bold">{battery}%</span>
-            </div>
-            <div className="space-y-1">
-              <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Battery Level</div>
-              <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                <motion.div 
-                  initial={{ width: 0 }}
-                  animate={{ width: `${battery}%` }}
-                  className="h-full bg-emerald-400"
+      <div className="w-full p-8 bg-brand-secondary/50 backdrop-blur-xl border border-white/10 rounded-[2.5rem] relative overflow-hidden group">
+        {/* HUD Accents */}
+        <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-brand-cyan/20 rounded-tl-[2.5rem]" />
+        <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-brand-cyan/20 rounded-br-[2.5rem]" />
+        
+        {/* Scanning Overlay */}
+        <AnimatePresence>
+          {isScanning && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 z-50 bg-brand-charcoal/80 backdrop-blur-md flex flex-col items-center justify-center p-12"
+            >
+              <div className="relative w-full max-w-md">
+                <div className="flex justify-between text-[10px] font-mono font-black text-brand-cyan uppercase tracking-[0.4em] mb-4">
+                  <span>Neural Scanning: {selectedVehicle}</span>
+                  <span>{Math.round(scanProgress)}%</span>
+                </div>
+                <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden mb-8">
+                  <motion.div 
+                    className="h-full bg-brand-cyan shadow-[0_0_20px_#00E5FF]"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${scanProgress}%` }}
+                  />
+                </div>
+                
+                {/* Scanning HUD Elements */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <div className="h-1 w-full bg-brand-cyan/20 animate-pulse" />
+                    <div className="h-1 w-2/3 bg-brand-cyan/20 animate-pulse delay-75" />
+                    <div className="h-1 w-1/2 bg-brand-cyan/20 animate-pulse delay-150" />
+                  </div>
+                  <div className="space-y-2 flex flex-col items-end">
+                    <div className="h-1 w-full bg-brand-cyan/20 animate-pulse" />
+                    <div className="h-1 w-3/4 bg-brand-cyan/20 animate-pulse delay-100" />
+                    <div className="h-1 w-1/3 bg-brand-cyan/20 animate-pulse delay-200" />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Scanning Beam */}
+              <motion.div 
+                animate={{ top: ['0%', '100%', '0%'] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                className="absolute left-0 right-0 h-1 bg-brand-cyan/40 shadow-[0_0_30px_#00E5FF] z-10"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
+          {/* Speedometer */}
+          <div className="flex flex-col items-center gap-2">
+            <div className="relative w-40 h-40 flex items-center justify-center">
+              <svg className="w-full h-full -rotate-90" viewBox="0 0 160 160">
+                <circle
+                  cx="80"
+                  cy="80"
+                  r="70"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  className="text-white/5"
                 />
+                <motion.circle
+                  cx="80"
+                  cy="80"
+                  r="70"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  strokeDasharray="440"
+                  animate={{ strokeDashoffset: 440 - (speed / 160) * 440 }}
+                  className="text-brand-cyan drop-shadow-[0_0_8px_rgba(0,229,255,0.5)]"
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-5xl font-display font-black text-brand-offwhite tracking-tighter">{speed}</span>
+                <span className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">km/h</span>
               </div>
             </div>
+            <div className="flex items-center gap-2 text-brand-cyan/60">
+              <Gauge size={14} />
+              <span className="text-[10px] font-mono uppercase tracking-widest">Velocity</span>
+            </div>
           </div>
 
-          <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <Activity className="text-brand-cyan" size={20} />
-              <span className="text-xs font-mono text-brand-cyan font-bold">32 PSI</span>
+          {/* Status Grid */}
+          <div className="grid grid-cols-2 gap-6 flex-1 w-full">
+            <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <Battery className="text-emerald-400" size={20} />
+                <span className="text-xs font-mono text-emerald-400 font-bold">{battery}%</span>
+              </div>
+              <div className="space-y-1">
+                <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Battery Level</div>
+                <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: `${battery}%` }}
+                    className="h-full bg-emerald-400"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="space-y-1">
-              <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Tire Pressure</div>
-              <div className="flex gap-1">
-                {[1, 2, 3, 4].map(i => (
-                  <div key={i} className="h-1.5 flex-1 bg-brand-cyan/40 rounded-full" />
+
+            <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <Activity className="text-brand-cyan" size={20} />
+                <span className="text-xs font-mono text-brand-cyan font-bold">32 PSI</span>
+              </div>
+              <div className="space-y-1">
+                <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Tire Pressure</div>
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4].map(i => (
+                    <div key={i} className="h-1.5 flex-1 bg-brand-cyan/40 rounded-full" />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Mode Selector */}
+            <div className="col-span-2 p-4 bg-white/5 border border-white/10 rounded-2xl">
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Driving Mode</div>
+                <button 
+                  onClick={toggleListening}
+                  className={`flex items-center gap-2 px-3 py-1 rounded-full border transition-all duration-300 ${
+                    isListening 
+                      ? 'bg-brand-cyan/20 border-brand-cyan text-brand-cyan animate-pulse' 
+                      : 'bg-white/5 border-white/10 text-brand-gray hover:text-brand-offwhite'
+                  }`}
+                >
+                  {isListening ? <Mic size={12} /> : <MicOff size={12} />}
+                  <span className="text-[9px] font-bold uppercase tracking-widest">
+                    {isListening ? 'Listening...' : 'Voice Command'}
+                  </span>
+                </button>
+              </div>
+              <div className="flex gap-3">
+                {modes.map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => setMode(m.id as any)}
+                    className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border transition-all duration-300 ${
+                      mode === m.id 
+                        ? `${m.bg} ${m.border} ${m.color} shadow-lg shadow-black/20` 
+                        : 'bg-transparent border-white/5 text-brand-gray hover:bg-white/5'
+                    }`}
+                  >
+                    {m.icon}
+                    <span className="text-xs font-bold uppercase tracking-widest">{m.id}</span>
+                  </button>
                 ))}
               </div>
             </div>
           </div>
-
-          {/* Mode Selector */}
-          <div className="col-span-2 p-4 bg-white/5 border border-white/10 rounded-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Driving Mode</div>
-              <button 
-                onClick={toggleListening}
-                className={`flex items-center gap-2 px-3 py-1 rounded-full border transition-all duration-300 ${
-                  isListening 
-                    ? 'bg-brand-cyan/20 border-brand-cyan text-brand-cyan animate-pulse' 
-                    : 'bg-white/5 border-white/10 text-brand-gray hover:text-brand-offwhite'
-                }`}
-              >
-                {isListening ? <Mic size={12} /> : <MicOff size={12} />}
-                <span className="text-[9px] font-bold uppercase tracking-widest">
-                  {isListening ? 'Listening...' : 'Voice Command'}
-                </span>
-              </button>
-            </div>
-            <div className="flex gap-3">
-              {modes.map((m) => (
-                <button
-                  key={m.id}
-                  onClick={() => setMode(m.id as any)}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border transition-all duration-300 ${
-                    mode === m.id 
-                      ? `${m.bg} ${m.border} ${m.color} shadow-lg shadow-black/20` 
-                      : 'bg-transparent border-white/5 text-brand-gray hover:bg-white/5'
-                  }`}
-                >
-                  {m.icon}
-                  <span className="text-xs font-bold uppercase tracking-widest">{m.id}</span>
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
-      </div>
 
-      {/* Scanline Effect */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[2.5rem]">
-        <div className="w-full h-full bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,229,255,0.05)_50%,transparent_100%)] animate-scanline opacity-20" />
+        {/* Scan Results / CTA */}
+        <div className="mt-8 pt-8 border-t border-white/10 relative z-10">
+          <AnimatePresence mode="wait">
+            {scanResult ? (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="grid grid-cols-1 md:grid-cols-2 gap-8"
+              >
+                <div className="space-y-4">
+                  <div className="text-[10px] font-mono font-black text-brand-cyan uppercase tracking-[0.4em]">Diagnostic Report: {selectedVehicle}</div>
+                  <div className="space-y-3">
+                    {Object.entries(scanResult).map(([key, value]: [string, any]) => (
+                      <div key={key} className="flex items-center gap-3 text-xs">
+                        <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan shadow-[0_0_8px_#00E5FF]" />
+                        <span className="text-brand-gray font-medium uppercase tracking-wider">{key.replace(/([A-Z])/g, ' $1')}:</span>
+                        <span className="text-brand-offwhite font-bold">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-col justify-center gap-4">
+                  <div className="p-4 rounded-2xl bg-brand-cyan/5 border border-brand-cyan/20">
+                    <p className="text-[11px] text-brand-gray font-medium leading-relaxed">
+                      The Astrateq Neural Engine has identified <span className="text-brand-cyan font-bold">3 critical optimizations</span> for your {selectedVehicle}. Secure your unit to activate real-time protection.
+                    </p>
+                  </div>
+                  <button 
+                    onClick={startScan}
+                    className="w-full py-4 bg-white/5 border border-white/10 rounded-xl text-[10px] font-mono font-black text-brand-gray uppercase tracking-widest hover:bg-white/10 transition-all"
+                  >
+                    Re-Scan Vehicle
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              <div className="flex flex-col items-center gap-6 py-4">
+                <div className="text-center space-y-2">
+                  <h4 className="text-xl font-display font-black text-brand-offwhite uppercase tracking-tight">Neural Diagnostic Scanner</h4>
+                  <p className="text-xs text-brand-gray font-medium">Select your vehicle above to simulate a deep-system neural scan.</p>
+                </div>
+                <button 
+                  onClick={startScan}
+                  className="group/scan relative px-12 py-5 bg-brand-cyan text-brand-charcoal font-black rounded-2xl overflow-hidden transition-all active:scale-95 shadow-[0_0_30px_rgba(0,229,255,0.4)]"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/scan:animate-shimmer" />
+                  <span className="relative z-10 flex items-center gap-3 uppercase tracking-[0.3em] holographic-glow text-sm">
+                    <Zap size={18} />
+                    Initiate Neural Scan
+                  </span>
+                </button>
+              </div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Scanline Effect */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[2.5rem]">
+          <div className="w-full h-full bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,229,255,0.05)_50%,transparent_100%)] animate-scanline opacity-20" />
+        </div>
       </div>
     </div>
   );
@@ -991,11 +1155,11 @@ export default function App() {
             <div className="w-full py-24">
               <div className="text-center mb-16 space-y-4">
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-xs font-mono font-black text-brand-cyan uppercase tracking-[0.3em]">
-                  <Activity size={16} />
-                  Live System Diagnostics
+                  <Zap size={16} />
+                  Neural Diagnostic Scanner
                 </div>
-                <h2 className="text-4xl md:text-5xl font-display font-black text-brand-offwhite tracking-tight">Real-time vehicle telemetry.</h2>
-                <p className="text-brand-gray text-lg max-w-2xl mx-auto font-medium">Experience the precision of the Astrateq Neural Engine as it monitors your vehicle's vital signs.</p>
+                <h2 className="text-4xl md:text-5xl font-display font-black text-brand-offwhite tracking-tight">Scan your vehicle in real-time.</h2>
+                <p className="text-brand-gray text-lg max-w-2xl mx-auto font-medium">Connect to the Astrateq Neural Network. Experience deep-system health monitoring and predictive diagnostics before you even hit the road.</p>
               </div>
               <VehicleDashboard />
             </div>
