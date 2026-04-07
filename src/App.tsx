@@ -53,7 +53,8 @@ import {
   Mic,
   MicOff,
   Leaf,
-  TrendingUp
+  TrendingUp,
+  ArrowUp
 } from "lucide-react";
 
 const SocialIcon = ({ href, title, icon, hoverColor }: { href: string, title: string, icon: React.ReactNode, hoverColor: string }) => (
@@ -75,8 +76,8 @@ const TikTokIcon = ({ size = 18, className = "" }) => (
 );
 
 const SnapchatIcon = ({ size = 18, className = "" }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M12 3c-1.2 0-2.4.3-3.5.8C7.4 4.4 6.5 5.2 6 6.2c-.5 1-.8 2.1-.8 3.3 0 1.2.3 2.4.8 3.5.5 1 1.4 1.8 2.5 2.4.5.3.9.6 1.2 1 .3.4.5.8.6 1.3.1.5.1 1 .1 1.5 0 .5-.1 1-.3 1.5-.2.5-.5 1-.9 1.4-.4.4-.9.7-1.4.9-.5.2-1 .3-1.5.3-1.2 0-2.4-.3-3.5-.8-1.1-.5-2-1.3-2.5-2.4-.5-1-.8-2.1-.8-3.3 0-1.2.3-2.4.8-3.5.5-1 1.4-1.8 2.5-2.4C4.1 3.3 5.3 3 6.5 3c1.2 0 2.4.3 3.5.8 1.1.5 2 1.3 2.5 2.4.5 1 .8 2.1.8 3.3 0 1.2-.3 2.4-.8 3.5-.5 1-1.4 1.8-2.5 2.4-.5.3-.9.6-1.2 1-.3.4-.5.8-.6 1.3-.1.5-.1 1-.1 1.5 0 .5.1 1 .3 1.5.2.5.5 1 .9 1.4.4.4.9.7 1.4.9.5.2 1 .3 1.5.3 1.2 0 2.4-.3 3.5-.8 1.1-.5 2-1.3 2.5-2.4.5 1 .8 2.1.8 3.3 0 1.2-.3 2.4-.8 3.5-.5 1-1.4 1.8-2.5 2.4-.5.3-.9.6-1.2 1-.3.4-.5.8-.6 1.3-.1.5-.1 1-.1 1.5 0-.5.1 1 .3 1.5.2.5.5 1 .9 1.4.4.4.9.7 1.4.9.5.2 1 .3 1.5.3 1.2 0 2.4.3 3.5.8 1.1.5 2 1.3 2.5 2.4.5 1 .8 2.1.8 3.3 0 1.2-.3 2.4-.8 3.5-.5 1-1.4 1.8-2.5 2.4-1.1.5-2.3.8-3.5.8z" />
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M12 2.75c-3.17 0-5.75 2.58-5.75 5.75 0 1.1.31 2.12.85 3-.13.04-.26.08-.39.14-.84.34-1.46 1.1-1.46 2.01 0 .61.28 1.15.71 1.52-.1.25-.16.52-.16.8 0 1.1.9 2 2 2 .13 0 .25-.01.37-.04.42.59 1.1 1.02 1.88 1.17-.1.2-.16.42-.16.65 0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5c0-.23-.06-.45-.16-.65.78-.15 1.46-.58 1.88-1.17.12.03.24.04.37.04 1.1 0 2-.9 2-2 0-.28-.06-.55-.16-.8.43-.37.71-.91.71-1.52 0-.91-.62-1.67-1.46-2.01-.13-.06-.26-.1-.39-.14.54-.88.85-1.9.85-3 0-3.17-2.58-5.75-5.75-5.75z" />
   </svg>
 );
 
@@ -453,7 +454,7 @@ function RouteOptimizer() {
                   
                   <div className="space-y-4 relative z-10">
                     <div className="space-y-2">
-                      <div className="flex justify-between text-[10px] font-mono text-brand-gray uppercase tracking-widest font-bold">
+                      <div className="flex justify-between text-[10px] font-mono text-brand-offwhite/70 uppercase tracking-widest font-bold">
                         <span className="flex items-center gap-1.5">
                           <Shield size={10} className={route.safety > 80 ? 'text-emerald-400' : 'text-brand-ember'} />
                           Safety Score
@@ -473,7 +474,7 @@ function RouteOptimizer() {
                     </div>
                     
                     <div className="space-y-2">
-                      <div className="flex justify-between text-[10px] font-mono text-brand-gray uppercase tracking-widest font-bold">
+                      <div className="flex justify-between text-[10px] font-mono text-brand-offwhite/70 uppercase tracking-widest font-bold">
                         <span className="flex items-center gap-1.5">
                           <Zap size={10} className="text-brand-cyan" />
                           Efficiency
@@ -494,7 +495,7 @@ function RouteOptimizer() {
                   </div>
 
                   <div className="relative z-10">
-                    <p className="text-[11px] text-brand-gray leading-relaxed font-medium border-l-2 border-white/5 pl-4 group-hover:border-brand-cyan/20 transition-colors">
+                    <p className="text-[11px] text-brand-offwhite leading-relaxed font-medium border-l-2 border-brand-cyan/20 pl-4 group-hover:border-brand-cyan transition-colors">
                       {route.reasoning}
                     </p>
                   </div>
@@ -574,7 +575,16 @@ export default function App() {
   const [spotsRemaining, setSpotsRemaining] = useState(73);
   const [timeLeft, setTimeLeft] = useState({ days: 30, hours: 0, minutes: 0, seconds: 0 });
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const currentEvent = getCanadianEvent();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -935,32 +945,68 @@ export default function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8 }}
-                className="w-full flex items-center justify-between px-10 py-4 border-y border-brand-cyan/10 relative bg-brand-cyan/[0.02] backdrop-blur-sm"
+                className="w-full flex flex-wrap items-center justify-between px-10 py-6 border-y border-brand-cyan/10 relative bg-brand-cyan/[0.03] backdrop-blur-md group/status overflow-hidden"
               >
-                {/* HUD Brackets - More Prominent */}
-                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-brand-cyan/50" />
-                <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-brand-cyan/50" />
-                <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-brand-cyan/50" />
-                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-brand-cyan/50" />
+                {/* HUD Brackets - Enhanced */}
+                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-brand-cyan/40 group-hover/status:border-brand-cyan transition-colors duration-500" />
+                <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-brand-cyan/40 group-hover/status:border-brand-cyan transition-colors duration-500" />
+                <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-brand-cyan/40 group-hover/status:border-brand-cyan transition-colors duration-500" />
+                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-brand-cyan/40 group-hover/status:border-brand-cyan transition-colors duration-500" />
 
-                <div className="flex items-center gap-4">
-                  <span className="text-[10px] font-mono font-bold text-brand-gray/80 uppercase tracking-[0.25em]">System Status:</span>
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_12px_#00E5FF]" />
-                    <span className="text-[11px] font-mono font-bold text-brand-cyan uppercase tracking-[0.25em] holographic-glow">Active</span>
+                {/* Scanning Line Effect */}
+                <div className="absolute inset-0 w-full h-[1px] bg-brand-cyan/10 -translate-y-full group-hover/status:animate-scan pointer-events-none" />
+
+                <div className="flex items-center gap-8 relative z-10">
+                  <div className="flex items-center gap-4">
+                    <span className="text-[9px] font-mono font-black text-brand-gray/40 uppercase tracking-[0.3em]">System Status</span>
+                    <div className="flex items-center gap-2.5 px-3 py-1 bg-brand-cyan/5 rounded-lg border border-brand-cyan/10">
+                      <div className="relative flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_10px_#00E5FF]" />
+                        <div className="absolute w-4 h-4 rounded-full border border-brand-cyan/30 animate-ping opacity-40" />
+                      </div>
+                      <span className="text-[11px] font-mono font-black text-brand-cyan uppercase tracking-[0.2em] holographic-glow">Active</span>
+                    </div>
+                  </div>
+                  
+                  <div className="hidden sm:block w-[1px] h-8 bg-white/5" />
+
+                  <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-3 group/loc cursor-help">
+                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover/loc:border-brand-cyan/40 transition-colors">
+                        <Globe size={14} className="text-brand-cyan/60 group-hover/loc:text-brand-cyan transition-colors" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[8px] font-mono text-brand-gray/40 uppercase tracking-widest">Location</span>
+                        <span className="text-[10px] font-mono font-bold text-brand-offwhite uppercase tracking-widest">Toronto, ON</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 group/time cursor-help">
+                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover/time:border-brand-cyan/40 transition-colors">
+                        <Clock size={14} className="text-brand-cyan/60 group-hover/time:text-brand-cyan transition-colors" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[8px] font-mono text-brand-gray/40 uppercase tracking-widest">Timestamp</span>
+                        <span className="text-[10px] font-mono font-bold text-brand-offwhite uppercase tracking-widest">
+                          {currentTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })} UTC
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-8">
-                  <div className="flex items-center gap-2.5">
-                    <Globe size={12} className="text-brand-cyan/60" />
-                    <span className="text-[10px] font-mono font-bold text-brand-offwhite uppercase tracking-[0.25em]">Toronto, ON</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <Clock size={12} className="text-brand-cyan/60" />
-                    <span className="text-[10px] font-mono font-bold text-brand-offwhite uppercase tracking-[0.25em]">
-                      {currentTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })} UTC
-                    </span>
+                {/* Right Side Telemetry */}
+                <div className="hidden xl:flex items-center gap-6 relative z-10">
+                  <div className="flex flex-col items-end">
+                    <span className="text-[8px] font-mono text-brand-gray/40 uppercase tracking-widest">Network Latency</span>
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-0.5">
+                        {[1, 2, 3, 4, 5].map(i => (
+                          <div key={i} className={`w-1 h-3 rounded-full ${i <= 4 ? 'bg-brand-cyan shadow-[0_0_4px_#00E5FF]' : 'bg-white/10'}`} />
+                        ))}
+                      </div>
+                      <span className="text-[10px] font-mono font-bold text-brand-cyan">8ms</span>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -1726,6 +1772,25 @@ export default function App() {
       </div>
 
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+
+      {/* Scroll to Top Button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, y: 20, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.8 }}
+            whileHover={{ scale: 1.1, y: -4 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-32 right-8 z-50 w-14 h-14 bg-brand-secondary/80 backdrop-blur-xl border border-brand-cyan/30 rounded-2xl flex items-center justify-center text-brand-cyan shadow-2xl shadow-brand-cyan/10 hover:bg-brand-secondary hover:border-brand-cyan transition-all group"
+            aria-label="Scroll to Top"
+          >
+            <div className="absolute inset-0 bg-brand-cyan/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+            <ArrowUp size={24} className="relative z-10 group-hover:-translate-y-1 transition-transform duration-300" />
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       <LegalModal 
         isOpen={!!activeLegalPage} 
