@@ -38,7 +38,7 @@
   }
 
   .holographic-glow {
-    text-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+    text-shadow: 0 0 15px rgba(0, 229, 255, 0.4), 0 0 30px rgba(0, 229, 255, 0.1);
   }
   
   .glass-panel {
@@ -105,4 +105,13 @@
 
 .animate-scanline {
   animation: scanline 8s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
 }

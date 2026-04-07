@@ -2178,12 +2178,34 @@ function HeroBadge({ icon, text, delay }: { icon: ReactNode, text: string, delay
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="flex items-center gap-3 px-5 py-2.5 bg-brand-secondary/80 backdrop-blur-md border border-brand-cyan/20 rounded-full text-xs font-bold text-brand-offwhite shadow-lg shadow-brand-cyan/5 hover:border-brand-cyan/40 hover:bg-brand-secondary transition-all group"
+      whileHover={{ y: -4, scale: 1.05 }}
+      className="flex items-center gap-4 px-7 py-3.5 bg-brand-secondary/30 backdrop-blur-2xl border border-brand-cyan/20 rounded-2xl text-[10px] font-black text-brand-offwhite shadow-2xl shadow-brand-cyan/5 hover:border-brand-cyan/60 hover:bg-brand-secondary/50 transition-all group relative overflow-hidden"
     >
-      <div className="group-hover:scale-110 transition-transform duration-300">
-        {icon}
+      {/* HUD Corner Accents */}
+      <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-brand-cyan/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-brand-cyan/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+      
+      {/* Scanning Line Effect */}
+      <div className="absolute inset-0 w-full h-[1px] bg-brand-cyan/20 -translate-y-full group-hover:animate-scan pointer-events-none" />
+      
+      {/* Background Shimmer */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-cyan/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+
+      <div className="relative z-10 flex items-center gap-4">
+        <div className="group-hover:scale-125 group-hover:rotate-6 transition-all duration-500 text-brand-cyan drop-shadow-[0_0_12px_rgba(0,229,255,0.6)]">
+          {icon}
+        </div>
+        <div className="flex flex-col">
+          <span className="uppercase tracking-[0.3em] whitespace-nowrap holographic-glow">{text}</span>
+          <div className="h-[1px] w-0 group-hover:w-full bg-brand-cyan/30 transition-all duration-500 mt-1" />
+        </div>
+        
+        {/* Status Indicator Dot */}
+        <div className="relative flex items-center justify-center">
+          <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_8px_#00E5FF]" />
+          <div className="absolute w-3 h-3 rounded-full border border-brand-cyan/40 animate-ping opacity-40" />
+        </div>
       </div>
-      <span className="tracking-wide">{text}</span>
     </motion.div>
   );
 }
