@@ -800,9 +800,6 @@ export default function App() {
   const [activeLegalPage, setActiveLegalPage] = useState<string | null>(null);
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [heroVideoUrl, setHeroVideoUrl] = useState<string | null>(null);
-  const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
-  const [videoGenStatus, setVideoGenStatus] = useState("");
   const [spotsRemaining, setSpotsRemaining] = useState(73);
   const [timeLeft, setTimeLeft] = useState({ days: 30, hours: 0, minutes: 0, seconds: 0 });
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -856,78 +853,6 @@ export default function App() {
     return () => clearInterval(timer);
   }, []);
 
-  const generateHeroVideo = async () => {
-    // @ts-ignore
-    if (!(await window.aistudio.hasSelectedApiKey())) {
-      // @ts-ignore
-      await window.aistudio.openSelectKey();
-      return;
-    }
-
-    setIsGeneratingVideo(true);
-    setVideoGenStatus("Initializing cinematic engine...");
-
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const prompt = `4K cinematic, hyper-realistic hero video loop for Astrateq Gadgets. A luxury EV driving through a vibrant Toronto cityscape at twilight. The windshield shows a projected mathematical Glacial Cyan wireframe grid onto the road. Translucent HUD elements float in the air, displaying "94% Hazard Accuracy" and "Active 360° Shield." The visual style is premium and moody, transitioning to a smooth pan showing the 'Guardian Mode' pulse in Safety Ember gold (#FFB800). No people visible, focus is on the technology and the environment. Smooth, slow-motion 60fps playback.`;
-
-      const statusMessages = [
-        "Initializing 4K Cinematic Engine...",
-        "Calibrating Glacial Cyan wireframe...",
-        "Rendering Toronto twilight reflections...",
-        "Simulating 'Guardian Mode' pulse...",
-        "Optimizing 60fps cinematic loop..."
-      ];
-
-      let msgIndex = 0;
-      const interval = setInterval(() => {
-        setVideoGenStatus(statusMessages[msgIndex % statusMessages.length]);
-        msgIndex++;
-      }, 8000);
-
-      // @ts-ignore
-      let operation = await ai.models.generateVideos({
-        model: 'veo-3.1-generate-preview',
-        prompt: prompt,
-        config: {
-          numberOfVideos: 1,
-          resolution: '4k',
-          aspectRatio: '16:9'
-        }
-      });
-
-      while (!operation.done) {
-        await new Promise(resolve => setTimeout(resolve, 10000));
-        // @ts-ignore
-        operation = await ai.operations.getVideosOperation({ operation: operation });
-      }
-
-      clearInterval(interval);
-      const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
-      
-      if (downloadLink) {
-        const response = await fetch(downloadLink, {
-          method: 'GET',
-          headers: {
-            'x-goog-api-key': process.env.API_KEY || '',
-          },
-        });
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        setHeroVideoUrl(url);
-      }
-    } catch (error) {
-      console.error("Video generation failed:", error);
-      // @ts-ignore
-      if (error.message?.includes("Requested entity was not found")) {
-        // @ts-ignore
-        await window.aistudio.openSelectKey();
-      }
-    } finally {
-      setIsGeneratingVideo(false);
-      setVideoGenStatus("");
-    }
-  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -994,25 +919,14 @@ export default function App() {
       <section id="main-content" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-20 pb-32" role="region" aria-label="Hero section">
         {/* Background with Arctic Feel */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-brand-charcoal/75 z-10" />
+          <div className="absolute inset-0 bg-brand-charcoal/80 z-10" />
           
-          {heroVideoUrl ? (
-            <video 
-              src={heroVideoUrl} 
-              autoPlay 
-              loop 
-              muted 
-              playsInline 
-              className="w-full h-full object-cover opacity-60"
-            />
-          ) : (
-            <img 
-              src="https://images.unsplash.com/photo-1542362567-b055002b91f4?auto=format&fit=crop&q=80&w=2000" 
-              alt="Astrateq FleetGuard Pro AI automotive safety device mounted in a Canadian vehicle dashboard during winter driving conditions" 
-              className="w-full h-full object-cover grayscale opacity-40"
-              referrerPolicy="no-referrer"
-            />
-          )}
+          <img 
+            src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=2560" 
+            alt="Cinematic luxury vehicle driving through a high-tech city at twilight" 
+            className="w-full h-full object-cover opacity-50 scale-110 animate-slow-zoom"
+            referrerPolicy="no-referrer"
+          />
           
           {/* HUD Overlays */}
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
@@ -1260,32 +1174,6 @@ export default function App() {
                 </div>
               </motion.div>
             </div>
-
-            {!heroVideoUrl && (
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5 }}
-                onClick={generateHeroVideo}
-                disabled={isGeneratingVideo}
-                className="relative mt-4 group overflow-hidden px-8 py-3 rounded-xl border border-brand-cyan/20 bg-brand-cyan/5 transition-all hover:bg-brand-cyan/10 disabled:opacity-50"
-              >
-                {/* Scanning Line Effect */}
-                <div className="absolute inset-0 w-full h-[1px] bg-brand-cyan/20 -translate-y-full group-hover:animate-scan pointer-events-none" />
-                
-                {isGeneratingVideo ? (
-                  <div className="flex items-center gap-3">
-                    <RefreshCw size={14} className="animate-spin text-brand-cyan" />
-                    <span className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.3em]">{videoGenStatus}</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-3">
-                    <Play size={14} className="text-brand-cyan group-hover:scale-125 transition-transform" />
-                    <span className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.3em]">GENERATE CINEMATIC HERO (4K VEO)</span>
-                  </div>
-                )}
-              </motion.button>
-            )}
 
             <motion.div 
               initial={{ opacity: 0 }}
