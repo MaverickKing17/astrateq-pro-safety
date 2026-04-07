@@ -19,6 +19,8 @@ import {
   AlertTriangle,
   Activity,
   Globe,
+  Gauge,
+  Cpu,
   Clock,
   Mail,
   Linkedin,
@@ -63,6 +65,138 @@ function Logo({ className = "" }: { className?: string }) {
       <div className="flex items-baseline gap-2 leading-none">
         <span className="text-2xl font-sans font-semibold text-brand-offwhite tracking-tight">Astrateq</span>
         <span className="text-2xl font-sans font-semibold text-brand-offwhite tracking-tight">Gadgets</span>
+      </div>
+    </div>
+  );
+}
+
+function VehicleDashboard() {
+  const [mode, setMode] = useState<'Eco' | 'Sport' | 'Auto'>('Auto');
+  const [speed, setSpeed] = useState(0);
+  const [battery] = useState(84);
+
+  // Simulate speed changes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSpeed(prev => {
+        const target = mode === 'Sport' ? 110 : mode === 'Eco' ? 85 : 100;
+        const diff = target - prev;
+        const next = Math.floor(prev + diff * 0.1 + (Math.random() * 2 - 1));
+        return Math.max(0, Math.min(160, next));
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [mode]);
+
+  const modes = [
+    { id: 'Eco', icon: <Cpu size={16} />, color: 'text-emerald-400', bg: 'bg-emerald-400/10', border: 'border-emerald-400/30' },
+    { id: 'Auto', icon: <Activity size={16} />, color: 'text-brand-cyan', bg: 'bg-brand-cyan/10', border: 'border-brand-cyan/30' },
+    { id: 'Sport', icon: <Zap size={16} />, color: 'text-brand-ember', bg: 'bg-brand-ember/10', border: 'border-brand-ember/30' },
+  ];
+
+  return (
+    <div className="w-full max-w-4xl mx-auto p-8 bg-brand-secondary/50 backdrop-blur-xl border border-white/10 rounded-[2.5rem] relative overflow-hidden group">
+      {/* HUD Accents */}
+      <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-brand-cyan/20 rounded-tl-[2.5rem]" />
+      <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-brand-cyan/20 rounded-br-[2.5rem]" />
+      
+      <div className="flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
+        {/* Speedometer */}
+        <div className="flex flex-col items-center gap-2">
+          <div className="relative w-40 h-40 flex items-center justify-center">
+            <svg className="w-full h-full -rotate-90" viewBox="0 0 160 160">
+              <circle
+                cx="80"
+                cy="80"
+                r="70"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="4"
+                className="text-white/5"
+              />
+              <motion.circle
+                cx="80"
+                cy="80"
+                r="70"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="4"
+                strokeDasharray="440"
+                animate={{ strokeDashoffset: 440 - (speed / 160) * 440 }}
+                className="text-brand-cyan drop-shadow-[0_0_8px_rgba(0,229,255,0.5)]"
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-5xl font-display font-black text-brand-offwhite tracking-tighter">{speed}</span>
+              <span className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">km/h</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 text-brand-cyan/60">
+            <Gauge size={14} />
+            <span className="text-[10px] font-mono uppercase tracking-widest">Velocity</span>
+          </div>
+        </div>
+
+        {/* Status Grid */}
+        <div className="grid grid-cols-2 gap-6 flex-1 w-full">
+          <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <Battery className="text-emerald-400" size={20} />
+              <span className="text-xs font-mono text-emerald-400 font-bold">{battery}%</span>
+            </div>
+            <div className="space-y-1">
+              <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Battery Level</div>
+              <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${battery}%` }}
+                  className="h-full bg-emerald-400"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4 bg-white/5 border border-white/10 rounded-2xl flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <Activity className="text-brand-cyan" size={20} />
+              <span className="text-xs font-mono text-brand-cyan font-bold">32 PSI</span>
+            </div>
+            <div className="space-y-1">
+              <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest">Tire Pressure</div>
+              <div className="flex gap-1">
+                {[1, 2, 3, 4].map(i => (
+                  <div key={i} className="h-1.5 flex-1 bg-brand-cyan/40 rounded-full" />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Mode Selector */}
+          <div className="col-span-2 p-4 bg-white/5 border border-white/10 rounded-2xl">
+            <div className="text-[10px] font-mono text-brand-gray uppercase tracking-widest mb-4">Driving Mode</div>
+            <div className="flex gap-3">
+              {modes.map((m) => (
+                <button
+                  key={m.id}
+                  onClick={() => setMode(m.id as any)}
+                  className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border transition-all duration-300 ${
+                    mode === m.id 
+                      ? `${m.bg} ${m.border} ${m.color} shadow-lg shadow-black/20` 
+                      : 'bg-transparent border-white/5 text-brand-gray hover:bg-white/5'
+                  }`}
+                >
+                  {m.icon}
+                  <span className="text-xs font-bold uppercase tracking-widest">{m.id}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Scanline Effect */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[2.5rem]">
+        <div className="w-full h-full bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,229,255,0.05)_50%,transparent_100%)] animate-scanline opacity-20" />
       </div>
     </div>
   );
@@ -367,7 +501,7 @@ export default function App() {
                   >
                     {spotsRemaining}
                   </motion.div>
-                  <div className="text-[10px] font-mono text-brand-cyan/60 uppercase tracking-[0.3em] mt-1">Spots Remaining</div>
+                  <div className="text-[10px] font-mono text-brand-offwhite uppercase tracking-[0.3em] mt-1">Spots Remaining</div>
                   
                   {/* HUD Accent */}
                   <div className="absolute -top-2 -left-4 w-3 h-3 border-t-2 border-l-2 border-brand-cyan/30" />
@@ -385,9 +519,9 @@ export default function App() {
                       <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.3)_50%,transparent_100%)] animate-shimmer" />
                     </motion.div>
                   </div>
-                  <div className="flex justify-between text-[9px] font-mono text-brand-gray/60 uppercase tracking-widest">
+                  <div className="flex justify-between text-[9px] font-mono text-brand-offwhite uppercase tracking-widest">
                     <span>Capacity: 100</span>
-                    <span className="text-brand-cyan">Critical Level</span>
+                    <span className="text-brand-offwhite">Critical Level</span>
                   </div>
                 </div>
               </div>
@@ -396,26 +530,26 @@ export default function App() {
                 <div className="flex gap-3">
                   <div className="flex flex-col items-center">
                     <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.days}</div>
-                    <span className="text-[9px] font-mono text-brand-gray/60 uppercase mt-2 tracking-widest">Days</span>
+                    <span className="text-[9px] font-mono text-brand-offwhite uppercase mt-2 tracking-widest">Days</span>
                   </div>
                   <div className="text-brand-cyan/40 font-bold self-start mt-3 animate-pulse">:</div>
                   <div className="flex flex-col items-center">
                     <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.hours}</div>
-                    <span className="text-[9px] font-mono text-brand-gray/60 uppercase mt-2 tracking-widest">Hrs</span>
+                    <span className="text-[9px] font-mono text-brand-offwhite uppercase mt-2 tracking-widest">Hrs</span>
                   </div>
                   <div className="text-brand-cyan/40 font-bold self-start mt-3 animate-pulse">:</div>
                   <div className="flex flex-col items-center">
                     <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.minutes}</div>
-                    <span className="text-[9px] font-mono text-brand-gray/60 uppercase mt-2 tracking-widest">Min</span>
+                    <span className="text-[9px] font-mono text-brand-offwhite uppercase mt-2 tracking-widest">Min</span>
                   </div>
                   <div className="text-brand-cyan/40 font-bold self-start mt-3 animate-pulse">:</div>
                   <div className="flex flex-col items-center">
                     <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.seconds}</div>
-                    <span className="text-[9px] font-mono text-brand-gray/60 uppercase mt-2 tracking-widest">Sec</span>
+                    <span className="text-[9px] font-mono text-brand-offwhite uppercase mt-2 tracking-widest">Sec</span>
                   </div>
                 </div>
                 <div className="h-8 w-[1px] bg-white/10 mx-2" />
-                <div className="text-[10px] font-mono text-brand-cyan uppercase tracking-[0.2em] leading-tight max-w-[80px] text-left">
+                <div className="text-[10px] font-mono text-brand-offwhite uppercase tracking-[0.2em] leading-tight max-w-[80px] text-left">
                   Until Beta Access Closes
                 </div>
               </div>
@@ -436,6 +570,14 @@ export default function App() {
             <WaitlistForm spotsRemaining={spotsRemaining} onSubmit={handleWaitlistSubmit} />
 
             <TestimonialRow />
+
+            <div className="w-full py-12">
+              <div className="text-center mb-10">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-brand-offwhite mb-2">Live System Diagnostics</h2>
+                <p className="text-sm text-brand-gray font-mono uppercase tracking-[0.2em]">Real-time vehicle telemetry & mode control</p>
+              </div>
+              <VehicleDashboard />
+            </div>
 
             <div className="flex flex-col items-center gap-6 w-full max-w-2xl">
               <motion.div 
