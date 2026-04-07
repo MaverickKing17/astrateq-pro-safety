@@ -326,6 +326,11 @@ function RouteOptimizer() {
         1. "AlTrak™ Safety Path" (Maximum safety, avoiding all predicted hazards)
         2. "Efficiency Prime" (Minimum energy consumption for EV)
         3. "Rapid Response" (Fastest time, but may have higher risk)
+
+        For each route, include a "hazards" array where each hazard is an object with:
+        - "type": (e.g., 'Black Ice', 'Congestion', 'Pedestrian Alert')
+        - "confidence": (a number between 0 and 1)
+        - "location": (a brief description of where it is)
       `;
 
       const response = await ai.models.generateContent({
@@ -345,7 +350,15 @@ function RouteOptimizer() {
                 reasoning: { type: Type.STRING },
                 hazards: { 
                   type: Type.ARRAY,
-                  items: { type: Type.STRING }
+                  items: { 
+                    type: Type.OBJECT,
+                    properties: {
+                      type: { type: Type.STRING },
+                      confidence: { type: Type.NUMBER },
+                      location: { type: Type.STRING }
+                    },
+                    required: ["type", "confidence", "location"]
+                  }
                 }
               },
               required: ["name", "efficiency", "safety", "time", "reasoning", "hazards"]
@@ -500,16 +513,70 @@ function RouteOptimizer() {
                     </p>
                   </div>
 
-                  {route.hazards.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-auto relative z-10">
-                      {route.hazards.map((h: string, i: number) => (
-                        <div key={i} className="flex items-center gap-1.5 px-3 py-1 bg-brand-ember/10 text-brand-ember text-[9px] font-black uppercase tracking-tighter rounded-lg border border-brand-ember/20 group-hover:bg-brand-ember/20 transition-colors">
-                          <AlertTriangle size={10} />
-                          {h}
-                        </div>
-                      ))}
+                  {/* Real-time Hazard Radar */}
+                  <div className="space-y-3 relative z-10 pt-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[9px] font-mono font-black text-brand-ember uppercase tracking-[0.2em] flex items-center gap-2">
+                        <Activity size={10} className="animate-pulse" />
+                        Live Hazard Radar
+                      </span>
+                      <span className="text-[8px] font-mono text-brand-gray/60 uppercase">Scanning...</span>
                     </div>
-                  )}
+                    
+                    <div className="relative h-24 bg-brand-charcoal/40 rounded-2xl border border-white/5 overflow-hidden group/radar">
+                      {/* Radar Sweep */}
+                      <div className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0%,rgba(0,229,255,0.05)_50%,transparent_100%)] animate-spin-slow origin-center" />
+                      
+                      {/* Mini-map Grid */}
+                      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #00E5FF 1px, transparent 1px)', backgroundSize: '12px 12px' }} />
+                      
+                      {/* Hazard Icons */}
+                      <div className="absolute inset-0 p-3">
+                        {route.hazards?.map((hazard: any, hIdx: number) => {
+                          // Random positions for visualization
+                          const top = [20, 60, 40][hIdx % 3];
+                          const left = [30, 70, 50][hIdx % 3];
+                          
+                          return (
+                            <motion.div
+                              key={hIdx}
+                              initial={{ scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              transition={{ delay: 0.5 + (hIdx * 0.2) }}
+                              className="absolute group/hazard"
+                              style={{ top: `${top}%`, left: `${left}%` }}
+                            >
+                              <div className="relative">
+                                <AlertTriangle size={14} className="text-brand-ember animate-pulse" />
+                                <div className="absolute top-0 left-0 w-full h-full bg-brand-ember/20 rounded-full animate-ping" />
+                                
+                                {/* Hazard Tooltip */}
+                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-brand-charcoal border border-brand-ember/30 rounded-lg opacity-0 group-hover/hazard:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-30 shadow-2xl">
+                                  <div className="flex flex-col gap-0.5">
+                                    <span className="text-[8px] font-black text-brand-offwhite uppercase tracking-wider">{hazard.type}</span>
+                                    <div className="flex items-center gap-1.5">
+                                      <div className="w-12 h-1 bg-white/10 rounded-full overflow-hidden">
+                                        <div className="h-full bg-brand-ember" style={{ width: `${hazard.confidence * 100}%` }} />
+                                      </div>
+                                      <span className="text-[7px] font-mono text-brand-ember">{(hazard.confidence * 100).toFixed(0)}% CONF</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                        
+                        {/* Vehicle Position */}
+                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+                          <div className="w-2 h-2 bg-brand-cyan rounded-full shadow-[0_0_10px_#00E5FF] relative">
+                            <div className="absolute -inset-2 border border-brand-cyan/30 rounded-full animate-ping" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </motion.div>
               );
             })
@@ -828,82 +895,86 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight mb-6 leading-[1.1] text-brand-offwhite">
-              Predictive AI for the <br />
-              <span className="text-brand-cyan holographic-glow">Modern Canadian Driver.</span>
+            <h1 className="text-4xl md:text-6xl lg:text-8xl font-display font-black tracking-tight mb-6 leading-[0.95] text-brand-offwhite">
+              The End of <br />
+              <span className="text-brand-cyan holographic-glow">Driving Anxiety.</span>
             </h1>
             
             {/* Urgency Counter */}
             <div className="flex flex-col items-center gap-6 mb-12 relative">
               {/* Background Glow for Counter */}
-              <div className="absolute inset-0 bg-brand-cyan/5 blur-[100px] rounded-full -z-10" />
+              <div className="absolute inset-0 bg-brand-cyan/5 blur-[120px] rounded-full -z-10" />
               
-              <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
                 <div className="text-center relative group">
+                  <div className="absolute -inset-4 bg-brand-cyan/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <motion.div 
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="text-6xl md:text-7xl font-display font-black text-brand-cyan tracking-tighter drop-shadow-[0_0_15px_rgba(0,229,255,0.5)]"
+                    className="text-7xl md:text-9xl font-display font-black text-brand-cyan tracking-tighter drop-shadow-[0_0_25px_rgba(0,229,255,0.6)] relative z-10"
                   >
                     {spotsRemaining}
                   </motion.div>
-                  <div className="text-[10px] font-mono text-brand-offwhite uppercase tracking-[0.3em] mt-1">Spots Remaining</div>
+                  <div className="text-[11px] font-mono font-black text-brand-offwhite uppercase tracking-[0.4em] mt-2 relative z-10">Founding Spots Left</div>
                   
                   {/* HUD Accent */}
-                  <div className="absolute -top-2 -left-4 w-3 h-3 border-t-2 border-l-2 border-brand-cyan/30" />
-                  <div className="absolute -bottom-2 -right-4 w-3 h-3 border-b-2 border-r-2 border-brand-cyan/30" />
+                  <div className="absolute -top-4 -left-6 w-5 h-5 border-t-2 border-l-2 border-brand-cyan/40" />
+                  <div className="absolute -bottom-4 -right-6 w-5 h-5 border-b-2 border-r-2 border-brand-cyan/40" />
                 </div>
 
-                <div className="flex flex-col gap-3">
-                  <div className="w-64 h-3 bg-brand-secondary/50 rounded-full overflow-hidden border border-white/10 relative">
+                <div className="flex flex-col gap-4">
+                  <div className="w-72 h-4 bg-brand-secondary/50 rounded-full overflow-hidden border border-white/10 relative shadow-inner">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${spotsRemaining}%` }}
                       transition={{ duration: 1.5, ease: "easeOut" }}
-                      className="h-full bg-gradient-to-r from-brand-cyan/40 via-brand-cyan to-brand-cyan/40 shadow-[0_0_20px_#00E5FF] relative"
+                      className="h-full bg-gradient-to-r from-brand-cyan/40 via-brand-cyan to-brand-cyan/40 shadow-[0_0_30px_#00E5FF] relative"
                     >
-                      <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.3)_50%,transparent_100%)] animate-shimmer" />
+                      <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.4)_50%,transparent_100%)] animate-shimmer" />
                     </motion.div>
                   </div>
-                  <div className="flex justify-between text-[9px] font-mono text-brand-offwhite uppercase tracking-widest">
-                    <span>Capacity: 100</span>
-                    <span className="text-brand-offwhite">Critical Level</span>
+                  <div className="flex justify-between text-[10px] font-mono font-black text-brand-offwhite uppercase tracking-widest">
+                    <span className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse" />
+                      Toronto Pilot: 100 Cap
+                    </span>
+                    <span className="text-brand-ember animate-pulse">High Demand</span>
                   </div>
                 </div>
               </div>
               
-              <div className="flex items-center gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-sm">
-                <div className="flex gap-3">
+              <div className="flex items-center gap-6 p-5 bg-white/[0.03] border border-white/10 rounded-[2rem] backdrop-blur-md shadow-2xl">
+                <div className="flex gap-4">
                   <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.days}</div>
-                    <span className="text-[9px] font-mono text-brand-offwhite uppercase mt-2 tracking-widest">Days</span>
+                    <div className="w-14 h-14 bg-brand-secondary/90 border border-brand-cyan/30 rounded-2xl flex items-center justify-center text-2xl font-display font-black text-brand-offwhite shadow-inner holographic-glow">{timeLeft.days}</div>
+                    <span className="text-[10px] font-mono font-black text-brand-gray uppercase mt-2 tracking-widest">Days</span>
                   </div>
-                  <div className="text-brand-cyan/40 font-bold self-start mt-3 animate-pulse">:</div>
+                  <div className="text-brand-cyan/40 font-black self-start mt-4 animate-pulse text-xl">:</div>
                   <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.hours}</div>
-                    <span className="text-[9px] font-mono text-brand-offwhite uppercase mt-2 tracking-widest">Hrs</span>
+                    <div className="w-14 h-14 bg-brand-secondary/90 border border-brand-cyan/30 rounded-2xl flex items-center justify-center text-2xl font-display font-black text-brand-offwhite shadow-inner holographic-glow">{timeLeft.hours}</div>
+                    <span className="text-[10px] font-mono font-black text-brand-gray uppercase mt-2 tracking-widest">Hrs</span>
                   </div>
-                  <div className="text-brand-cyan/40 font-bold self-start mt-3 animate-pulse">:</div>
+                  <div className="text-brand-cyan/40 font-black self-start mt-4 animate-pulse text-xl">:</div>
                   <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.minutes}</div>
-                    <span className="text-[9px] font-mono text-brand-offwhite uppercase mt-2 tracking-widest">Min</span>
+                    <div className="w-14 h-14 bg-brand-secondary/90 border border-brand-cyan/30 rounded-2xl flex items-center justify-center text-2xl font-display font-black text-brand-offwhite shadow-inner holographic-glow">{timeLeft.minutes}</div>
+                    <span className="text-[10px] font-mono font-black text-brand-gray uppercase mt-2 tracking-widest">Min</span>
                   </div>
-                  <div className="text-brand-cyan/40 font-bold self-start mt-3 animate-pulse">:</div>
+                  <div className="text-brand-cyan/40 font-black self-start mt-4 animate-pulse text-xl">:</div>
                   <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-brand-secondary/80 border border-brand-cyan/20 rounded-xl flex items-center justify-center text-xl font-display font-bold text-brand-offwhite shadow-inner">{timeLeft.seconds}</div>
-                    <span className="text-[9px] font-mono text-brand-offwhite uppercase mt-2 tracking-widest">Sec</span>
+                    <div className="w-14 h-14 bg-brand-secondary/90 border border-brand-cyan/30 rounded-2xl flex items-center justify-center text-2xl font-display font-black text-brand-offwhite shadow-inner holographic-glow">{timeLeft.seconds}</div>
+                    <span className="text-[10px] font-mono font-black text-brand-gray uppercase mt-2 tracking-widest">Sec</span>
                   </div>
                 </div>
-                <div className="h-8 w-[1px] bg-white/10 mx-2" />
-                <div className="text-[10px] font-mono text-brand-offwhite uppercase tracking-[0.2em] leading-tight max-w-[80px] text-left">
-                  Until Beta Access Closes
+                <div className="h-10 w-[1px] bg-white/10 mx-2" />
+                <div className="text-[11px] font-mono font-black text-brand-offwhite uppercase tracking-[0.25em] leading-tight max-w-[100px] text-left">
+                  Until Founding Offer Expires
                 </div>
               </div>
             </div>
 
-            <p className="text-lg md:text-xl text-brand-gray max-w-2xl mx-auto mb-10 leading-relaxed">
-              Anticipate road hazards and optimize battery health with 94% accuracy. 
-              Engineered in Toronto for the Great North.
+            <p className="text-xl md:text-2xl text-brand-gray max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
+              Protect your family with <span className="text-brand-offwhite font-bold">94% predictive accuracy</span>. 
+              Zero effort. Total peace of mind. Engineered in Toronto for the Great North.
             </p>
           </motion.div>
 
@@ -917,18 +988,26 @@ export default function App() {
 
             <TestimonialRow />
 
-            <div className="w-full py-12">
-              <div className="text-center mb-10">
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-brand-offwhite mb-2">Live System Diagnostics</h2>
-                <p className="text-sm text-brand-gray font-mono uppercase tracking-[0.2em]">Real-time vehicle telemetry & mode control</p>
+            <div className="w-full py-24">
+              <div className="text-center mb-16 space-y-4">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-xs font-mono font-black text-brand-cyan uppercase tracking-[0.3em]">
+                  <Activity size={16} />
+                  Live System Diagnostics
+                </div>
+                <h2 className="text-4xl md:text-5xl font-display font-black text-brand-offwhite tracking-tight">Real-time vehicle telemetry.</h2>
+                <p className="text-brand-gray text-lg max-w-2xl mx-auto font-medium">Experience the precision of the Astrateq Neural Engine as it monitors your vehicle's vital signs.</p>
               </div>
               <VehicleDashboard />
             </div>
 
-            <div className="w-full py-12">
-              <div className="text-center mb-10">
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-brand-offwhite mb-2">AI Predictive Navigation</h2>
-                <p className="text-sm text-brand-gray font-mono uppercase tracking-[0.2em]">AlTrak™ Cloud-Sync Route Optimization</p>
+            <div className="w-full py-24">
+              <div className="text-center mb-16 space-y-4">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-xs font-mono font-black text-brand-cyan uppercase tracking-[0.3em]">
+                  <Navigation size={16} />
+                  AI Predictive Navigation
+                </div>
+                <h2 className="text-4xl md:text-5xl font-display font-black text-brand-offwhite tracking-tight">Navigate the unseen.</h2>
+                <p className="text-brand-gray text-lg max-w-2xl mx-auto font-medium">Our AlTrak™ Cloud-Sync Engine predicts hazards before they enter your field of vision.</p>
               </div>
               <RouteOptimizer />
             </div>
@@ -1209,33 +1288,54 @@ export default function App() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <SolutionCard 
+          <div className="space-y-32">
+            <DramaticProductShowcase 
               index={0}
-              icon={<Eye className="text-brand-cyan" />}
               title="AlTrak™"
-              subtitle="PREDICTIVE SAFETY"
-              description="Our AI system detects hazards before human reaction time, analyzing thousands of data points per second to keep you one step ahead on every road."
-              features={["< 50MS REACTION TIME", "94% HAZARD PREDICTION", "360° COVERAGE"]}
+              subtitle="PREDICTIVE NEURAL SHIELD"
+              headline="See the unseen. <br />Predict the impossible."
+              description="Human reaction time is 250ms. AlTrak™ reacts in 50ms. By the time you see the hazard, our AI has already calculated 1,000 escape vectors. It's not just a camera; it's a second set of eyes that never blinks."
+              features={[
+                { label: "94% Accuracy", desc: "Predicts black ice and collisions before they happen." },
+                { label: "50ms Response", desc: "Faster than human biological capability." },
+                { label: "360° Vision", desc: "Neural fusion of 8 multi-spectral sensors." }
+              ]}
               image="https://i.ibb.co/DPz0TMCF/4-K-professional-product-202604021635.jpg"
+              cta="Secure My Shield"
+              onCta={() => setIsWaitlistOpen(true)}
             />
-            <SolutionCard 
+
+            <DramaticProductShowcase 
               index={1}
-              icon={<Battery className="text-brand-cyan" />}
               title="EV Battery Intelligence"
-              subtitle="RANGE CONFIDENCE"
-              description="Drive from Toronto to Montreal with total peace of mind. Our AI optimizes thermal management to give you up to 500 miles of Range Confidence, even in Canadian winters."
-              features={["500MI RANGE OPTIMIZED", "THERMAL AI MANAGEMENT", "WINTER-TESTED"]}
+              subtitle="THERMAL MASTERY"
+              headline="Winter is no longer <br />the enemy of range."
+              description="Range anxiety is a relic of the past. Our Thermal AI Management system optimizes every electron, extending your winter range by up to 24%. Drive from Toronto to Montreal with total confidence, even at -30°C."
+              features={[
+                { label: "+24% Range", desc: "Optimized thermal cycles for extreme cold." },
+                { label: "Cell-Level AI", desc: "Real-time health monitoring for every cell." },
+                { label: "Predictive Charging", desc: "Smart pre-conditioning based on your route." }
+              ]}
               image="https://i.ibb.co/Qvh1LVns/Can-you-add-202604021625.jpg"
+              cta="Extend My Range"
+              onCta={() => setIsWaitlistOpen(true)}
+              reversed
             />
-            <SolutionCard 
+
+            <DramaticProductShowcase 
               index={2}
-              icon={<Shield className="text-brand-cyan" />}
               title="Guardian Mode"
-              subtitle="24/7 ASSET MONITORING"
-              description="Proactive around-the-clock asset monitoring and security. Your vehicle is always watched, always protected, always connected."
-              features={["24/7 MONITORING", "INSTANT ALERTS", "GEO-FENCING"]}
+              subtitle="INVISIBLE SENTINEL"
+              headline="Your family's safety <br />is non-negotiable."
+              description="The ultimate peace of mind. Guardian Mode provides 24/7 proactive monitoring, alerting you to threats before they reach your vehicle. It's like having a private security detail for your most precious cargo."
+              features={[
+                { label: "24/7 Active", desc: "Always watching, even when you're miles away." },
+                { label: "Instant Alerts", desc: "Direct-to-phone threat notifications." },
+                { label: "Mil-Spec Security", desc: "Encrypted data sharding for total privacy." }
+              ]}
               image="https://i.ibb.co/Nn1hgkdL/To-implement-the-202604021814.jpg"
+              cta="Activate Guardian"
+              onCta={() => setIsWaitlistOpen(true)}
             />
           </div>
 
@@ -1317,6 +1417,123 @@ export default function App() {
               </div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* The Founding Member Offer Section (Alex Hormozi Style) */}
+      <section id="offer" className="py-32 px-4 bg-brand-charcoal relative overflow-hidden">
+        <div className="absolute inset-0 bg-brand-cyan/[0.02] -z-10" />
+        <div className="max-w-5xl mx-auto relative">
+          <div className="text-center mb-16 space-y-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-ember/10 border border-brand-ember/20 text-xs font-mono font-black text-brand-ember uppercase tracking-[0.4em]">
+              <Star size={16} className="animate-pulse" />
+              Exclusive Founding Offer
+            </div>
+            <h2 className="text-5xl md:text-7xl font-display font-black text-brand-offwhite tracking-tight leading-none">
+              The Astrateq <br />
+              <span className="text-brand-ember holographic-glow">Founding Member Protocol.</span>
+            </h2>
+            <p className="text-brand-gray text-xl max-w-2xl mx-auto font-medium">
+              We're looking for 100 early adopters in the GTA to help us refine the future of Canadian driving. 
+              This is a one-time opportunity to secure the ultimate safety bundle.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+            {/* The Bundle Card */}
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="glass-panel p-10 rounded-[3rem] border-brand-ember/30 bg-brand-secondary/40 relative overflow-hidden flex flex-col"
+            >
+              <div className="absolute top-0 right-0 px-6 py-2 bg-brand-ember text-brand-charcoal font-black text-[10px] uppercase tracking-[0.3em] rounded-bl-2xl shadow-xl z-20">
+                Most Valuable Offer
+              </div>
+              
+              <div className="space-y-8 flex-1">
+                <div className="space-y-2">
+                  <h3 className="text-3xl font-display font-black text-brand-offwhite">The Safety Protocol Bundle</h3>
+                  <p className="text-brand-gray text-sm font-medium">Everything you need for total vehicle intelligence.</p>
+                </div>
+
+                <div className="space-y-4">
+                  <OfferItem text="Astrateq AlTrak™ AI Hardware Unit" value="$1,299" />
+                  <OfferItem text="EV Battery Intelligence Suite (Lifetime)" value="$499" />
+                  <OfferItem text="Guardian Mode 24/7 Monitoring (1 Year)" value="$240" />
+                  <OfferItem text="Founding Member Priority AI Updates" value="PRICELESS" />
+                  <OfferItem text="Direct Access to Toronto Engineering Team" value="PRICELESS" />
+                </div>
+
+                <div className="pt-8 border-t border-white/10">
+                  <div className="flex items-baseline gap-3 mb-2">
+                    <span className="text-brand-gray text-lg line-through opacity-50">$2,038+</span>
+                    <span className="text-5xl font-display font-black text-brand-ember tracking-tighter">$329</span>
+                    <span className="text-brand-gray text-sm font-bold uppercase tracking-widest">/ Founding Member</span>
+                  </div>
+                  <p className="text-[10px] font-mono text-brand-gray/60 uppercase tracking-widest">One-time payment. No hidden fees. Lifetime AI Core access.</p>
+                </div>
+              </div>
+
+              <div className="mt-10">
+                <button 
+                  onClick={() => setIsWaitlistOpen(true)}
+                  className="w-full py-5 bg-brand-ember text-brand-charcoal font-black text-base rounded-2xl uppercase tracking-[0.3em] hover:bg-brand-ember/90 transition-all shadow-2xl shadow-brand-ember/30 active:scale-95 holographic-glow"
+                >
+                  Secure My Founding Spot
+                </button>
+                <div className="flex items-center justify-center gap-4 mt-4 text-[10px] font-mono text-brand-gray uppercase tracking-widest">
+                  <span className="flex items-center gap-1.5"><ShieldCheck size={12} className="text-brand-cyan" /> 60-Day Guarantee</span>
+                  <span className="flex items-center gap-1.5"><Lock size={12} className="text-brand-cyan" /> Secure Processing</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* The "Why Now" Card */}
+            <motion.div 
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="flex flex-col gap-8"
+            >
+              <div className="glass-panel p-8 rounded-[2.5rem] border-white/10 bg-brand-secondary/20 space-y-6">
+                <h4 className="text-xl font-display font-bold text-brand-offwhite flex items-center gap-3">
+                  <Clock className="text-brand-cyan" size={20} />
+                  Why the Founding Offer?
+                </h4>
+                <div className="space-y-4">
+                  <p className="text-brand-gray text-sm leading-relaxed">
+                    We are scaling our neural network across the GTA. By joining as a Founding Member, you provide the critical real-world data our AI needs to achieve 99.9% accuracy.
+                  </p>
+                  <p className="text-brand-gray text-sm leading-relaxed">
+                    In exchange, you get our <span className="text-brand-offwhite font-bold">hardware at cost</span> and <span className="text-brand-offwhite font-bold">lifetime software access</span>. Once the 100 spots are gone, the price reverts to $1,299 + subscription.
+                  </p>
+                </div>
+              </div>
+
+              <div className="glass-panel p-8 rounded-[2.5rem] border-white/10 bg-brand-secondary/20 space-y-6">
+                <h4 className="text-xl font-display font-bold text-brand-offwhite flex items-center gap-3">
+                  <ShieldCheck className="text-brand-cyan" size={20} />
+                  The Astrateq Guarantee
+                </h4>
+                <p className="text-brand-gray text-sm leading-relaxed">
+                  If you don't feel safer within 60 days of installation, we'll buy the hardware back from you. No questions asked. We're that confident in the Astrateq Neural Engine.
+                </p>
+              </div>
+
+              <div className="p-8 rounded-[2.5rem] bg-brand-cyan/5 border border-brand-cyan/20 flex items-center gap-6">
+                <div className="w-16 h-16 rounded-2xl bg-brand-cyan/10 flex items-center justify-center shrink-0">
+                  <MapPin className="text-brand-cyan" size={32} />
+                </div>
+                <div>
+                  <div className="text-[10px] font-mono font-black text-brand-cyan uppercase tracking-[0.3em] mb-1">Toronto Pilot Program</div>
+                  <p className="text-xs text-brand-gray font-medium leading-relaxed">
+                    Optimized for GTA density and Canadian winters. Local support, local engineering, global safety standards.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -1730,18 +1947,24 @@ export default function App() {
         </div>
       </motion.footer>
 
-      {/* Floating Chat Button */}
-      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-4">
+      {/* Floating Chat Button & Status Pill */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3">
         <AnimatePresence>
           {!isChatOpen && (
             <motion.div
-              initial={{ opacity: 0, x: 20, scale: 0.8 }}
+              initial={{ opacity: 0, x: 20, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 20, scale: 0.8 }}
-              className="bg-brand-secondary/90 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-amber-400/30 shadow-[0_0_20px_rgba(251,191,36,0.1)] mb-2 hidden md:block"
+              exit={{ opacity: 0, x: 20, scale: 0.9 }}
+              className="bg-brand-secondary/40 backdrop-blur-xl px-4 py-2 rounded-xl border border-brand-ember/20 shadow-[0_8px_32px_rgba(0,0,0,0.4)] mb-1 hidden md:block group/pill overflow-hidden"
             >
-              <p className="text-[11px] font-mono font-bold text-amber-400 uppercase tracking-[0.2em] flex items-center gap-2.5">
-                <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse shadow-[0_0_8px_#FBBF24]" />
+              {/* Pill HUD Accent */}
+              <div className="absolute inset-0 bg-gradient-to-r from-brand-ember/0 via-brand-ember/5 to-brand-ember/0 -translate-x-full group-hover/pill:translate-x-full transition-transform duration-1000" />
+              
+              <p className="text-[10px] font-mono font-black text-brand-ember uppercase tracking-[0.25em] flex items-center gap-2.5 relative z-10">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-ember opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-ember shadow-[0_0_8px_#FFB800]"></span>
+                </span>
                 AI Safety Assistant Online
               </p>
             </motion.div>
@@ -1752,48 +1975,47 @@ export default function App() {
           onClick={() => setIsChatOpen(true)}
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          whileHover={{ scale: 1.05, y: -4 }}
+          whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.95 }}
-          className="relative w-20 h-20 bg-amber-400 text-brand-charcoal rounded-[2.5rem] flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(251,191,36,0.4)] hover:shadow-[0_25px_50px_-12px_rgba(251,191,36,0.6)] transition-all group overflow-hidden border border-white/20"
+          className="relative w-16 h-16 bg-brand-ember text-brand-charcoal rounded-2xl flex items-center justify-center shadow-[0_12px_40px_-10px_rgba(255,184,0,0.3)] hover:shadow-[0_20px_50px_-12px_rgba(255,184,0,0.5)] transition-all group overflow-hidden border border-white/20"
           aria-label="Open AI Live Chat"
         >
           {/* Dynamic Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-ember via-brand-ember to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
-          {/* Animated Rings */}
-          <div className="absolute inset-0 border-2 border-amber-400/20 rounded-[2.5rem] animate-ping opacity-20" />
-          <div className="absolute inset-0 border border-amber-400/40 rounded-[2.5rem] animate-spin-slow opacity-30" />
+          {/* Animated Rings - More Subtle */}
+          <div className="absolute inset-0 border border-brand-ember/20 rounded-2xl animate-ping opacity-10" />
           
           {/* Notification Dot */}
-          <div className="absolute top-4 right-4 w-3 h-3 bg-brand-cyan rounded-full border-2 border-amber-400 z-20 shadow-[0_0_10px_#00E5FF]" />
+          <div className="absolute top-3 right-3 w-2.5 h-2.5 bg-brand-cyan rounded-full border-2 border-brand-ember z-20 shadow-[0_0_8px_#00E5FF]" />
           
-          <div className="relative z-10 flex flex-col items-center gap-1">
-            <MessageSquare size={28} className="group-hover:rotate-12 transition-transform duration-500" />
-            <span className="text-[8px] font-mono font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Chat</span>
+          <div className="relative z-10 flex flex-col items-center gap-0.5">
+            <MessageSquare size={24} className="group-hover:rotate-6 transition-transform duration-500" />
+            <span className="text-[7px] font-mono font-black uppercase tracking-[0.2em] opacity-60 group-hover:opacity-100 transition-opacity">Chat</span>
           </div>
 
           {/* Inner Glow Overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.3)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity" />
         </motion.button>
       </div>
 
       <ChatWidget isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
-      {/* Scroll to Top Button */}
+      {/* Scroll to Top Button - Repositioned to avoid crowding */}
       <AnimatePresence>
         {showScrollTop && (
           <motion.button
-            initial={{ opacity: 0, y: 20, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.8 }}
-            whileHover={{ scale: 1.1, y: -4 }}
+            initial={{ opacity: 0, x: 20, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 20, scale: 0.8 }}
+            whileHover={{ scale: 1.1, x: -4 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-32 right-8 z-50 w-14 h-14 bg-brand-secondary/80 backdrop-blur-xl border border-brand-cyan/30 rounded-2xl flex items-center justify-center text-brand-cyan shadow-2xl shadow-brand-cyan/10 hover:bg-brand-secondary hover:border-brand-cyan transition-all group"
+            className="fixed bottom-8 right-28 z-50 w-12 h-12 bg-brand-secondary/60 backdrop-blur-xl border border-brand-ember/20 rounded-xl flex items-center justify-center text-brand-ember shadow-xl shadow-black/20 hover:bg-brand-secondary/80 hover:border-brand-ember/40 transition-all group"
             aria-label="Scroll to Top"
           >
-            <div className="absolute inset-0 bg-brand-cyan/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-            <ArrowUp size={24} className="relative z-10 group-hover:-translate-y-1 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-brand-ember/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+            <ArrowUp size={20} className="relative z-10 group-hover:-translate-y-0.5 transition-transform duration-300" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -1813,6 +2035,18 @@ export default function App() {
       />
       
       <SuccessToast isVisible={showSuccess} />
+    </div>
+  );
+}
+
+function OfferItem({ text, value }: { text: string, value: string }) {
+  return (
+    <div className="flex items-center justify-between py-3 border-b border-white/5 group/item">
+      <div className="flex items-center gap-3">
+        <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan group-hover/item:scale-150 transition-transform" />
+        <span className="text-sm font-medium text-brand-gray group-hover/item:text-brand-offwhite transition-colors">{text}</span>
+      </div>
+      <span className={`text-xs font-mono font-black tracking-widest ${value === 'PRICELESS' ? 'text-brand-cyan' : 'text-brand-offwhite'}`}>{value}</span>
     </div>
   );
 }
@@ -1856,7 +2090,7 @@ function WaitlistForm({ spotsRemaining, onSubmit }: { spotsRemaining: number, on
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.3)_0%,transparent_70%)] opacity-0 group-hover/btn:opacity-100 transition-opacity" />
 
             <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-[0.25em] drop-shadow-sm holographic-glow">
-              Join Waitlist
+              Secure My Founding Spot
               <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
             </span>
           </button>
@@ -2280,6 +2514,94 @@ function HeroBadge({ icon, text, delay }: { icon: ReactNode, text: string, delay
         <div className="relative flex items-center justify-center">
           <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_8px_#00E5FF]" />
           <div className="absolute w-3 h-3 rounded-full border border-brand-cyan/40 animate-ping opacity-40" />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function DramaticProductShowcase({ 
+  index, 
+  title, 
+  subtitle, 
+  headline, 
+  description, 
+  features, 
+  image, 
+  cta, 
+  onCta,
+  reversed = false 
+}: { 
+  index: number, 
+  title: string, 
+  subtitle: string, 
+  headline: string, 
+  description: string, 
+  features: { label: string, desc: string }[], 
+  image: string, 
+  cta: string, 
+  onCta: () => void,
+  reversed?: boolean 
+}) {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, delay: index * 0.1 }}
+      className={`flex flex-col ${reversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-16 lg:gap-24`}
+    >
+      <div className="flex-1 space-y-8">
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-[10px] font-mono font-black text-brand-cyan uppercase tracking-[0.3em]">
+            {subtitle}
+          </div>
+          <h3 className="text-4xl md:text-6xl font-display font-black text-brand-offwhite tracking-tight leading-[1.1]" dangerouslySetInnerHTML={{ __html: headline }} />
+          <p className="text-brand-gray text-lg md:text-xl leading-relaxed font-medium max-w-xl">
+            {description}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {features.map((f, i) => (
+            <div key={i} className="space-y-1">
+              <div className="text-brand-offwhite font-display font-black text-lg uppercase tracking-tight">{f.label}</div>
+              <div className="text-brand-gray text-xs font-medium leading-relaxed">{f.desc}</div>
+            </div>
+          ))}
+        </div>
+
+        <button 
+          onClick={onCta}
+          className="group/btn relative px-8 py-4 bg-brand-ember text-brand-charcoal text-sm font-black rounded-xl overflow-hidden transition-all active:scale-95 shadow-2xl shadow-brand-ember/20 hover:shadow-brand-ember/40 border border-white/10"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
+          <span className="relative z-10 flex items-center gap-2 uppercase tracking-[0.2em] holographic-glow">
+            {cta}
+            <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+          </span>
+        </button>
+      </div>
+
+      <div className="flex-1 relative group">
+        <div className="absolute -inset-4 bg-brand-cyan/10 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
+          <img 
+            src={image} 
+            alt={title} 
+            className="w-full aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-1000"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/60 via-transparent to-transparent" />
+          
+          {/* HUD Overlay Elements */}
+          <div className="absolute top-6 left-6 flex items-center gap-3 px-3 py-1.5 rounded-lg bg-brand-charcoal/60 backdrop-blur-md border border-white/10">
+            <div className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse" />
+            <span className="text-[10px] font-mono font-black text-brand-offwhite uppercase tracking-widest">Neural Link: Active</span>
+          </div>
+          
+          <div className="absolute bottom-6 right-6 w-24 h-24 border-b-2 border-r-2 border-brand-cyan/40 opacity-40" />
+          <div className="absolute top-6 right-6 w-12 h-12 border-t-2 border-r-2 border-brand-cyan/40 opacity-40" />
         </div>
       </div>
     </motion.div>
