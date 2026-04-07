@@ -1154,49 +1154,49 @@ export default function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8 }}
-                className="w-full flex flex-wrap items-center justify-between px-10 py-6 border-y border-brand-cyan/10 relative bg-brand-cyan/[0.03] backdrop-blur-md group/status overflow-hidden"
+                className="w-full flex flex-wrap items-center justify-between px-10 py-8 border-y border-brand-cyan/20 relative bg-brand-cyan/[0.04] backdrop-blur-xl group/status overflow-hidden"
               >
-                {/* HUD Brackets - Enhanced */}
-                <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-brand-cyan/40 group-hover/status:border-brand-cyan transition-colors duration-500" />
-                <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-brand-cyan/40 group-hover/status:border-brand-cyan transition-colors duration-500" />
-                <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-brand-cyan/40 group-hover/status:border-brand-cyan transition-colors duration-500" />
-                <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-brand-cyan/40 group-hover/status:border-brand-cyan transition-colors duration-500" />
+                {/* HUD Brackets - Enhanced with Glow */}
+                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_15px_rgba(0,229,255,0.4)] transition-all duration-500" />
+                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_15px_rgba(0,229,255,0.4)] transition-all duration-500" />
+                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_15px_rgba(0,229,255,0.4)] transition-all duration-500" />
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_15px_rgba(0,229,255,0.4)] transition-all duration-500" />
 
-                {/* Scanning Line Effect */}
-                <div className="absolute inset-0 w-full h-[1px] bg-brand-cyan/10 -translate-y-full group-hover/status:animate-scan pointer-events-none" />
+                {/* Scanning Line Effect - Faster and more visible */}
+                <div className="absolute inset-0 w-full h-[2px] bg-brand-cyan/20 -translate-y-full group-hover/status:animate-scan pointer-events-none" />
 
-                <div className="flex items-center gap-8 relative z-10">
-                  <div className="flex items-center gap-4">
-                    <span className="text-[9px] font-mono font-black text-brand-gray/40 uppercase tracking-[0.3em]">System Status</span>
-                    <div className="flex items-center gap-2.5 px-3 py-1 bg-brand-cyan/5 rounded-lg border border-brand-cyan/10">
+                <div className="flex items-center gap-12 relative z-10">
+                  <div className="flex items-center gap-6">
+                    <span className="text-[10px] font-mono font-black text-brand-gray/60 uppercase tracking-[0.4em]">Neural Core Status</span>
+                    <div className="flex items-center gap-3 px-4 py-2 bg-brand-cyan/10 rounded-xl border border-brand-cyan/30 shadow-[0_0_20px_rgba(0,229,255,0.1)]">
                       <div className="relative flex items-center justify-center">
-                        <div className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_10px_#00E5FF]" />
-                        <div className="absolute w-4 h-4 rounded-full border border-brand-cyan/30 animate-ping opacity-40" />
+                        <div className="w-2.5 h-2.5 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_15px_#00E5FF]" />
+                        <div className="absolute w-5 h-5 rounded-full border border-brand-cyan/40 animate-ping opacity-60" />
                       </div>
-                      <span className="text-[11px] font-mono font-black text-brand-cyan uppercase tracking-[0.2em] holographic-glow">Active</span>
+                      <span className="text-[12px] font-mono font-black text-brand-cyan uppercase tracking-[0.3em] holographic-glow">Active</span>
                     </div>
                   </div>
                   
-                  <div className="hidden sm:block w-[1px] h-8 bg-white/5" />
+                  <div className="hidden lg:block w-[1px] h-10 bg-white/10" />
 
-                  <div className="flex items-center gap-6">
-                    <div className="flex items-center gap-3 group/loc cursor-help">
-                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover/loc:border-brand-cyan/40 transition-colors">
-                        <Globe size={14} className="text-brand-cyan/60 group-hover/loc:text-brand-cyan transition-colors" />
+                  <div className="flex items-center gap-8">
+                    <div className="flex items-center gap-4 group/loc cursor-help">
+                      <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover/loc:border-brand-cyan/60 group-hover/loc:bg-brand-cyan/5 transition-all duration-500">
+                        <Globe size={18} className="text-brand-cyan/60 group-hover/loc:text-brand-cyan transition-colors" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-[8px] font-mono text-brand-gray/40 uppercase tracking-widest">Location</span>
-                        <span className="text-[10px] font-mono font-bold text-brand-offwhite uppercase tracking-widest">Toronto, ON</span>
+                        <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Deployment Node</span>
+                        <span className="text-[11px] font-mono font-black text-brand-offwhite uppercase tracking-widest">Toronto, ON</span>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3 group/time cursor-help">
-                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover/time:border-brand-cyan/40 transition-colors">
-                        <Clock size={14} className="text-brand-cyan/60 group-hover/time:text-brand-cyan transition-colors" />
+                    <div className="flex items-center gap-4 group/time cursor-help">
+                      <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover/time:border-brand-cyan/60 group-hover/time:bg-brand-cyan/5 transition-all duration-500">
+                        <Clock size={18} className="text-brand-cyan/60 group-hover/time:text-brand-cyan transition-colors" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-[8px] font-mono text-brand-gray/40 uppercase tracking-widest">Timestamp</span>
-                        <span className="text-[10px] font-mono font-bold text-brand-offwhite uppercase tracking-widest">
+                        <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Sync Timestamp</span>
+                        <span className="text-[11px] font-mono font-black text-brand-offwhite uppercase tracking-widest">
                           {currentTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })} UTC
                         </span>
                       </div>
@@ -1204,17 +1204,32 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Right Side Telemetry */}
-                <div className="hidden xl:flex items-center gap-6 relative z-10">
-                  <div className="flex flex-col items-end">
-                    <span className="text-[8px] font-mono text-brand-gray/40 uppercase tracking-widest">Network Latency</span>
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-0.5">
+                {/* Right Side Telemetry - Enhanced with more metrics */}
+                <div className="hidden xl:flex items-center gap-10 relative z-10">
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Neural Load</span>
+                    <div className="flex items-center gap-3">
+                      <div className="w-24 h-1.5 bg-white/5 rounded-full overflow-hidden border border-white/10">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          animate={{ width: "42%" }}
+                          transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+                          className="h-full bg-brand-cyan shadow-[0_0_10px_#00E5FF]"
+                        />
+                      </div>
+                      <span className="text-[10px] font-mono font-black text-brand-cyan">42%</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Network Latency</span>
+                    <div className="flex items-center gap-3">
+                      <div className="flex gap-1">
                         {[1, 2, 3, 4, 5].map(i => (
-                          <div key={i} className={`w-1 h-3 rounded-full ${i <= 4 ? 'bg-brand-cyan shadow-[0_0_4px_#00E5FF]' : 'bg-white/10'}`} />
+                          <div key={i} className={`w-1.5 h-4 rounded-full transition-all duration-500 ${i <= 4 ? 'bg-brand-cyan shadow-[0_0_8px_#00E5FF]' : 'bg-white/10'}`} />
                         ))}
                       </div>
-                      <span className="text-[10px] font-mono font-bold text-brand-cyan">8ms</span>
+                      <span className="text-[11px] font-mono font-black text-brand-cyan">8ms</span>
                     </div>
                   </div>
                 </div>
@@ -1538,14 +1553,18 @@ export default function App() {
 
             {/* Column 2: Lead Generation (CRO Focus) */}
             <div className="flex flex-col items-center gap-4 w-full max-w-md mx-auto">
-              <div className="w-full space-y-4 relative group/form">
+              <div className="w-full space-y-6 relative group/form">
                 {/* Decorative Glow */}
-                <div className="absolute -inset-4 bg-brand-cyan/5 rounded-[2rem] blur-2xl opacity-0 group-hover/form:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                <div className="absolute -inset-6 bg-brand-cyan/5 rounded-[3rem] blur-3xl opacity-0 group-hover/form:opacity-100 transition-opacity duration-700 pointer-events-none" />
                 
-                <div className="relative space-y-3">
-                  <div className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.3em] text-center">Stay in the Loop</div>
+                <div className="relative space-y-4">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="text-[10px] font-mono font-black text-brand-cyan uppercase tracking-[0.4em]">Secure Priority Access</div>
+                    <div className="text-[9px] text-brand-gray/60 font-bold uppercase tracking-widest">Join the Toronto Safety Network</div>
+                  </div>
+                  
                   <form 
-                    className="flex gap-2 p-1 bg-white/5 border border-white/10 rounded-2xl shadow-sm focus-within:border-brand-cyan/50 focus-within:shadow-lg focus-within:shadow-brand-cyan/5 transition-all duration-300" 
+                    className="flex gap-2 p-1.5 bg-brand-charcoal/40 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl focus-within:border-brand-cyan/50 focus-within:shadow-lg focus-within:shadow-brand-cyan/10 transition-all duration-500" 
                     onSubmit={async (e) => { 
                       e.preventDefault(); 
                       const form = e.currentTarget;
@@ -1575,60 +1594,74 @@ export default function App() {
                       type="email" 
                       name="email"
                       placeholder="Enter your email" 
-                      className="flex-1 px-4 py-2.5 bg-transparent text-sm focus:outline-none placeholder:text-brand-gray/40 text-brand-offwhite"
+                      className="flex-1 px-5 py-3 bg-transparent text-sm focus:outline-none placeholder:text-brand-gray/30 text-brand-offwhite font-medium"
                       required
                     />
                     <button 
                       type="submit"
-                      className="px-6 py-2.5 bg-brand-cyan text-brand-charcoal text-xs font-bold rounded-xl hover:bg-brand-cyan-hover transition-all shadow-md hover:shadow-brand-cyan/30 uppercase tracking-widest active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-8 py-3 bg-brand-cyan text-brand-charcoal text-xs font-black rounded-xl hover:bg-brand-cyan-hover transition-all shadow-xl hover:shadow-brand-cyan/40 uppercase tracking-[0.2em] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed group/join relative overflow-hidden"
                     >
-                      Join
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/join:animate-shimmer" />
+                      <span className="relative z-10">Join</span>
                     </button>
                   </form>
                   
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="flex -space-x-1.5">
-                        {[1,2,3].map(i => (
-                          <div key={i} className="w-5 h-5 rounded-full border-2 border-brand-charcoal bg-brand-secondary overflow-hidden shadow-sm">
-                            <img src={`https://i.pravatar.cc/40?img=${i+10}`} alt="User" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="flex items-center justify-center gap-3">
+                      <div className="flex -space-x-2">
+                        {[1,2,3,4].map(i => (
+                          <div key={i} className="w-6 h-6 rounded-full border-2 border-brand-charcoal bg-brand-secondary overflow-hidden shadow-md">
+                            <img src={`https://i.pravatar.cc/60?img=${i+30}`} alt="User" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
                           </div>
                         ))}
                       </div>
-                      <p className="text-[11px] text-brand-gray/70 font-bold uppercase tracking-wider">
-                        Join <span className="text-brand-cyan">2,400+</span> drivers receiving updates
+                      <p className="text-[10px] text-brand-gray/80 font-black uppercase tracking-widest">
+                        Join <span className="text-brand-cyan">2,400+</span> Canadian Drivers
                       </p>
                     </div>
-                    <p className="text-[10px] text-brand-gray/50 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                      <Shield size={12} className="text-brand-cyan/50" />
-                      Privacy Guaranteed • No Spam
-                    </p>
+                    <div className="flex items-center gap-6">
+                      <p className="text-[9px] text-brand-gray/40 font-bold uppercase tracking-widest flex items-center gap-2">
+                        <Shield size={12} className="text-brand-cyan/40" />
+                        Privacy Guaranteed
+                      </p>
+                      <div className="w-1 h-1 rounded-full bg-white/10" />
+                      <p className="text-[9px] text-brand-gray/40 font-bold uppercase tracking-widest flex items-center gap-2">
+                        <Zap size={12} className="text-brand-cyan/40" />
+                        No Spam
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Column 3: Status & Utilities */}
-            <div className="flex flex-col items-center lg:items-end gap-8">
+            <div className="flex flex-col items-center lg:items-end gap-10">
               {/* System Status - Enhanced with Radar Effect */}
-              <div className="space-y-3 text-center lg:text-right group/status">
-                <div className="text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-[0.4em] group-hover/status:text-brand-cyan-hover transition-all duration-500">System Status</div>
+              <div className="space-y-4 text-center lg:text-right group/status">
+                <div className="text-[10px] font-mono font-black text-brand-cyan uppercase tracking-[0.4em] group-hover/status:text-brand-cyan-hover transition-all duration-500">Global Network Status</div>
                 <div className="relative">
-                  {/* Radar Pulse Rings */}
-                  <div className="absolute -inset-2 bg-emerald-500/10 rounded-full blur-xl opacity-0 group-hover/status:opacity-100 transition-opacity duration-700" />
+                  {/* Radar Pulse Rings - More complex */}
+                  <div className="absolute -inset-4 bg-emerald-500/10 rounded-full blur-2xl opacity-0 group-hover/status:opacity-100 transition-opacity duration-700" />
                   
-                  <div className="relative flex items-center gap-4 px-6 py-3 bg-brand-secondary/50 border border-emerald-500/20 rounded-2xl shadow-[0_4px_20px_-4px_rgba(16,185,129,0.1)] hover:shadow-[0_8px_30px_-4px_rgba(16,185,129,0.2)] transition-all duration-500 backdrop-blur-md group-hover/status:border-emerald-500/40">
+                  <div className="relative flex items-center gap-5 px-8 py-4 bg-brand-secondary/40 border border-emerald-500/20 rounded-2xl shadow-2xl hover:border-emerald-500/40 transition-all duration-500 backdrop-blur-xl">
                     <div className="relative flex items-center justify-center">
-                      <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse" />
-                      <div className="absolute w-6 h-6 rounded-full border border-emerald-500/40 animate-ping opacity-40" />
-                      <div className="absolute w-8 h-8 rounded-full border border-emerald-500/20 animate-ping [animation-delay:0.5s] opacity-20" />
+                      <div className="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-[0_0_15px_#10b981] animate-pulse" />
+                      <div className="absolute w-7 h-7 rounded-full border border-emerald-500/40 animate-ping opacity-40" />
+                      <div className="absolute w-10 h-10 rounded-full border border-emerald-500/20 animate-ping [animation-delay:0.5s] opacity-20" />
                     </div>
                     <div className="flex flex-col items-start leading-none">
-                      <span className="text-[13px] font-black text-emerald-500 uppercase tracking-tighter">All Systems Nominal</span>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[9px] font-mono text-emerald-500/60 font-bold">LATENCY: 8MS</span>
-                        <div className="w-1 h-1 rounded-full bg-emerald-500/30" />
-                        <span className="text-[9px] font-mono text-emerald-500/60 font-bold">UPTIME: 99.9%</span>
+                      <span className="text-[14px] font-black text-emerald-500 uppercase tracking-tighter">All Systems Nominal</span>
+                      <div className="flex items-center gap-3 mt-1.5">
+                        <div className="flex items-center gap-1">
+                          <div className="w-1 h-1 rounded-full bg-emerald-500" />
+                          <span className="text-[9px] font-mono text-emerald-500/60 font-black">LATENCY: 8MS</span>
+                        </div>
+                        <div className="w-1 h-1 rounded-full bg-emerald-500/20" />
+                        <div className="flex items-center gap-1">
+                          <div className="w-1 h-1 rounded-full bg-emerald-500" />
+                          <span className="text-[9px] font-mono text-emerald-500/60 font-black">UPTIME: 99.9%</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -2229,68 +2262,92 @@ function WaitlistForm({ spotsRemaining, onSubmit }: { spotsRemaining: number, on
       {/* Background Radar Pulse */}
       <div className="absolute -inset-40 bg-brand-cyan/10 rounded-full blur-[120px] animate-pulse pointer-events-none" />
 
-      <div className="relative glass-panel p-4 rounded-[2.4rem] border-brand-cyan/30 bg-brand-secondary/70 backdrop-blur-3xl">
-        <div className="flex flex-col gap-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-brand-cyan/10 flex items-center justify-center border border-brand-cyan/20">
-                <ShieldCheck className="text-brand-cyan" size={20} />
+      <div className="relative glass-panel p-6 md:p-10 rounded-[2.4rem] border-brand-cyan/30 bg-brand-secondary/70 backdrop-blur-3xl">
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 px-4">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-brand-cyan/10 flex items-center justify-center border border-brand-cyan/20 shadow-inner">
+                <ShieldCheck className="text-brand-cyan" size={24} />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-mono font-black text-brand-cyan uppercase tracking-[0.3em]">Founding Beta Access</span>
-                <span className="text-xs text-brand-gray font-medium">Toronto Pilot Program</span>
+                <span className="text-[11px] font-mono font-black text-brand-cyan uppercase tracking-[0.4em]">Founding Member Offer</span>
+                <span className="text-sm text-brand-gray font-bold">Limited to first 100 Toronto Pilot Participants</span>
               </div>
             </div>
-            <div className="flex items-center gap-3 bg-brand-ember/10 px-4 py-2 rounded-xl border border-brand-ember/20">
+            <div className="flex items-center gap-4 bg-brand-ember/10 px-6 py-3 rounded-2xl border border-brand-ember/20 shadow-lg">
               <div className="flex flex-col items-end">
-                <span className="text-[9px] font-mono font-black text-brand-ember uppercase tracking-widest">Limited Scarcity</span>
-                <span className="text-sm font-display font-black text-brand-ember tracking-tighter">{spotsRemaining} SPOTS REMAINING</span>
+                <span className="text-[10px] font-mono font-black text-brand-ember uppercase tracking-widest">Urgency Protocol</span>
+                <span className="text-lg font-display font-black text-brand-ember tracking-tighter">{spotsRemaining} SPOTS REMAINING</span>
               </div>
-              <div className="w-2 h-2 rounded-full bg-brand-ember animate-ping" />
+              <div className="relative">
+                <div className="w-3 h-3 rounded-full bg-brand-ember animate-ping" />
+                <div className="absolute inset-0 w-3 h-3 rounded-full bg-brand-ember shadow-[0_0_10px_#FFB800]" />
+              </div>
             </div>
           </div>
 
-          <form 
-            className="flex flex-col md:flex-row gap-4 relative z-10"
-            onSubmit={onSubmit}
-          >
-            <div className="flex-[3] relative group/input">
-              <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-cyan/60 group-focus-within/input:text-brand-cyan transition-colors z-20">
-                <Mail size={24} />
-              </div>
-              <input 
-                type="email" 
-                name="email"
-                placeholder="Enter your email for priority founding access" 
-                className="w-full pl-16 pr-8 py-8 bg-brand-charcoal/60 border border-white/10 rounded-3xl text-xl focus:outline-none focus:border-brand-cyan/50 focus:bg-brand-charcoal/80 placeholder:text-brand-gray/30 text-brand-offwhite font-medium transition-all shadow-inner"
-                required
-              />
-              {/* Input HUD Accent */}
-              <div className="absolute bottom-0 left-16 right-8 h-[2px] bg-gradient-to-r from-transparent via-brand-cyan/40 to-transparent opacity-0 group-focus-within/input:opacity-100 transition-opacity" />
-            </div>
-            <button 
-              type="submit"
-              className="flex-1 py-8 bg-brand-cyan text-brand-charcoal font-display font-black text-lg rounded-3xl hover:bg-brand-cyan-hover transition-all shadow-xl shadow-brand-cyan/20 active:scale-[0.98] uppercase tracking-[0.2em] holographic-glow border border-white/20 group/btn"
-            >
-              <span className="flex items-center justify-center gap-3">
-                SECURE ACCESS
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-              </span>
-            </button>
-          </form>
+          {/* Grand Slam Offer Summary */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
+            <OfferItem text="ASTRA-AI Hardware Unit" value="$329" />
+            <OfferItem text="Lifetime Software Updates" value="FREE" />
+            <OfferItem text="24/7 Priority Safety Support" value="PRICELESS" />
+          </div>
 
-          <div className="flex items-center justify-center gap-8 px-4 pb-2">
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan/40" />
-              <span className="text-[9px] font-mono text-brand-gray/60 uppercase tracking-widest">No Credit Card Required</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan/40" />
-              <span className="text-[9px] font-mono text-brand-gray/60 uppercase tracking-widest">Instant Activation</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan/40" />
-              <span className="text-[9px] font-mono text-brand-gray/60 uppercase tracking-widest">Priority Support</span>
+          <div className="space-y-6">
+            <form 
+              className="flex flex-col md:flex-row gap-4 relative z-10"
+              onSubmit={onSubmit}
+            >
+              <div className="flex-[3] relative group/input">
+                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-cyan/60 group-focus-within/input:text-brand-cyan transition-colors z-20">
+                  <Mail size={24} />
+                </div>
+                <input 
+                  type="email" 
+                  name="email"
+                  placeholder="Enter your email to secure your founding spot" 
+                  className="w-full pl-16 pr-8 py-8 bg-brand-charcoal/60 border border-white/10 rounded-3xl text-xl focus:outline-none focus:border-brand-cyan/50 focus:bg-brand-charcoal/80 placeholder:text-brand-gray/30 text-brand-offwhite font-medium transition-all shadow-inner"
+                  required
+                />
+                {/* Input HUD Accent */}
+                <div className="absolute bottom-0 left-16 right-8 h-[2px] bg-gradient-to-r from-transparent via-brand-cyan/40 to-transparent opacity-0 group-focus-within/input:opacity-100 transition-opacity" />
+              </div>
+              <button 
+                type="submit"
+                className="flex-1 py-8 bg-brand-cyan text-brand-charcoal font-display font-black text-lg rounded-3xl hover:bg-brand-cyan-hover transition-all shadow-xl shadow-brand-cyan/20 active:scale-[0.98] uppercase tracking-[0.2em] holographic-glow border border-white/20 group/btn overflow-hidden relative"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
+                <span className="relative z-10 flex items-center justify-center gap-3">
+                  SECURE MY SPOT
+                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </span>
+              </button>
+            </form>
+
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8 px-4">
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-2">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="w-8 h-8 rounded-full border-2 border-brand-secondary bg-brand-charcoal overflow-hidden shadow-lg">
+                      <img src={`https://i.pravatar.cc/100?img=${i+20}`} alt="User" className="w-full h-full object-cover grayscale" referrerPolicy="no-referrer" />
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-brand-gray font-bold uppercase tracking-widest">
+                  Join <span className="text-brand-cyan">2,400+</span> Canadian Drivers
+                </p>
+              </div>
+              <div className="hidden md:block w-[1px] h-6 bg-white/10" />
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck size={16} className="text-brand-cyan" />
+                  <span className="text-[10px] font-mono text-brand-gray/60 uppercase tracking-widest">100% Risk-Free</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <RotateCcw size={16} className="text-brand-cyan" />
+                  <span className="text-[10px] font-mono text-brand-gray/60 uppercase tracking-widest">60-Day Guarantee</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -2700,25 +2757,25 @@ function HeroBadge({ icon, text, delay }: { icon: ReactNode, text: string, delay
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
       whileHover={{ y: -4, scale: 1.05 }}
-      className="flex items-center gap-4 px-7 py-3.5 bg-brand-secondary/30 backdrop-blur-2xl border border-brand-cyan/20 rounded-2xl text-[10px] font-black text-brand-offwhite shadow-2xl shadow-brand-cyan/5 hover:border-brand-cyan/60 hover:bg-brand-secondary/50 transition-all group relative overflow-hidden"
+      className="flex items-center gap-4 px-8 py-4 bg-brand-secondary/40 backdrop-blur-3xl border border-brand-cyan/30 rounded-2xl text-[11px] font-black text-brand-offwhite shadow-2xl shadow-brand-cyan/10 hover:border-brand-cyan/60 hover:bg-brand-secondary/60 transition-all group relative overflow-hidden"
     >
-      {/* HUD Corner Accents */}
-      <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-brand-cyan/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-      <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-brand-cyan/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+      {/* HUD Corner Accents - More prominent */}
+      <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-brand-cyan/60 group-hover:border-brand-cyan transition-colors" />
+      <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-brand-cyan/60 group-hover:border-brand-cyan transition-colors" />
       
       {/* Scanning Line Effect */}
-      <div className="absolute inset-0 w-full h-[1px] bg-brand-cyan/20 -translate-y-full group-hover:animate-scan pointer-events-none" />
+      <div className="absolute inset-0 w-full h-[2px] bg-brand-cyan/20 -translate-y-full group-hover:animate-scan pointer-events-none" />
       
       {/* Background Shimmer */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-cyan/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-cyan/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
 
       <div className="relative z-10 flex items-center gap-4">
-        <div className="group-hover:scale-125 group-hover:rotate-6 transition-all duration-500 text-brand-cyan drop-shadow-[0_0_12px_rgba(0,229,255,0.6)]">
+        <div className="p-2 bg-brand-cyan/10 rounded-lg border border-brand-cyan/20 group-hover:bg-brand-cyan/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 text-brand-cyan drop-shadow-[0_0_15px_rgba(0,229,255,0.6)]">
           {icon}
         </div>
         <div className="flex flex-col">
-          <span className="uppercase tracking-[0.3em] whitespace-nowrap holographic-glow">{text}</span>
-          <div className="h-[1px] w-0 group-hover:w-full bg-brand-cyan/30 transition-all duration-500 mt-1" />
+          <span className="uppercase tracking-[0.3em] whitespace-nowrap holographic-glow font-black">{text}</span>
+          <div className="h-[1px] w-0 group-hover:w-full bg-brand-cyan/50 transition-all duration-700 mt-1" />
         </div>
         
         {/* Status Indicator Dot */}
