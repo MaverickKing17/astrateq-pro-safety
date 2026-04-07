@@ -1235,133 +1235,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Vision Section */}
-      <section id="vision" className="py-32 px-4 bg-brand-charcoal relative overflow-hidden">
-        {/* Background Grid Accent */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-        
-        <div className="max-w-6xl mx-auto relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-8"
-            >
-              <div className="flex items-center gap-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-widest">
-                  <Eye size={14} className="text-brand-cyan" />
-                  Vision Intelligence
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
-                  <span className="text-[10px] font-mono font-bold text-brand-gray uppercase tracking-widest">Live Feed</span>
-                </div>
-              </div>
-              
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-brand-offwhite leading-tight">
-                Vision Beyond <br />
-                <span className="text-brand-cyan relative inline-block">
-                  the Storm.
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "100%" }}
-                    transition={{ duration: 1, delay: 0.5 }}
-                    className="absolute -bottom-2 left-0 h-1 bg-brand-cyan/30 rounded-full"
-                  />
-                </span>
-              </h2>
-              
-              <div className="space-y-6 text-brand-gray text-lg leading-relaxed max-w-xl">
-                <p className="border-l-2 border-brand-cyan/20 pl-6 italic bg-brand-cyan/5 py-4 rounded-r-xl">
-                  "Standard cameras fail when visibility drops. Our multi-spectral sensor array cuts through whiteouts, heavy rain, and fog by detecting thermal signatures in real-time."
-                </p>
-                <p className="text-base">
-                  We're engineering <span className="text-brand-offwhite font-bold">AI Co-pilots</span> that see through the blizzard using multi-spectral sensor fusion and real-time terrain analysis.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-6 pt-4">
-                <motion.div 
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  className="p-6 rounded-3xl bg-gradient-to-br from-brand-cyan to-brand-cyan-hover shadow-xl shadow-brand-cyan/20 border border-white/20 relative overflow-hidden group/stat"
-                >
-                  <div className="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-2xl group-hover/stat:bg-white/20 transition-colors" />
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
-                      <Zap className="text-brand-charcoal" size={20} />
-                    </div>
-                    <div className="text-3xl font-display font-black text-brand-charcoal tracking-tighter">500ms</div>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] text-brand-charcoal uppercase tracking-widest font-bold">Predictive Window</span>
-                    <span className="text-[9px] text-brand-charcoal/70 font-mono mt-1 font-bold">LATENCY: ULTRA-LOW</span>
-                  </div>
-                </motion.div>
-
-                <motion.div 
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  className="p-6 rounded-3xl bg-brand-secondary shadow-xl shadow-brand-secondary/20 border border-white/10 relative overflow-hidden group/stat"
-                >
-                  <div className="absolute -right-4 -top-4 w-20 h-20 bg-brand-cyan/10 rounded-full blur-2xl group-hover/stat:bg-brand-cyan/20 transition-colors" />
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-brand-cyan/10 backdrop-blur-md flex items-center justify-center border border-brand-cyan/20">
-                      <Eye className="text-brand-cyan" size={20} />
-                    </div>
-                    <div className="text-3xl font-display font-black text-white tracking-tighter">4K</div>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] text-brand-gray uppercase tracking-widest font-bold">Sensor Fusion</span>
-                    <span className="text-[9px] text-brand-cyan/60 font-mono mt-1 font-bold">RESOLUTION: NATIVE</span>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl group bg-brand-charcoal"
-            >
-              {/* Base Image */}
-              <img 
-                src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=1200" 
-                alt="Luxury vehicle navigating a snowy Canadian road with Astrateq AI vision overlays" 
-                className="w-full h-full object-cover brightness-90 group-hover:scale-105 transition-transform duration-[3s] ease-out"
-                referrerPolicy="no-referrer"
-              />
-              
-              {/* Thermal / Night Vision Overlay */}
-              <div className="absolute inset-0 bg-brand-cyan/15 mix-blend-color opacity-50" />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/60 via-transparent to-brand-charcoal/20" />
-              
-              {/* Terrain Analysis Grid */}
-              <div className="absolute inset-0 [perspective:500px] pointer-events-none opacity-30">
-                <motion.div 
-                  animate={{ 
-                    backgroundPosition: ["0px 0px", "0px 40px"] 
-                  }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 [transform:rotateX(60deg)] origin-bottom bg-[linear-gradient(to_right,#00E5FF33_1px,transparent_1px),linear-gradient(to_bottom,#00E5FF33_1px,transparent_1px)] bg-[size:40px_40px]"
-                />
-              </div>
-              
-              {/* HUD Elements */}
-              <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
-                <div className="flex justify-between items-start">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 font-mono text-[10px] text-brand-cyan font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-brand-cyan/40 shadow-[0_0_15px_rgba(0,229,255,0.2)]">
-                      <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_8px_#00E5FF]" />
-                      Live Feed: Multi-Spectral Lidar
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <VisionSection />
 
       {/* Solutions Section */}
       <section id="solutions" className="py-32 px-4 bg-brand-charcoal relative overflow-hidden">
@@ -2149,55 +2023,278 @@ function OfferItem({ text, value }: { text: string, value: string }) {
   );
 }
 
+function VisionSection() {
+  const [isStormMode, setIsStormMode] = useState(false);
+
+  return (
+    <section id="vision" className="py-32 px-4 bg-brand-charcoal relative overflow-hidden">
+      {/* Background Grid Accent */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      
+      <div className="max-w-6xl mx-auto relative">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-[10px] font-mono font-bold text-brand-cyan uppercase tracking-widest">
+                  <Eye size={14} className="text-brand-cyan" />
+                  Vision Intelligence
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
+                  <span className="text-[10px] font-mono font-bold text-brand-gray uppercase tracking-widest">Live Feed</span>
+                </div>
+              </div>
+              
+              {/* Storm Mode Toggle */}
+              <button 
+                onClick={() => setIsStormMode(!isStormMode)}
+                className={`flex items-center gap-3 px-4 py-2 rounded-xl border transition-all duration-500 ${
+                  isStormMode 
+                    ? 'bg-brand-ember/20 border-brand-ember text-brand-ember shadow-[0_0_20px_rgba(255,184,0,0.3)]' 
+                    : 'bg-white/5 border-white/10 text-brand-gray hover:border-white/30'
+                }`}
+              >
+                <div className="relative">
+                  <Wind size={14} className={isStormMode ? 'animate-bounce' : ''} />
+                  {isStormMode && <div className="absolute -inset-1 bg-brand-ember/40 rounded-full animate-ping" />}
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-widest">
+                  {isStormMode ? 'Storm Mode: Active' : 'Simulate Storm'}
+                </span>
+              </button>
+            </div>
+            
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-brand-offwhite leading-tight">
+              Vision Beyond <br />
+              <span className="text-brand-cyan relative inline-block">
+                the Storm.
+                <motion.div 
+                  initial={{ width: 0 }}
+                  whileInView={{ width: "100%" }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                  className="absolute -bottom-2 left-0 h-1 bg-brand-cyan/30 rounded-full"
+                />
+              </span>
+            </h2>
+            
+            <div className="space-y-6 text-brand-gray text-lg leading-relaxed max-w-xl">
+              <p className="border-l-2 border-brand-cyan/20 pl-6 italic bg-brand-cyan/5 py-4 rounded-r-xl">
+                "Standard cameras fail when visibility drops. Our multi-spectral sensor array cuts through whiteouts, heavy rain, and fog by detecting thermal signatures in real-time."
+              </p>
+              <p className="text-base">
+                The ASTRA-AI Multi-Spectral Lidar is the backbone of our 94% accuracy. While standard systems are blinded by GTA whiteouts, our array uses non-visible light to "see" heat signatures through solid fog.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6 pt-4">
+              <motion.div 
+                whileHover={{ y: -5, scale: 1.02 }}
+                className="p-6 rounded-3xl bg-gradient-to-br from-brand-cyan to-brand-cyan-hover shadow-xl shadow-brand-cyan/20 border border-white/20 relative overflow-hidden group/stat"
+              >
+                <div className="absolute -right-4 -top-4 w-20 h-20 bg-white/10 rounded-full blur-2xl group-hover/stat:bg-white/20 transition-colors" />
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
+                    <Zap className="text-brand-charcoal" size={20} />
+                  </div>
+                  <div className="text-3xl font-display font-black text-brand-charcoal tracking-tighter">500ms</div>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-brand-charcoal uppercase tracking-widest font-bold">Predictive Window</span>
+                  <span className="text-[9px] text-brand-charcoal/70 font-mono mt-1 font-bold">LATENCY: ULTRA-LOW</span>
+                </div>
+              </motion.div>
+
+              <motion.div 
+                whileHover={{ y: -5, scale: 1.02 }}
+                className="p-6 rounded-3xl bg-brand-secondary shadow-xl shadow-brand-secondary/20 border border-white/10 relative overflow-hidden group/stat"
+              >
+                <div className="absolute -right-4 -top-4 w-20 h-20 bg-brand-cyan/10 rounded-full blur-2xl group-hover/stat:bg-brand-cyan/20 transition-colors" />
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-brand-cyan/10 backdrop-blur-md flex items-center justify-center border border-brand-cyan/20">
+                    <Eye className="text-brand-cyan" size={20} />
+                  </div>
+                  <div className="text-3xl font-display font-black text-white tracking-tighter">4K</div>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-brand-gray uppercase tracking-widest font-bold">Sensor Fusion</span>
+                  <span className="text-[9px] text-brand-cyan/60 font-mono mt-1 font-bold">RESOLUTION: NATIVE</span>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl group bg-brand-charcoal"
+          >
+            {/* Base Image */}
+            <img 
+              src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=1200" 
+              alt="Luxury vehicle navigating a snowy Canadian road" 
+              className={`w-full h-full object-cover transition-all duration-[2s] ease-out ${isStormMode ? 'blur-sm brightness-50 contrast-125' : 'brightness-90 group-hover:scale-105'}`}
+              referrerPolicy="no-referrer"
+            />
+            
+            {/* Storm Overlay (Snow/Fog) */}
+            <AnimatePresence>
+              {isStormMode && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 pointer-events-none"
+                >
+                  <div className="absolute inset-0 bg-white/20 backdrop-blur-[2px]" />
+                  {/* Simulated Snow Particles */}
+                  <div className="absolute inset-0 opacity-40 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] animate-pulse" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            
+            {/* Astrateq Neural Overlay (Always active, but more prominent in Storm Mode) */}
+            <div className={`absolute inset-0 transition-opacity duration-1000 ${isStormMode ? 'opacity-100' : 'opacity-40'}`}>
+              {/* Thermal / Night Vision Overlay */}
+              <div className={`absolute inset-0 mix-blend-color transition-colors duration-1000 ${isStormMode ? 'bg-brand-cyan/40' : 'bg-brand-cyan/15'}`} />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/60 via-transparent to-brand-charcoal/20" />
+              
+              {/* Terrain Analysis Grid */}
+              <div className="absolute inset-0 [perspective:500px] pointer-events-none opacity-30">
+                <motion.div 
+                  animate={{ 
+                    backgroundPosition: ["0px 0px", "0px 40px"] 
+                  }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 [transform:rotateX(60deg)] origin-bottom bg-[linear-gradient(to_right,#00E5FF33_1px,transparent_1px),linear-gradient(to_bottom,#00E5FF33_1px,transparent_1px)] bg-[size:40px_40px]"
+                />
+              </div>
+              
+              {/* HUD Elements */}
+              <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
+                <div className="flex justify-between items-start">
+                  <div className="space-y-2">
+                    <div className={`flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border transition-all duration-500 ${isStormMode ? 'text-brand-ember border-brand-ember shadow-[0_0_15px_rgba(255,184,0,0.4)]' : 'text-brand-cyan border-brand-cyan/40 shadow-[0_0_15px_rgba(0,229,255,0.2)]'}`}>
+                      <div className={`w-1.5 h-1.5 rounded-full animate-pulse shadow-[0_0_8px_currentColor] ${isStormMode ? 'bg-brand-ember' : 'bg-brand-cyan'}`} />
+                      {isStormMode ? 'Neural Override: Multi-Spectral Active' : 'Live Feed: Multi-Spectral Lidar'}
+                    </div>
+                    {isStormMode && (
+                      <motion.div 
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="flex items-center gap-2 font-mono text-[9px] text-brand-cyan font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md px-3 py-1 rounded-lg border border-brand-cyan/40"
+                      >
+                        <Shield size={10} />
+                        94% Hazard Confidence
+                      </motion.div>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Scanning HUD brackets */}
+                <div className="flex justify-between items-end">
+                  <div className="w-12 h-12 border-b-2 border-l-2 border-brand-cyan/40 rounded-bl-xl" />
+                  <div className="w-12 h-12 border-b-2 border-r-2 border-brand-cyan/40 rounded-br-xl" />
+                </div>
+              </div>
+
+              {/* Neural Heat Signature Effect in Storm Mode */}
+              {isStormMode && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.3 }}
+                  className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,#FFB800_0%,transparent_40%)] mix-blend-overlay"
+                />
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function WaitlistForm({ spotsRemaining, onSubmit }: { spotsRemaining: number, onSubmit: (e: React.FormEvent<HTMLFormElement>) => void }) {
   return (
-    <div className="w-full max-w-4xl p-[2px] bg-gradient-to-br from-brand-cyan/40 via-brand-cyan/10 to-brand-cyan/40 rounded-3xl shadow-[0_0_80px_-20px_rgba(0,229,255,0.4)] backdrop-blur-3xl group/form relative overflow-hidden transition-all duration-700 hover:shadow-[0_0_100px_-10px_rgba(0,229,255,0.6)]">
+    <div className="w-full max-w-5xl p-[2px] bg-gradient-to-br from-brand-cyan/40 via-brand-cyan/10 to-brand-cyan/40 rounded-[2.5rem] shadow-[0_0_80px_-20px_rgba(0,229,255,0.4)] backdrop-blur-3xl group/form relative overflow-hidden transition-all duration-700 hover:shadow-[0_0_100px_-10px_rgba(0,229,255,0.6)]">
       {/* Animated Scanline */}
       <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_0%,rgba(0,229,255,0.15)_50%,transparent_100%)] h-[200%] w-full animate-scanline pointer-events-none" />
       
       {/* Background Radar Pulse */}
       <div className="absolute -inset-40 bg-brand-cyan/10 rounded-full blur-[120px] animate-pulse pointer-events-none" />
 
-      <div className="relative glass-panel p-3 rounded-[1.4rem] border-brand-cyan/30 bg-brand-secondary/70 backdrop-blur-3xl">
-        <form 
-          className="flex flex-col md:flex-row gap-4 relative z-10"
-          onSubmit={onSubmit}
-        >
-          <div className="flex-[2] relative group/input">
-            <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-cyan/60 group-focus-within/input:text-brand-cyan transition-colors z-20">
-              <Mail size={22} />
+      <div className="relative glass-panel p-4 rounded-[2.4rem] border-brand-cyan/30 bg-brand-secondary/70 backdrop-blur-3xl">
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-brand-cyan/10 flex items-center justify-center border border-brand-cyan/20">
+                <ShieldCheck className="text-brand-cyan" size={20} />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-mono font-black text-brand-cyan uppercase tracking-[0.3em]">Founding Beta Access</span>
+                <span className="text-xs text-brand-gray font-medium">Toronto Pilot Program</span>
+              </div>
             </div>
-            <input 
-              type="email" 
-              name="email"
-              placeholder="Enter your email for priority founding access" 
-              className="w-full pl-16 pr-8 py-6 bg-brand-charcoal/60 border border-white/10 rounded-2xl text-lg focus:outline-none focus:border-brand-cyan/50 focus:bg-brand-charcoal/80 placeholder:text-brand-gray/30 text-brand-offwhite font-medium transition-all shadow-inner"
-              required
-            />
-            {/* Input HUD Accent */}
-            <div className="absolute bottom-0 left-16 right-8 h-[2px] bg-gradient-to-r from-transparent via-brand-cyan/40 to-transparent opacity-0 group-focus-within/input:opacity-100 transition-opacity" />
+            <div className="flex items-center gap-3 bg-brand-ember/10 px-4 py-2 rounded-xl border border-brand-ember/20">
+              <div className="flex flex-col items-end">
+                <span className="text-[9px] font-mono font-black text-brand-ember uppercase tracking-widest">Limited Scarcity</span>
+                <span className="text-sm font-display font-black text-brand-ember tracking-tighter">{spotsRemaining} SPOTS REMAINING</span>
+              </div>
+              <div className="w-2 h-2 rounded-full bg-brand-ember animate-ping" />
+            </div>
           </div>
-          <button 
-            type="submit"
-            className="flex-1 group/btn relative px-12 py-6 bg-brand-ember text-brand-charcoal text-base font-black rounded-2xl overflow-hidden transition-all active:scale-95 shadow-[0_0_35px_rgba(255,184,0,0.5)] hover:shadow-[0_0_60px_rgba(255,184,0,0.7)] border border-white/30 animate-pulse-subtle"
-          >
-            {/* Shimmer Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
-            
-            {/* Inner Glow */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.4)_0%,transparent_70%)] opacity-0 group-hover/btn:opacity-100 transition-opacity" />
 
-            <span className="relative z-10 flex items-center justify-center gap-3 uppercase tracking-[0.3em] drop-shadow-md holographic-glow">
-              Secure My Founding Spot
-              <ChevronRight size={22} className="group-hover:translate-x-2 transition-transform duration-500" />
-            </span>
-          </button>
-        </form>
+          <form 
+            className="flex flex-col md:flex-row gap-4 relative z-10"
+            onSubmit={onSubmit}
+          >
+            <div className="flex-[3] relative group/input">
+              <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-cyan/60 group-focus-within/input:text-brand-cyan transition-colors z-20">
+                <Mail size={24} />
+              </div>
+              <input 
+                type="email" 
+                name="email"
+                placeholder="Enter your email for priority founding access" 
+                className="w-full pl-16 pr-8 py-8 bg-brand-charcoal/60 border border-white/10 rounded-3xl text-xl focus:outline-none focus:border-brand-cyan/50 focus:bg-brand-charcoal/80 placeholder:text-brand-gray/30 text-brand-offwhite font-medium transition-all shadow-inner"
+                required
+              />
+              {/* Input HUD Accent */}
+              <div className="absolute bottom-0 left-16 right-8 h-[2px] bg-gradient-to-r from-transparent via-brand-cyan/40 to-transparent opacity-0 group-focus-within/input:opacity-100 transition-opacity" />
+            </div>
+            <button 
+              type="submit"
+              className="flex-1 py-8 bg-brand-cyan text-brand-charcoal font-display font-black text-lg rounded-3xl hover:bg-brand-cyan-hover transition-all shadow-xl shadow-brand-cyan/20 active:scale-[0.98] uppercase tracking-[0.2em] holographic-glow border border-white/20 group/btn"
+            >
+              <span className="flex items-center justify-center gap-3">
+                SECURE ACCESS
+                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              </span>
+            </button>
+          </form>
+
+          <div className="flex items-center justify-center gap-8 px-4 pb-2">
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan/40" />
+              <span className="text-[9px] font-mono text-brand-gray/60 uppercase tracking-widest">No Credit Card Required</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan/40" />
+              <span className="text-[9px] font-mono text-brand-gray/60 uppercase tracking-widest">Instant Activation</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan/40" />
+              <span className="text-[9px] font-mono text-brand-gray/60 uppercase tracking-widest">Priority Support</span>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      {/* Corner Accents - Enhanced */}
-      <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-brand-cyan/80 rounded-tl-2xl" />
-      <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-brand-cyan/80 rounded-br-2xl" />
     </div>
   );
 }
