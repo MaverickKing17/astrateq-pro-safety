@@ -1257,118 +1257,161 @@ export default function App() {
                 <h2 className="text-4xl md:text-5xl font-display font-black text-brand-offwhite tracking-tight">Navigate the unseen.</h2>
                 <p className="text-brand-gray text-lg max-w-2xl mx-auto font-medium">Our AlTrak™ Cloud-Sync Engine predicts hazards before they enter your field of vision.</p>
               </div>
-              <RouteOptimizer />
-            </div>
+                        <div className="flex flex-col items-center gap-6 w-full max-w-4xl">
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                  className="relative group w-full max-w-2xl"
+                >
+                  <div className="absolute -inset-1 bg-brand-cyan/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition duration-500" />
+                  <div className="relative flex items-center justify-center gap-4 px-8 py-3 bg-brand-secondary/90 backdrop-blur-xl border border-brand-cyan/40 rounded-full text-brand-cyan text-[10px] font-black tracking-[0.25em] shadow-2xl shadow-brand-cyan/20 overflow-hidden">
+                    {/* HUD Brackets for Alert */}
+                    <div className="absolute top-0 left-4 w-2 h-full border-l border-brand-cyan/30" />
+                    <div className="absolute top-0 right-4 w-2 h-full border-r border-brand-cyan/30" />
+                    
+                    <AlertTriangle size={14} className="animate-pulse text-brand-cyan drop-shadow-[0_0_8px_#00E5FF]" />
+                    <span className="uppercase holographic-glow">Astrateq Gadgets are driver assistance tools only.</span>
+                    
+                    {/* Scanning Line */}
+                    <div className="absolute inset-0 w-full h-[1px] bg-brand-cyan/10 -translate-y-full group-hover:animate-scan pointer-events-none" />
+                  </div>
+                </motion.div>
 
-            <div className="flex flex-col items-center gap-6 w-full max-w-2xl">
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="relative group"
-              >
-                <div className="absolute -inset-1 bg-brand-cyan/30 rounded-full blur-md opacity-0 group-hover:opacity-100 transition duration-500" />
-                <div className="relative flex items-center gap-3 px-8 py-3 bg-brand-secondary/90 backdrop-blur-xl border border-brand-cyan/40 rounded-full text-brand-cyan text-xs font-bold tracking-[0.15em] shadow-2xl shadow-brand-cyan/20">
-                  <AlertTriangle size={16} className="animate-pulse text-brand-cyan" />
-                  <span className="uppercase">Astrateq Gadgets are driver assistance tools only.</span>
-                </div>
-              </motion.div>
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                  className="w-full flex flex-col lg:flex-row items-center justify-between px-10 py-10 border border-brand-cyan/20 relative bg-brand-cyan/[0.04] backdrop-blur-2xl group/status overflow-hidden rounded-[2.5rem] gap-8"
+                >
+                  {/* HUD Brackets - Enhanced with Glow */}
+                  <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_20px_rgba(0,229,255,0.4)] transition-all duration-500 rounded-tl-[2.5rem]" />
+                  <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_20px_rgba(0,229,255,0.4)] transition-all duration-500 rounded-tr-[2.5rem]" />
+                  <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_20px_rgba(0,229,255,0.4)] transition-all duration-500 rounded-bl-[2.5rem]" />
+                  <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_20px_rgba(0,229,255,0.4)] transition-all duration-500 rounded-br-[2.5rem]" />
 
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-                className="w-full flex flex-wrap items-center justify-between px-10 py-8 border-y border-brand-cyan/20 relative bg-brand-cyan/[0.04] backdrop-blur-xl group/status overflow-hidden"
-              >
-                {/* HUD Brackets - Enhanced with Glow */}
-                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_15px_rgba(0,229,255,0.4)] transition-all duration-500" />
-                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_15px_rgba(0,229,255,0.4)] transition-all duration-500" />
-                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_15px_rgba(0,229,255,0.4)] transition-all duration-500" />
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-brand-cyan/60 group-hover/status:border-brand-cyan group-hover/status:shadow-[0_0_15px_rgba(0,229,255,0.4)] transition-all duration-500" />
+                  {/* Scanning Line Effect */}
+                  <div className="absolute inset-0 w-full h-[2px] bg-brand-cyan/10 -translate-y-full group-hover/status:animate-scan pointer-events-none" />
 
-                {/* Scanning Line Effect - Faster and more visible */}
-                <div className="absolute inset-0 w-full h-[2px] bg-brand-cyan/20 -translate-y-full group-hover/status:animate-scan pointer-events-none" />
-
-                <div className="flex items-center gap-12 relative z-10">
-                  <div className="flex items-center gap-6">
-                    <span className="text-[10px] font-mono font-black text-brand-gray/60 uppercase tracking-[0.4em]">Neural Core Status</span>
-                    <div className="flex items-center gap-3 px-4 py-2 bg-brand-cyan/10 rounded-xl border border-brand-cyan/30 shadow-[0_0_20px_rgba(0,229,255,0.1)]">
-                      <div className="relative flex items-center justify-center">
-                        <div className="w-2.5 h-2.5 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_15px_#00E5FF]" />
-                        <div className="absolute w-5 h-5 rounded-full border border-brand-cyan/40 animate-ping opacity-60" />
+                  <div className="flex flex-col sm:flex-row items-center gap-12 relative z-10 w-full lg:w-auto">
+                    <div className="flex flex-col gap-4">
+                      <div className="flex items-center gap-6">
+                        <div className="flex flex-col">
+                          <span className="text-[9px] font-mono font-black text-brand-gray/40 uppercase tracking-[0.4em] mb-1">System Authority</span>
+                          <span className="text-[11px] font-mono font-black text-brand-offwhite uppercase tracking-widest">Neural Core v4.2</span>
+                        </div>
+                        <div className="flex items-center gap-3 px-4 py-2 bg-brand-cyan/10 rounded-xl border border-brand-cyan/30 shadow-[0_0_20px_rgba(0,229,255,0.1)]">
+                          <div className="relative flex items-center justify-center">
+                            <div className="w-2.5 h-2.5 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_15px_#00E5FF]" />
+                            <div className="absolute w-5 h-5 rounded-full border border-brand-cyan/40 animate-ping opacity-60" />
+                          </div>
+                          <span className="text-[12px] font-mono font-black text-brand-cyan uppercase tracking-[0.3em] holographic-glow">Active</span>
+                        </div>
                       </div>
-                      <span className="text-[12px] font-mono font-black text-brand-cyan uppercase tracking-[0.3em] holographic-glow">Active</span>
+                      
+                      <div className="flex items-center gap-8">
+                        <div className="flex flex-col">
+                          <span className="text-[8px] font-mono text-brand-gray/40 uppercase tracking-widest mb-1">Uptime</span>
+                          <span className="text-[10px] font-mono font-black text-brand-offwhite">99.998%</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[8px] font-mono text-brand-gray/40 uppercase tracking-widest mb-1">Threats Logged</span>
+                          <span className="text-[10px] font-mono font-black text-brand-ember">14,204</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="hidden lg:block w-[1px] h-16 bg-white/10" />
+
+                    <div className="flex flex-wrap items-center justify-center gap-8">
+                      <div className="flex items-center gap-4 group/loc cursor-help">
+                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover/loc:border-brand-cyan/60 group-hover/loc:bg-brand-cyan/5 transition-all duration-500">
+                          <Globe size={20} className="text-brand-cyan/60 group-hover/loc:text-brand-cyan transition-colors" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Deployment Node</span>
+                          <span className="text-[11px] font-mono font-black text-brand-offwhite uppercase tracking-widest">Toronto, ON</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-4 group/time cursor-help">
+                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover/time:border-brand-cyan/60 group-hover/time:bg-brand-cyan/5 transition-all duration-500">
+                          <Clock size={20} className="text-brand-cyan/60 group-hover/time:text-brand-cyan transition-colors" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Sync Timestamp</span>
+                          <span className="text-[11px] font-mono font-black text-brand-offwhite uppercase tracking-widest">
+                            {currentTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })} UTC
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  
-                  <div className="hidden lg:block w-[1px] h-10 bg-white/10" />
 
-                  <div className="flex items-center gap-8">
-                    <div className="flex items-center gap-4 group/loc cursor-help">
-                      <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover/loc:border-brand-cyan/60 group-hover/loc:bg-brand-cyan/5 transition-all duration-500">
-                        <Globe size={18} className="text-brand-cyan/60 group-hover/loc:text-brand-cyan transition-colors" />
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Deployment Node</span>
-                        <span className="text-[11px] font-mono font-black text-brand-offwhite uppercase tracking-widest">Toronto, ON</span>
+                  {/* Right Side Telemetry - Enhanced with more metrics */}
+                  <div className="flex items-center gap-10 relative z-10 w-full lg:w-auto justify-center lg:justify-end">
+                    <div className="flex flex-col items-end gap-2">
+                      <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Neural Load</span>
+                      <div className="flex items-center gap-3">
+                        <div className="w-32 h-2 bg-white/5 rounded-full overflow-hidden border border-white/10 relative">
+                          <motion.div 
+                            initial={{ width: 0 }}
+                            animate={{ width: "42%" }}
+                            transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+                            className="h-full bg-brand-cyan shadow-[0_0_15px_#00E5FF] relative"
+                          >
+                            <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.3)_50%,transparent_100%)] animate-shimmer" />
+                          </motion.div>
+                        </div>
+                        <span className="text-[11px] font-mono font-black text-brand-cyan">42.8%</span>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4 group/time cursor-help">
-                      <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover/time:border-brand-cyan/60 group-hover/time:bg-brand-cyan/5 transition-all duration-500">
-                        <Clock size={18} className="text-brand-cyan/60 group-hover/time:text-brand-cyan transition-colors" />
+                    <div className="flex flex-col items-end gap-2">
+                      <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Network Latency</span>
+                      <div className="flex items-center gap-3">
+                        <div className="flex gap-1.5">
+                          {[1, 2, 3, 4, 5].map(i => (
+                            <motion.div 
+                              key={i} 
+                              animate={{ opacity: i === 5 ? [0.1, 0.3, 0.1] : 1 }}
+                              transition={{ duration: 1, repeat: Infinity, delay: i * 0.1 }}
+                              className={`w-2 h-5 rounded-sm transition-all duration-500 ${i <= 4 ? 'bg-brand-cyan shadow-[0_0_10px_#00E5FF]' : 'bg-white/10'}`} 
+                            />
+                          ))}
+                        </div>
+                        <span className="text-[11px] font-mono font-black text-brand-cyan">8ms</span>
                       </div>
-                      <div className="flex flex-col">
-                        <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Sync Timestamp</span>
-                        <span className="text-[11px] font-mono font-black text-brand-offwhite uppercase tracking-widest">
-                          {currentTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })} UTC
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Side Telemetry - Enhanced with more metrics */}
-                <div className="hidden xl:flex items-center gap-10 relative z-10">
-                  <div className="flex flex-col items-end gap-1">
-                    <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Neural Load</span>
-                    <div className="flex items-center gap-3">
-                      <div className="w-24 h-1.5 bg-white/5 rounded-full overflow-hidden border border-white/10">
-                        <motion.div 
-                          initial={{ width: 0 }}
-                          animate={{ width: "42%" }}
-                          transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-                          className="h-full bg-brand-cyan shadow-[0_0_10px_#00E5FF]"
-                        />
-                      </div>
-                      <span className="text-[10px] font-mono font-black text-brand-cyan">42%</span>
                     </div>
                   </div>
-
-                  <div className="flex flex-col items-end gap-1">
-                    <span className="text-[9px] font-mono text-brand-gray/40 uppercase tracking-widest">Network Latency</span>
-                    <div className="flex items-center gap-3">
-                      <div className="flex gap-1">
-                        {[1, 2, 3, 4, 5].map(i => (
-                          <div key={i} className={`w-1.5 h-4 rounded-full transition-all duration-500 ${i <= 4 ? 'bg-brand-cyan shadow-[0_0_8px_#00E5FF]' : 'bg-white/10'}`} />
-                        ))}
-                      </div>
-                      <span className="text-[11px] font-mono font-black text-brand-cyan">8ms</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
             </div>
 
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 1.2 }}
-              className="flex flex-wrap justify-center gap-8 mt-12 text-brand-gray"
+              className="flex flex-wrap justify-center gap-6 mt-16 w-full max-w-6xl"
             >
-              <HeroBadge icon={<ShieldCheck size={18} className="text-brand-cyan" />} text="Transport Canada Compliant" delay={1.3} />
-              <HeroBadge icon={<RotateCcw size={18} className="text-brand-cyan" />} text="60-Day Returns" delay={1.4} />
-              <HeroBadge icon={<MapPin size={18} className="text-brand-cyan" />} text="Toronto Engineered & Shipped" delay={1.5} />
+              <HeroBadge 
+                icon={<ShieldCheck size={24} className="text-brand-cyan" />} 
+                text="Transport Canada Compliant" 
+                subtext="Safety Standard: TC-2026-X"
+                delay={1.3} 
+              />
+              <HeroBadge 
+                icon={<RotateCcw size={24} className="text-brand-cyan" />} 
+                text="60-Day Returns" 
+                subtext="Satisfaction Guarantee"
+                delay={1.4} 
+              />
+              <HeroBadge 
+                icon={<MapPin size={24} className="text-brand-cyan" />} 
+                text="Toronto Engineered" 
+                subtext="GTA Logistics Hub"
+                delay={1.5} 
+              />
             </motion.div>
           </motion.div>
         </div>
@@ -2874,18 +2917,18 @@ function FooterAccordion({ title, description, onLinkClick, links }: {
   );
 }
 
-function HeroBadge({ icon, text, delay }: { icon: ReactNode, text: string, delay: number }) {
+function HeroBadge({ icon, text, delay, subtext }: { icon: ReactNode, text: string, delay: number, subtext?: string }) {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      whileHover={{ y: -4, scale: 1.05 }}
-      className="flex items-center gap-4 px-8 py-4 bg-brand-secondary/40 backdrop-blur-3xl border border-brand-cyan/30 rounded-2xl text-[11px] font-black text-brand-offwhite shadow-2xl shadow-brand-cyan/10 hover:border-brand-cyan/60 hover:bg-brand-secondary/60 transition-all group relative overflow-hidden"
+      whileHover={{ y: -4, scale: 1.02 }}
+      className="flex items-center gap-6 px-10 py-6 bg-brand-secondary/40 backdrop-blur-3xl border border-brand-cyan/30 rounded-[2rem] text-[11px] font-black text-brand-offwhite shadow-2xl shadow-brand-cyan/10 hover:border-brand-cyan/60 hover:bg-brand-secondary/60 transition-all group relative overflow-hidden flex-1 min-w-[300px]"
     >
       {/* HUD Corner Accents - More prominent */}
-      <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-brand-cyan/60 group-hover:border-brand-cyan transition-colors" />
-      <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-brand-cyan/60 group-hover:border-brand-cyan transition-colors" />
+      <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-brand-cyan/60 group-hover:border-brand-cyan transition-colors" />
+      <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-brand-cyan/60 group-hover:border-brand-cyan transition-colors" />
       
       {/* Scanning Line Effect */}
       <div className="absolute inset-0 w-full h-[2px] bg-brand-cyan/20 -translate-y-full group-hover:animate-scan pointer-events-none" />
@@ -2893,19 +2936,22 @@ function HeroBadge({ icon, text, delay }: { icon: ReactNode, text: string, delay
       {/* Background Shimmer */}
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-cyan/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
 
-      <div className="relative z-10 flex items-center gap-4">
-        <div className="p-2 bg-brand-cyan/10 rounded-lg border border-brand-cyan/20 group-hover:bg-brand-cyan/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 text-brand-cyan drop-shadow-[0_0_15px_rgba(0,229,255,0.6)]">
+      <div className="relative z-10 flex items-center gap-5 w-full">
+        <div className="w-14 h-14 bg-brand-cyan/10 rounded-2xl border border-brand-cyan/20 flex items-center justify-center group-hover:bg-brand-cyan/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 text-brand-cyan drop-shadow-[0_0_15px_rgba(0,229,255,0.6)]">
           {icon}
         </div>
-        <div className="flex flex-col">
-          <span className="uppercase tracking-[0.3em] whitespace-nowrap holographic-glow font-black">{text}</span>
-          <div className="h-[1px] w-0 group-hover:w-full bg-brand-cyan/50 transition-all duration-700 mt-1" />
+        <div className="flex flex-col flex-1">
+          <span className="uppercase tracking-[0.3em] whitespace-nowrap holographic-glow font-black text-xs">{text}</span>
+          <span className="text-[9px] font-mono text-brand-gray/60 uppercase tracking-widest mt-1 group-hover:text-brand-cyan/60 transition-colors">
+            {subtext || "Verified Security Protocol"}
+          </span>
+          <div className="h-[1px] w-0 group-hover:w-full bg-brand-cyan/50 transition-all duration-700 mt-2" />
         </div>
         
         {/* Status Indicator Dot */}
         <div className="relative flex items-center justify-center">
-          <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_8px_#00E5FF]" />
-          <div className="absolute w-3 h-3 rounded-full border border-brand-cyan/40 animate-ping opacity-40" />
+          <div className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse shadow-[0_0_10px_#00E5FF]" />
+          <div className="absolute w-4 h-4 rounded-full border border-brand-cyan/40 animate-ping opacity-40" />
         </div>
       </div>
     </motion.div>
