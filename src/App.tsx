@@ -1087,16 +1087,21 @@ export default function App() {
 
       {/* Hero Section */}
       <section id="main-content" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-20 pb-32" role="region" aria-label="Hero section">
-        {/* Background with Arctic Feel */}
+        {/* Background with Arctic Feel & 4K Video */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-brand-charcoal/80 z-10" />
+          <div className="absolute inset-0 bg-brand-charcoal/70 z-10 backdrop-blur-[2px]" />
           
-          <img 
-            src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=2560" 
-            alt="Cinematic luxury vehicle driving through a high-tech city at twilight" 
-            className="w-full h-full object-cover opacity-50 scale-110 animate-slow-zoom"
-            referrerPolicy="no-referrer"
-          />
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="w-full h-full object-cover opacity-60 scale-110"
+            poster="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=2560"
+          >
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-driving-in-the-snow-at-night-42845-large.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
           
           {/* HUD Overlays */}
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
@@ -1584,8 +1589,8 @@ export default function App() {
               Exclusive Founding Offer
             </div>
             <h2 className="text-5xl md:text-7xl font-display font-black text-brand-offwhite tracking-tight leading-none">
-              The Astrateq <br />
-              <span className="text-brand-ember holographic-glow">Founding Member Protocol.</span>
+              The ASTRA-AI <br />
+              <span className="text-brand-ember holographic-glow">Founding Mandate.</span>
             </h2>
             <p className="text-brand-gray text-xl max-w-2xl mx-auto font-medium">
               We're looking for 100 early adopters in the GTA to help us refine the future of Canadian driving. 
