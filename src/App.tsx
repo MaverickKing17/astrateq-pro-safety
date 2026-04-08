@@ -117,6 +117,7 @@ function VehicleDashboard() {
   const [isListening, setIsListening] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
+  const [scanStatus, setScanStatus] = useState('');
   const [scanResult, setScanResult] = useState<null | any>(null);
   const [selectedVehicle, setSelectedVehicle] = useState('Tesla Model Y');
   const recognitionRef = useRef<any>(null);
@@ -134,16 +135,30 @@ function VehicleDashboard() {
     setIsScanning(true);
     setScanProgress(0);
     setScanResult(null);
+    setScanStatus('Initializing Neural Link...');
     
     const duration = 3000;
     const interval = 30;
     const steps = duration / interval;
     let currentStep = 0;
 
+    const statuses = [
+      { threshold: 0, text: 'Establishing OBD-II Connection...' },
+      { threshold: 15, text: 'Accessing Vehicle Control Module...' },
+      { threshold: 30, text: 'Mapping Neural Sensor Array...' },
+      { threshold: 45, text: 'Decrypting Telemetry Streams...' },
+      { threshold: 60, text: 'Analyzing Thermal Efficiency...' },
+      { threshold: 75, text: 'Calibrating Predictive Models...' },
+      { threshold: 90, text: 'Finalizing Diagnostic Report...' }
+    ];
+
     const timer = setInterval(() => {
       currentStep++;
       const progress = (currentStep / steps) * 100;
       setScanProgress(progress);
+
+      const status = [...statuses].reverse().find(s => progress >= s.threshold);
+      if (status) setScanStatus(status.text);
 
       if (currentStep >= steps) {
         clearInterval(timer);
@@ -278,42 +293,104 @@ function VehicleDashboard() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 z-50 bg-brand-charcoal/80 backdrop-blur-md flex flex-col items-center justify-center p-12"
+              className="absolute inset-0 z-50 bg-brand-charcoal/90 backdrop-blur-xl flex flex-col items-center justify-center p-12 overflow-hidden"
             >
-              <div className="relative w-full max-w-md">
+              {/* Data Grid Background */}
+              <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, #00E5FF 1px, transparent 1px), linear-gradient(to bottom, #00E5FF 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
+                <motion.div 
+                  animate={{ opacity: [0.3, 0.6, 0.3] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute inset-0 bg-brand-cyan/5"
+                />
+              </div>
+
+              <div className="relative w-full max-w-md z-10">
                 <div className="flex justify-between text-[10px] font-mono font-black text-brand-cyan uppercase tracking-[0.4em] mb-4">
-                  <span>Neural Scanning: {selectedVehicle}</span>
-                  <span>{Math.round(scanProgress)}%</span>
+                  <motion.span
+                    animate={{ opacity: [1, 0.5, 1] }}
+                    transition={{ duration: 0.5, repeat: Infinity }}
+                  >
+                    Neural Scanning: {selectedVehicle}
+                  </motion.span>
+                  <span className="holographic-glow">{Math.round(scanProgress)}%</span>
                 </div>
-                <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden mb-8">
+                
+                <div className="relative w-full h-2 bg-white/5 rounded-full overflow-hidden mb-2 border border-white/10">
                   <motion.div 
-                    className="h-full bg-brand-cyan shadow-[0_0_20px_#00E5FF]"
+                    className="h-full bg-gradient-to-r from-brand-cyan/40 via-brand-cyan to-brand-cyan shadow-[0_0_20px_#00E5FF] relative"
                     initial={{ width: 0 }}
                     animate={{ width: `${scanProgress}%` }}
-                  />
+                  >
+                    {/* Shimmer Effect */}
+                    <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.4)_50%,transparent_100%)] animate-shimmer" />
+                    
+                    {/* Progress Tip Glow */}
+                    <div className="absolute right-0 top-0 bottom-0 w-4 bg-brand-cyan blur-md" />
+                  </motion.div>
+                </div>
+
+                <div className="text-[9px] font-mono text-brand-cyan/60 uppercase tracking-widest mb-8 text-center h-4">
+                  {scanStatus}
                 </div>
                 
                 {/* Scanning HUD Elements */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4 opacity-40">
                   <div className="space-y-2">
-                    <div className="h-1 w-full bg-brand-cyan/20 animate-pulse" />
-                    <div className="h-1 w-2/3 bg-brand-cyan/20 animate-pulse delay-75" />
-                    <div className="h-1 w-1/2 bg-brand-cyan/20 animate-pulse delay-150" />
+                    <motion.div animate={{ width: ['100%', '80%', '100%'] }} transition={{ duration: 1.5, repeat: Infinity }} className="h-1 bg-brand-cyan/20" />
+                    <motion.div animate={{ width: ['66%', '90%', '66%'] }} transition={{ duration: 2, repeat: Infinity }} className="h-1 bg-brand-cyan/20" />
+                    <motion.div animate={{ width: ['50%', '30%', '50%'] }} transition={{ duration: 1.2, repeat: Infinity }} className="h-1 bg-brand-cyan/20" />
                   </div>
                   <div className="space-y-2 flex flex-col items-end">
-                    <div className="h-1 w-full bg-brand-cyan/20 animate-pulse" />
-                    <div className="h-1 w-3/4 bg-brand-cyan/20 animate-pulse delay-100" />
-                    <div className="h-1 w-1/3 bg-brand-cyan/20 animate-pulse delay-200" />
+                    <motion.div animate={{ width: ['100%', '70%', '100%'] }} transition={{ duration: 1.8, repeat: Infinity }} className="h-1 bg-brand-cyan/20" />
+                    <motion.div animate={{ width: ['75%', '95%', '75%'] }} transition={{ duration: 2.2, repeat: Infinity }} className="h-1 bg-brand-cyan/20" />
+                    <motion.div animate={{ width: ['33%', '60%', '33%'] }} transition={{ duration: 1.4, repeat: Infinity }} className="h-1 bg-brand-cyan/20" />
                   </div>
                 </div>
               </div>
               
-              {/* Scanning Beam */}
-              <motion.div 
-                animate={{ top: ['0%', '100%', '0%'] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                className="absolute left-0 right-0 h-1 bg-brand-cyan/40 shadow-[0_0_30px_#00E5FF] z-10"
-              />
+              {/* Dynamic Scanning Beams */}
+              <div className="absolute inset-0 pointer-events-none">
+                {/* Primary Beam */}
+                <motion.div 
+                  animate={{ top: ['-10%', '110%'] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  className="absolute left-0 right-0 h-[2px] bg-brand-cyan shadow-[0_0_40px_#00E5FF] z-20"
+                >
+                  {/* Beam Glitch Effect */}
+                  <motion.div 
+                    animate={{ opacity: [0.2, 1, 0.2, 0.8, 0.2] }}
+                    transition={{ duration: 0.2, repeat: Infinity }}
+                    className="absolute inset-0 bg-white/40"
+                  />
+                </motion.div>
+
+                {/* Secondary Faster Beam */}
+                <motion.div 
+                  animate={{ top: ['-10%', '110%'] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                  className="absolute left-0 right-0 h-[1px] bg-brand-cyan/30 z-10"
+                />
+
+                {/* Random Data Points */}
+                {[...Array(10)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ 
+                      opacity: [0, 1, 0],
+                      scale: [0, 1.5, 0],
+                      x: [Math.random() * 100 + '%', Math.random() * 100 + '%'],
+                      y: [Math.random() * 100 + '%', Math.random() * 100 + '%']
+                    }}
+                    transition={{ 
+                      duration: 2 + Math.random() * 2,
+                      repeat: Infinity,
+                      delay: Math.random() * 2
+                    }}
+                    className="absolute w-1 h-1 bg-brand-cyan rounded-full shadow-[0_0_10px_#00E5FF]"
+                  />
+                ))}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
