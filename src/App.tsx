@@ -2360,13 +2360,16 @@ function VisionSection() {
             </AnimatePresence>
             
             {/* Astrateq Neural Overlay (Always active, but more prominent in Storm Mode) */}
-            <div className={`absolute inset-0 transition-opacity duration-1000 ${isStormMode ? 'opacity-100' : 'opacity-40'}`}>
+            <div className={`absolute inset-0 transition-all duration-1000 ${isStormMode ? 'opacity-100' : 'opacity-60'}`}>
               {/* Thermal / Night Vision Overlay */}
-              <div className={`absolute inset-0 mix-blend-color transition-colors duration-1000 ${isStormMode ? 'bg-brand-cyan/40' : 'bg-brand-cyan/15'}`} />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/60 via-transparent to-brand-charcoal/20" />
+              <div className={`absolute inset-0 mix-blend-color transition-colors duration-1000 ${isStormMode ? 'bg-brand-cyan/40' : 'bg-brand-cyan/10'}`} />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/80 via-transparent to-brand-charcoal/40" />
               
+              {/* Digital Noise / Grain Effect */}
+              <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay" />
+
               {/* Terrain Analysis Grid */}
-              <div className="absolute inset-0 [perspective:500px] pointer-events-none opacity-30">
+              <div className="absolute inset-0 [perspective:500px] pointer-events-none opacity-20">
                 <motion.div 
                   animate={{ 
                     backgroundPosition: ["0px 0px", "0px 40px"] 
@@ -2377,30 +2380,159 @@ function VisionSection() {
               </div>
               
               {/* HUD Elements */}
-              <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
-                <div className="flex justify-between items-start">
-                  <div className="space-y-2">
-                    <div className={`flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border transition-all duration-500 ${isStormMode ? 'text-brand-ember border-brand-ember shadow-[0_0_15px_rgba(255,184,0,0.4)]' : 'text-brand-cyan border-brand-cyan/40 shadow-[0_0_15px_rgba(0,229,255,0.2)]'}`}>
-                      <div className={`w-1.5 h-1.5 rounded-full animate-pulse shadow-[0_0_8px_currentColor] ${isStormMode ? 'bg-brand-ember' : 'bg-brand-cyan'}`} />
+              <div className="absolute inset-0 p-8 flex flex-col justify-between pointer-events-none overflow-hidden">
+                {/* Top HUD Bar */}
+                <div className="flex justify-between items-start relative z-10">
+                  <div className="space-y-3">
+                    <div className={`flex items-center gap-3 font-mono text-[10px] font-black uppercase tracking-[0.2em] bg-black/80 backdrop-blur-xl px-4 py-2 rounded-xl border transition-all duration-500 ${isStormMode ? 'text-brand-ember border-brand-ember shadow-[0_0_20px_rgba(255,184,0,0.4)]' : 'text-brand-cyan border-brand-cyan/40 shadow-[0_0_20px_rgba(0,229,255,0.2)]'}`}>
+                      <div className={`w-2 h-2 rounded-full animate-pulse shadow-[0_0_10px_currentColor] ${isStormMode ? 'bg-brand-ember' : 'bg-brand-cyan'}`} />
                       {isStormMode ? 'Neural Override: Multi-Spectral Active' : 'Live Feed: Multi-Spectral Lidar'}
                     </div>
-                    {isStormMode && (
-                      <motion.div 
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex items-center gap-2 font-mono text-[9px] text-brand-cyan font-bold uppercase tracking-widest bg-black/70 backdrop-blur-md px-3 py-1 rounded-lg border border-brand-cyan/40"
-                      >
-                        <Shield size={10} />
-                        94% Hazard Confidence
-                      </motion.div>
-                    )}
+                    
+                    <div className="flex gap-2">
+                      <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10 font-mono text-[8px] text-brand-cyan/60 uppercase tracking-widest">
+                        SIG: 100%
+                      </div>
+                      <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10 font-mono text-[8px] text-brand-cyan/60 uppercase tracking-widest">
+                        ENC: AES-256
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col items-end gap-2">
+                    <div className="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 font-mono text-[9px] text-brand-cyan/80 uppercase tracking-widest flex items-center gap-2">
+                      <div className="w-1 h-1 bg-brand-cyan rounded-full animate-ping" />
+                      FPS: 120.4
+                    </div>
+                    <div className="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 font-mono text-[9px] text-brand-cyan/80 uppercase tracking-widest">
+                      TEMP: -14°C
+                    </div>
                   </div>
                 </div>
-                
-                {/* Scanning HUD brackets */}
-                <div className="flex justify-between items-end">
-                  <div className="w-12 h-12 border-b-2 border-l-2 border-brand-cyan/40 rounded-bl-xl" />
-                  <div className="w-12 h-12 border-b-2 border-r-2 border-brand-cyan/40 rounded-br-xl" />
+
+                {/* Center Crosshair HUD */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative w-48 h-48">
+                    {/* Crosshair Lines */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-8 bg-brand-cyan/40" />
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-8 bg-brand-cyan/40" />
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-brand-cyan/40" />
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-[1px] bg-brand-cyan/40" />
+                    
+                    {/* Pulsing Circles */}
+                    <motion.div 
+                      animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.3, 0.1] }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                      className="absolute inset-0 border border-brand-cyan/20 rounded-full"
+                    />
+                    <motion.div 
+                      animate={{ scale: [1.2, 1, 1.2], opacity: [0.05, 0.15, 0.05] }}
+                      transition={{ duration: 4, repeat: Infinity }}
+                      className="absolute -inset-8 border border-brand-cyan/10 rounded-full"
+                    />
+
+                    {/* Corner Accents */}
+                    <div className="absolute top-4 left-4 w-4 h-4 border-t border-l border-brand-cyan/40" />
+                    <div className="absolute top-4 right-4 w-4 h-4 border-t border-r border-brand-cyan/40" />
+                    <div className="absolute bottom-4 left-4 w-4 h-4 border-b border-l border-brand-cyan/40" />
+                    <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-brand-cyan/40" />
+                  </div>
+                </div>
+
+                {/* Simulated Object Detection Bounding Boxes */}
+                <AnimatePresence>
+                  {isStormMode && (
+                    <>
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1, x: [0, 15, 0], y: [0, -10, 0] }}
+                        transition={{ duration: 5, repeat: Infinity }}
+                        className="absolute top-[40%] left-[30%] w-40 h-32 border border-brand-ember/60 rounded-lg"
+                      >
+                        <div className="absolute -top-6 left-0 bg-brand-ember/90 text-black text-[9px] font-mono px-2 py-0.5 font-black uppercase tracking-widest rounded-t-md">
+                          Hazard: Black Ice
+                        </div>
+                        <div className="absolute top-0 right-0 p-1 font-mono text-[8px] text-brand-ember font-bold">
+                          94% CONF
+                        </div>
+                        <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-brand-ember" />
+                        <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-brand-ember" />
+                      </motion.div>
+
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1, x: [0, -20, 0], y: [0, 15, 0] }}
+                        transition={{ duration: 7, repeat: Infinity, delay: 1 }}
+                        className="absolute bottom-[20%] right-[25%] w-32 h-24 border border-brand-cyan/60 rounded-lg"
+                      >
+                        <div className="absolute -top-6 left-0 bg-brand-cyan/90 text-black text-[9px] font-mono px-2 py-0.5 font-black uppercase tracking-widest rounded-t-md">
+                          Object: Terrain
+                        </div>
+                        <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-brand-cyan" />
+                        <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-brand-cyan" />
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+
+                {/* Bottom HUD Bar */}
+                <div className="flex justify-between items-end relative z-10">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-4">
+                      <div className="flex flex-col">
+                        <span className="text-[8px] font-mono text-brand-gray/40 uppercase tracking-widest">Velocity</span>
+                        <span className="text-[11px] font-mono font-black text-brand-offwhite">104 KM/H</span>
+                      </div>
+                      <div className="w-[1px] h-6 bg-white/10" />
+                      <div className="flex flex-col">
+                        <span className="text-[8px] font-mono text-brand-gray/40 uppercase tracking-widest">Terrain</span>
+                        <span className="text-[11px] font-mono font-black text-brand-offwhite">UNSTABLE</span>
+                      </div>
+                    </div>
+                    {/* Scanning HUD brackets */}
+                    <div className="flex gap-4">
+                      <div className="w-16 h-16 border-b-2 border-l-2 border-brand-cyan/40 rounded-bl-2xl" />
+                      <div className="flex flex-col justify-end pb-2">
+                        <div className="w-32 h-1 bg-white/5 rounded-full overflow-hidden border border-white/10">
+                          <motion.div 
+                            animate={{ width: ["10%", "90%", "10%"] }}
+                            transition={{ duration: 3, repeat: Infinity }}
+                            className="h-full bg-brand-cyan shadow-[0_0_10px_#00E5FF]"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col items-end gap-3">
+                    <div className="flex flex-col items-end">
+                      <span className="text-[8px] font-mono text-brand-gray/40 uppercase tracking-widest">Neural Link</span>
+                      <div className="flex gap-1 mt-1">
+                        {[1, 2, 3, 4, 5, 6].map(i => (
+                          <motion.div 
+                            key={i}
+                            animate={{ opacity: [0.3, 1, 0.3] }}
+                            transition={{ duration: 1, repeat: Infinity, delay: i * 0.1 }}
+                            className="w-1 h-3 bg-brand-cyan rounded-full" 
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <div className="w-16 h-16 border-b-2 border-r-2 border-brand-cyan/40 rounded-br-2xl" />
+                  </div>
+                </div>
+
+                {/* Scrolling Data Stream (Left Side) */}
+                <div className="absolute left-8 top-1/2 -translate-y-1/2 flex flex-col gap-1 opacity-20 font-mono text-[7px] text-brand-cyan pointer-events-none">
+                  {[...Array(15)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      animate={{ opacity: [0.2, 1, 0.2] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.1 }}
+                    >
+                      {Math.random().toString(16).substring(2, 10).toUpperCase()}
+                    </motion.div>
+                  ))}
                 </div>
               </div>
 
